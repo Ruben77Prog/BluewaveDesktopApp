@@ -315,7 +315,7 @@ public class NuevaIncidenciaView extends AbstractView {
 		}
 	}
 
-	// ========== MÉTODOS PARA MODO EDICIÓN ==========
+
 
 	public void setEditable(boolean editable) {
 		this.editable = editable;

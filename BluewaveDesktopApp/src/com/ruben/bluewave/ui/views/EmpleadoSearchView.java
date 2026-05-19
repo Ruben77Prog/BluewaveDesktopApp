@@ -7,6 +7,8 @@ import java.awt.GridBagLayout;
 import java.awt.Insets;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
+import java.awt.event.MouseAdapter;
+import java.awt.event.MouseEvent;
 import java.util.ArrayList;
 import java.util.List;
 
@@ -16,6 +18,7 @@ import javax.swing.JButton;
 import javax.swing.JComboBox;
 import javax.swing.JFormattedTextField;
 import javax.swing.JLabel;
+import javax.swing.JOptionPane;
 import javax.swing.JPanel;
 import javax.swing.JScrollPane;
 import javax.swing.JTable;
@@ -31,7 +34,10 @@ import com.ruben.bluewave.service.EmpleadoService;
 import com.ruben.bluewave.service.GeneroService;
 import com.ruben.bluewave.service.impl.EmpleadoServiceImpl;
 import com.ruben.bluewave.service.impl.GeneroServiceImpl;
+import com.ruben.bluewave.ui.MainWindow;
+import com.ruben.bluewave.ui.controller.EmpleadoDeleteController;
 import com.ruben.bluewave.ui.controller.EmpleadoSearchController;
+import com.ruben.bluewave.ui.controller.EmpleadoSetEditableController;
 import com.ruben.bluewave.ui.model.EmpleadoTableModel;
 import com.ruben.bluewave.ui.renderer.EmpleadoTableCellRenderer;
 import com.ruben.bluewave.ui.renderer.GeneroCBRenderer;
@@ -90,7 +96,7 @@ public class EmpleadoSearchView extends AbstractView {
 		gbl_busquedaPanel.rowWeights = new double[] { 0.0, 0.0, 0.0, 0.0, 0.0, 0.0, 0.0, Double.MIN_VALUE };
 		busquedaPanel.setLayout(gbl_busquedaPanel);
 
-		// Etiquetas primera fila
+		
 		JLabel idEmpleadoLabel = new JLabel("ID Empleado");
 		GridBagConstraints gbc_idEmpleadoLabel = new GridBagConstraints();
 		gbc_idEmpleadoLabel.insets = new Insets(0, 0, 5, 5);
@@ -225,7 +231,7 @@ public class EmpleadoSearchView extends AbstractView {
 		gbc_estadoLabel.gridy = 2;
 		busquedaPanel.add(estadoLabel, gbc_estadoLabel);
 
-		// Segunda fila campos
+		
 		telefonoTF = new JTextField(10);
 		GridBagConstraints gbc_telefonoTF = new GridBagConstraints();
 		gbc_telefonoTF.insets = new Insets(0, 0, 5, 5);
@@ -266,7 +272,7 @@ public class EmpleadoSearchView extends AbstractView {
 		gbc_fechaBajaHastaDC.gridy = 3;
 		busquedaPanel.add(fechaBajaHastaDC, gbc_fechaBajaHastaDC);
 
-		// ComboBox estado (activo/inactivo)
+	
 		estadoCB = new JComboBox<>(new String[] { "Seleccionar", "Activo", "Inactivo" });
 		GridBagConstraints gbc_estadoCB = new GridBagConstraints();
 		gbc_estadoCB.insets = new Insets(0, 0, 5, 5);
@@ -275,7 +281,7 @@ public class EmpleadoSearchView extends AbstractView {
 		gbc_estadoCB.gridy = 3;
 		busquedaPanel.add(estadoCB, gbc_estadoCB);
 
-		// Género
+	
 		JLabel generoLabel = new JLabel("Género");
 		GridBagConstraints gbc_generoLabel = new GridBagConstraints();
 		gbc_generoLabel.insets = new Insets(0, 0, 5, 5);
@@ -291,7 +297,7 @@ public class EmpleadoSearchView extends AbstractView {
 		gbc_generoCB.gridy = 5;
 		busquedaPanel.add(generoCB, gbc_generoCB);
 
-		// Botones acción
+		
 		JButton limpiarButton = new JButton("Limpiar Campos");
 		limpiarButton.setIcon(new ImageIcon(
 				getClass().getResource("/nuvola/16x16/1909_restart_tool_restart_refresh_tool_refresh.png")));
@@ -314,38 +320,38 @@ public class EmpleadoSearchView extends AbstractView {
 		gbc_limpiarButton.gridy = 6;
 		busquedaPanel.add(limpiarButton, gbc_limpiarButton);
 
-		// Tabla resultados
+		
 		resultadosTable = new JTable();
-		JScrollPane scrollPane = new JScrollPane(resultadosTable);
-		add(scrollPane, BorderLayout.CENTER);
+	    JScrollPane scrollPane = new JScrollPane(resultadosTable);
+	    add(scrollPane, BorderLayout.CENTER);
 
-		// Panel SUR con paginación
-		JPanel southPanel = new JPanel(new BorderLayout());
-		add(southPanel, BorderLayout.SOUTH);
+	   
+	    JPanel southPanel = new JPanel(new BorderLayout());
+	    add(southPanel, BorderLayout.SOUTH);
 
-		JPanel leftPanel = new JPanel(new FlowLayout(FlowLayout.LEFT));
-		totalResultadosLabel = new JLabel("");
-		leftPanel.add(totalResultadosLabel);
+	    JPanel leftPanel = new JPanel(new FlowLayout(FlowLayout.LEFT));
+	    totalResultadosLabel = new JLabel("");
+	    leftPanel.add(totalResultadosLabel);
 
-		JPanel rightPanel = new JPanel(new FlowLayout(FlowLayout.RIGHT));
-		firstButton = new JButton("|<");
-		firstButton.setToolTipText("Primera página");
-		prevButton = new JButton("<");
-		prevButton.setToolTipText("Página anterior");
-		pageInfoLabel = new JLabel("Página 1 de 1");
-		nextButton = new JButton(">");
-		nextButton.setToolTipText("Página siguiente");
-		lastButton = new JButton(">|");
-		lastButton.setToolTipText("Última página");
+	    JPanel rightPanel = new JPanel(new FlowLayout(FlowLayout.RIGHT));
+	    firstButton = new JButton("|<");
+	    firstButton.setToolTipText("Primera página");
+	    prevButton = new JButton("<");
+	    prevButton.setToolTipText("Página anterior");
+	    pageInfoLabel = new JLabel("Página 1 de 1");
+	    nextButton = new JButton(">");
+	    nextButton.setToolTipText("Página siguiente");
+	    lastButton = new JButton(">|");
+	    lastButton.setToolTipText("Última página");
 
-		rightPanel.add(firstButton);
-		rightPanel.add(prevButton);
-		rightPanel.add(pageInfoLabel);
-		rightPanel.add(nextButton);
-		rightPanel.add(lastButton);
+	    rightPanel.add(firstButton);
+	    rightPanel.add(prevButton);
+	    rightPanel.add(pageInfoLabel);
+	    rightPanel.add(nextButton);
+	    rightPanel.add(lastButton);
 
-		southPanel.add(leftPanel, BorderLayout.WEST);
-		southPanel.add(rightPanel, BorderLayout.EAST);
+	    southPanel.add(leftPanel, BorderLayout.WEST);
+	    southPanel.add(rightPanel, BorderLayout.EAST);
 	}
 
 	private void postInitialize() {
@@ -359,7 +365,7 @@ public class EmpleadoSearchView extends AbstractView {
 		cargarComboBoxes();
 		resultadosTable.setDefaultRenderer(Object.class, new EmpleadoTableCellRenderer());
 
-		// Listeners paginación
+		
 		firstButton.addActionListener(new ActionListener() {
 			public void actionPerformed(ActionEvent e) {
 				goToPage(1);
@@ -385,10 +391,44 @@ public class EmpleadoSearchView extends AbstractView {
 		prevButton.setEnabled(false);
 		nextButton.setEnabled(false);
 		lastButton.setEnabled(false);
+		
+		resultadosTable.addMouseListener(new MouseAdapter() {
+		    @Override
+		    public void mouseClicked(MouseEvent e) {
+		        int column = resultadosTable.columnAtPoint(e.getPoint());
+		        int row = resultadosTable.rowAtPoint(e.getPoint());
+		        
+		        if (row >= 0 && column == 10) {
+		            EmpleadoDTO empleado = ((EmpleadoTableModel) resultadosTable.getModel()).getEmpleadoAt(row);
+		            
+		            if (empleado == null) return;
+		            
+		            Object[] options = {"Editar", "Eliminar", "Cancelar"};
+		            int option = JOptionPane.showOptionDialog(EmpleadoSearchView.this,
+		                "Empleado: " + empleado.getNombre() + " " + empleado.getApellido1(),
+		                "Acciones",
+		                JOptionPane.YES_NO_CANCEL_OPTION,
+		                JOptionPane.QUESTION_MESSAGE,
+		                null,
+		                options,
+		                options[2]);
+		            
+		            if (option == 0) {
+		                EmpleadoAltaView editView = new EmpleadoAltaView();
+		                EmpleadoSetEditableController setEditableController = new EmpleadoSetEditableController(editView, empleado);
+		                setEditableController.doAction();
+		                MainWindow.getInstance().addView("Editar empleado", editView);
+		            } else if (option == 1) {
+		                EmpleadoDeleteController deleteController = new EmpleadoDeleteController(EmpleadoSearchView.this, empleado);
+		                deleteController.doAction();
+		            }
+		        }
+		    }
+		});
 	}
 
 	private void cargarComboBoxes() {
-		// Cargar géneros
+		
 		List<Genero> generos = null;
 		try {
 			generos = generoService.findAll();
@@ -406,6 +446,19 @@ public class EmpleadoSearchView extends AbstractView {
 			}
 		}
 		generoCB.setModel(generoModel);
+	}
+	
+	
+	//refrescar despues de eliminar
+	public void buscar() {
+	    EmpleadoCriteria criteria = getCriteria();
+	    try {
+	        Results<EmpleadoDTO> resultados = empleadoService.findByCriteria(criteria, 0, Integer.MAX_VALUE);
+	        setModel(resultados);
+	    } catch (Exception e) {
+	        e.printStackTrace();
+	        JOptionPane.showMessageDialog(this, "Error al buscar empleados: " + e.getMessage(), "Error", JOptionPane.ERROR_MESSAGE);
+	    }
 	}
 
 	private void limpiarCampos() {
@@ -445,7 +498,7 @@ public class EmpleadoSearchView extends AbstractView {
 		criteria.setEmail(StringUtils.trimToNull(emailTF.getText()));
 		criteria.setTelefono(StringUtils.trimToNull(telefonoTF.getText()));
 
-		// Estado (activo)
+		
 		int estadoIdx = estadoCB.getSelectedIndex();
 		if (estadoIdx == 1) {
 			criteria.setActivo(true);

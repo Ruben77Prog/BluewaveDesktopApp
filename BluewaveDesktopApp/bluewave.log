@@ -1727,3 +1727,323 @@ java.lang.NullPointerException: null
 [2026-05-18 21:03:57.908] [AWT-EventQueue-0] INFO  com.ruben.bluewave.dao.ClienteDAO - Criteria SQL:com.ruben.bluewave.dao.criteria.ClienteCriteria@1862f38[ORDER_BY_APELLIDO1= c.apellido1 ,ORDER_BY_EMAIL= c.email ,ORDER_BY_FECHA_CREACION= c.fecha_creacion ,ORDER_BY_NOMBRE= c.nombre ,apellido1=<null>,apellido2=<null>,ascDesc=true,direccionId=<null>,dni=<null>,email=<null>,empleadoAsignadoId=<null>,estadoClienteId=<null>,fechaCreacionDesde=<null>,fechaCreacionHasta=<null>,fechaNacimientoDesde=<null>,fechaNacimientoHasta=<null>,generoId=<null>,id=<null>,nombre=<null>,orderBy= c.nombre ,telefono=<null>] SELECT c.id, c.nombre, c.apellido1, c.apellido2, c.dni, c.telefono, c.telefono2, c.telefono3, c.email, c.password, c.fecha_nacimiento, c.fecha_creacion, c.fecha_baja, c.estado_cliente_id, ec.nombre AS estado_cliente_nombre, c.direccion_id, d.calle, d.numero, d.piso, d.apartamento, d.codigo_postal, ci.id AS ciudad_id, ci.nombre AS ciudad_nombre, p.id AS provincia_id, p.nombre AS provincia_nombre, pais.id AS pais_id, pais.nombre AS pais_nombre, pais.codigo_iso AS pais_codigo_iso, c.empleado_asignado_id, e.nombre AS empleado_nombre, e.apellido1 AS empleado_apellido, c.genero_id, g.nombre AS genero_nombre, g.codigo AS genero_codigo FROM cliente c INNER JOIN estado_cliente ec ON c.estado_cliente_id = ec.id INNER JOIN direccion d ON c.direccion_id = d.id INNER JOIN ciudad ci ON d.ciudad_id = ci.id INNER JOIN provincia p ON ci.provincia_id = p.id INNER JOIN pais ON p.pais_id = pais.id INNER JOIN empleado e ON c.empleado_asignado_id = e.id INNER JOIN genero g ON c.genero_id = g.id
 [2026-05-18 21:03:58.582] [AWT-EventQueue-0] INFO  com.ruben.bluewave.dao.ClienteDAO - Criteria: com.ruben.bluewave.dao.criteria.ClienteCriteria@72342071[ORDER_BY_APELLIDO1= c.apellido1 ,ORDER_BY_EMAIL= c.email ,ORDER_BY_FECHA_CREACION= c.fecha_creacion ,ORDER_BY_NOMBRE= c.nombre ,apellido1=<null>,apellido2=<null>,ascDesc=true,direccionId=<null>,dni=<null>,email=<null>,empleadoAsignadoId=<null>,estadoClienteId=<null>,fechaCreacionDesde=<null>,fechaCreacionHasta=<null>,fechaNacimientoDesde=<null>,fechaNacimientoHasta=<null>,generoId=<null>,id=<null>,nombre=<null>,orderBy= c.nombre ,telefono=<null>]
 [2026-05-18 21:03:58.582] [AWT-EventQueue-0] INFO  com.ruben.bluewave.dao.ClienteDAO - Criteria SQL:com.ruben.bluewave.dao.criteria.ClienteCriteria@72342071[ORDER_BY_APELLIDO1= c.apellido1 ,ORDER_BY_EMAIL= c.email ,ORDER_BY_FECHA_CREACION= c.fecha_creacion ,ORDER_BY_NOMBRE= c.nombre ,apellido1=<null>,apellido2=<null>,ascDesc=true,direccionId=<null>,dni=<null>,email=<null>,empleadoAsignadoId=<null>,estadoClienteId=<null>,fechaCreacionDesde=<null>,fechaCreacionHasta=<null>,fechaNacimientoDesde=<null>,fechaNacimientoHasta=<null>,generoId=<null>,id=<null>,nombre=<null>,orderBy= c.nombre ,telefono=<null>] SELECT c.id, c.nombre, c.apellido1, c.apellido2, c.dni, c.telefono, c.telefono2, c.telefono3, c.email, c.password, c.fecha_nacimiento, c.fecha_creacion, c.fecha_baja, c.estado_cliente_id, ec.nombre AS estado_cliente_nombre, c.direccion_id, d.calle, d.numero, d.piso, d.apartamento, d.codigo_postal, ci.id AS ciudad_id, ci.nombre AS ciudad_nombre, p.id AS provincia_id, p.nombre AS provincia_nombre, pais.id AS pais_id, pais.nombre AS pais_nombre, pais.codigo_iso AS pais_codigo_iso, c.empleado_asignado_id, e.nombre AS empleado_nombre, e.apellido1 AS empleado_apellido, c.genero_id, g.nombre AS genero_nombre, g.codigo AS genero_codigo FROM cliente c INNER JOIN estado_cliente ec ON c.estado_cliente_id = ec.id INNER JOIN direccion d ON c.direccion_id = d.id INNER JOIN ciudad ci ON d.ciudad_id = ci.id INNER JOIN provincia p ON ci.provincia_id = p.id INNER JOIN pais ON p.pais_id = pais.id INNER JOIN empleado e ON c.empleado_asignado_id = e.id INNER JOIN genero g ON c.genero_id = g.id
+[2026-05-19 03:11:58.306] [AWT-EventQueue-0] ERROR com.ruben.bluewave.util.JDBCUtils - java.sql.SQLException: Can't call commit when autocommit=true
+[2026-05-19 03:11:59.307] [AWT-EventQueue-0] DEBUG com.ruben.bluewave.dao.EmpleadoDAO - SQL: SELECT e.id, e.nombre, e.apellido1, e.apellido2, e.dni, e.telefono, e.email, e.password, e.fecha_creacion, e.fecha_baja, e.ultimo_login, e.activo, e.rol_id, e.genero_id, e.direccion_id, r.nombre AS rol_nombre, g.nombre AS genero_nombre FROM empleado e LEFT JOIN rol r ON e.rol_id = r.id LEFT JOIN genero g ON e.genero_id = g.id ORDER BY  fecha_creacion  DESC  LIMIT ? OFFSET ? 
+[2026-05-19 03:11:59.308] [AWT-EventQueue-0] DEBUG com.ruben.bluewave.dao.EmpleadoDAO - Params: [2147483647, 0]
+[2026-05-19 03:12:03.784] [AWT-EventQueue-0] ERROR com.ruben.bluewave.util.JDBCUtils - java.sql.SQLException: Can't call commit when autocommit=true
+[2026-05-19 03:12:03.819] [AWT-EventQueue-0] ERROR com.ruben.bluewave.util.JDBCUtils - java.sql.SQLNonTransientConnectionException: No operations allowed after connection closed.
+[2026-05-19 03:13:12.928] [AWT-EventQueue-0] INFO  com.ruben.bluewave.service.impl.DireccionServiceImpl - Dirección creada con id: 7
+[2026-05-19 03:17:47.375] [AWT-EventQueue-0] ERROR com.ruben.bluewave.util.JDBCUtils - java.sql.SQLException: Can't call commit when autocommit=true
+[2026-05-19 03:17:47.425] [AWT-EventQueue-0] ERROR com.ruben.bluewave.util.JDBCUtils - java.sql.SQLNonTransientConnectionException: No operations allowed after connection closed.
+[2026-05-19 03:18:50.837] [AWT-EventQueue-0] INFO  com.ruben.bluewave.service.impl.DireccionServiceImpl - Dirección creada con id: 8
+[2026-05-19 03:18:50.977] [AWT-EventQueue-0] INFO  com.ruben.bluewave.service.impl.EmpleadoServiceImpl - Empleado creado con id: 51
+[2026-05-19 03:18:53.877] [AWT-EventQueue-0] ERROR com.ruben.bluewave.util.JDBCUtils - java.sql.SQLException: Can't call commit when autocommit=true
+[2026-05-19 03:18:55.778] [AWT-EventQueue-0] DEBUG com.ruben.bluewave.dao.EmpleadoDAO - SQL: SELECT e.id, e.nombre, e.apellido1, e.apellido2, e.dni, e.telefono, e.email, e.password, e.fecha_creacion, e.fecha_baja, e.ultimo_login, e.activo, e.rol_id, e.genero_id, e.direccion_id, r.nombre AS rol_nombre, g.nombre AS genero_nombre FROM empleado e LEFT JOIN rol r ON e.rol_id = r.id LEFT JOIN genero g ON e.genero_id = g.id ORDER BY  fecha_creacion  DESC  LIMIT ? OFFSET ? 
+[2026-05-19 03:18:55.778] [AWT-EventQueue-0] DEBUG com.ruben.bluewave.dao.EmpleadoDAO - Params: [2147483647, 0]
+[2026-05-19 03:25:08.065] [AWT-EventQueue-0] ERROR com.ruben.bluewave.util.JDBCUtils - java.sql.SQLException: Can't call commit when autocommit=true
+[2026-05-19 03:25:09.337] [AWT-EventQueue-0] DEBUG com.ruben.bluewave.dao.EmpleadoDAO - SQL: SELECT e.id, e.nombre, e.apellido1, e.apellido2, e.dni, e.telefono, e.email, e.password, e.fecha_creacion, e.fecha_baja, e.ultimo_login, e.activo, e.rol_id, e.genero_id, e.direccion_id, r.nombre AS rol_nombre, g.nombre AS genero_nombre FROM empleado e LEFT JOIN rol r ON e.rol_id = r.id LEFT JOIN genero g ON e.genero_id = g.id ORDER BY  fecha_creacion  DESC  LIMIT ? OFFSET ? 
+[2026-05-19 03:25:09.337] [AWT-EventQueue-0] DEBUG com.ruben.bluewave.dao.EmpleadoDAO - Params: [2147483647, 0]
+[2026-05-19 03:25:16.921] [AWT-EventQueue-0] ERROR com.ruben.bluewave.util.JDBCUtils - java.sql.SQLException: Can't call commit when autocommit=true
+[2026-05-19 03:25:16.960] [AWT-EventQueue-0] ERROR com.ruben.bluewave.util.JDBCUtils - java.sql.SQLNonTransientConnectionException: No operations allowed after connection closed.
+[2026-05-19 03:25:22.155] [AWT-EventQueue-0] INFO  com.ruben.bluewave.service.impl.EmpleadoServiceImpl - Empleado actualizado id: 51
+[2026-05-19 03:25:28.862] [AWT-EventQueue-0] DEBUG com.ruben.bluewave.dao.EmpleadoDAO - SQL: SELECT e.id, e.nombre, e.apellido1, e.apellido2, e.dni, e.telefono, e.email, e.password, e.fecha_creacion, e.fecha_baja, e.ultimo_login, e.activo, e.rol_id, e.genero_id, e.direccion_id, r.nombre AS rol_nombre, g.nombre AS genero_nombre FROM empleado e LEFT JOIN rol r ON e.rol_id = r.id LEFT JOIN genero g ON e.genero_id = g.id ORDER BY  fecha_creacion  DESC  LIMIT ? OFFSET ? 
+[2026-05-19 03:25:28.862] [AWT-EventQueue-0] DEBUG com.ruben.bluewave.dao.EmpleadoDAO - Params: [2147483647, 0]
+[2026-05-19 03:25:29.962] [AWT-EventQueue-0] DEBUG com.ruben.bluewave.dao.EmpleadoDAO - SQL: SELECT e.id, e.nombre, e.apellido1, e.apellido2, e.dni, e.telefono, e.email, e.password, e.fecha_creacion, e.fecha_baja, e.ultimo_login, e.activo, e.rol_id, e.genero_id, e.direccion_id, r.nombre AS rol_nombre, g.nombre AS genero_nombre FROM empleado e LEFT JOIN rol r ON e.rol_id = r.id LEFT JOIN genero g ON e.genero_id = g.id ORDER BY  fecha_creacion  DESC  LIMIT ? OFFSET ? 
+[2026-05-19 03:25:29.962] [AWT-EventQueue-0] DEBUG com.ruben.bluewave.dao.EmpleadoDAO - Params: [2147483647, 0]
+[2026-05-19 03:25:32.657] [AWT-EventQueue-0] INFO  com.ruben.bluewave.service.impl.EmpleadoServiceImpl - Empleado eliminado id: 51
+[2026-05-19 03:25:33.702] [AWT-EventQueue-0] DEBUG com.ruben.bluewave.dao.EmpleadoDAO - SQL: SELECT e.id, e.nombre, e.apellido1, e.apellido2, e.dni, e.telefono, e.email, e.password, e.fecha_creacion, e.fecha_baja, e.ultimo_login, e.activo, e.rol_id, e.genero_id, e.direccion_id, r.nombre AS rol_nombre, g.nombre AS genero_nombre FROM empleado e LEFT JOIN rol r ON e.rol_id = r.id LEFT JOIN genero g ON e.genero_id = g.id ORDER BY  fecha_creacion  DESC  LIMIT ? OFFSET ? 
+[2026-05-19 03:25:33.702] [AWT-EventQueue-0] DEBUG com.ruben.bluewave.dao.EmpleadoDAO - Params: [2147483647, 0]
+[2026-05-19 03:30:25.989] [AWT-EventQueue-0] ERROR com.ruben.bluewave.util.JDBCUtils - java.sql.SQLException: Can't call commit when autocommit=true
+[2026-05-19 03:30:26.782] [AWT-EventQueue-0] DEBUG com.ruben.bluewave.dao.EmpleadoDAO - SQL: SELECT e.id, e.nombre, e.apellido1, e.apellido2, e.dni, e.telefono, e.email, e.password, e.fecha_creacion, e.fecha_baja, e.ultimo_login, e.activo, e.rol_id, e.genero_id, e.direccion_id, r.nombre AS rol_nombre, g.nombre AS genero_nombre FROM empleado e LEFT JOIN rol r ON e.rol_id = r.id LEFT JOIN genero g ON e.genero_id = g.id ORDER BY  fecha_creacion  DESC  LIMIT ? OFFSET ? 
+[2026-05-19 03:30:26.782] [AWT-EventQueue-0] DEBUG com.ruben.bluewave.dao.EmpleadoDAO - Params: [2147483647, 0]
+[2026-05-19 03:30:48.248] [AWT-EventQueue-0] ERROR com.ruben.bluewave.util.JDBCUtils - java.sql.SQLException: Can't call commit when autocommit=true
+[2026-05-19 03:30:50.390] [AWT-EventQueue-0] INFO  com.ruben.bluewave.dao.ClienteDAO - Criteria: com.ruben.bluewave.dao.criteria.ClienteCriteria@3c55c3e0[ORDER_BY_APELLIDO1= c.apellido1 ,ORDER_BY_EMAIL= c.email ,ORDER_BY_FECHA_CREACION= c.fecha_creacion ,ORDER_BY_NOMBRE= c.nombre ,apellido1=<null>,apellido2=<null>,ascDesc=true,direccionId=<null>,dni=<null>,email=<null>,empleadoAsignadoId=<null>,estadoClienteId=<null>,fechaCreacionDesde=<null>,fechaCreacionHasta=<null>,fechaNacimientoDesde=<null>,fechaNacimientoHasta=<null>,generoId=<null>,id=<null>,nombre=<null>,orderBy= c.nombre ,telefono=<null>]
+[2026-05-19 03:30:50.391] [AWT-EventQueue-0] INFO  com.ruben.bluewave.dao.ClienteDAO - Criteria SQL:com.ruben.bluewave.dao.criteria.ClienteCriteria@3c55c3e0[ORDER_BY_APELLIDO1= c.apellido1 ,ORDER_BY_EMAIL= c.email ,ORDER_BY_FECHA_CREACION= c.fecha_creacion ,ORDER_BY_NOMBRE= c.nombre ,apellido1=<null>,apellido2=<null>,ascDesc=true,direccionId=<null>,dni=<null>,email=<null>,empleadoAsignadoId=<null>,estadoClienteId=<null>,fechaCreacionDesde=<null>,fechaCreacionHasta=<null>,fechaNacimientoDesde=<null>,fechaNacimientoHasta=<null>,generoId=<null>,id=<null>,nombre=<null>,orderBy= c.nombre ,telefono=<null>] SELECT c.id, c.nombre, c.apellido1, c.apellido2, c.dni, c.telefono, c.telefono2, c.telefono3, c.email, c.password, c.fecha_nacimiento, c.fecha_creacion, c.fecha_baja, c.estado_cliente_id, ec.nombre AS estado_cliente_nombre, c.direccion_id, d.calle, d.numero, d.piso, d.apartamento, d.codigo_postal, ci.id AS ciudad_id, ci.nombre AS ciudad_nombre, p.id AS provincia_id, p.nombre AS provincia_nombre, pais.id AS pais_id, pais.nombre AS pais_nombre, pais.codigo_iso AS pais_codigo_iso, c.empleado_asignado_id, e.nombre AS empleado_nombre, e.apellido1 AS empleado_apellido, c.genero_id, g.nombre AS genero_nombre, g.codigo AS genero_codigo FROM cliente c INNER JOIN estado_cliente ec ON c.estado_cliente_id = ec.id INNER JOIN direccion d ON c.direccion_id = d.id INNER JOIN ciudad ci ON d.ciudad_id = ci.id INNER JOIN provincia p ON ci.provincia_id = p.id INNER JOIN pais ON p.pais_id = pais.id INNER JOIN empleado e ON c.empleado_asignado_id = e.id INNER JOIN genero g ON c.genero_id = g.id
+[2026-05-19 03:37:13.225] [AWT-EventQueue-0] ERROR com.ruben.bluewave.util.JDBCUtils - java.sql.SQLException: Can't call commit when autocommit=true
+[2026-05-19 03:37:14.173] [AWT-EventQueue-0] DEBUG com.ruben.bluewave.dao.EmpleadoDAO - SQL: SELECT e.id, e.nombre, e.apellido1, e.apellido2, e.dni, e.telefono, e.email, e.password, e.fecha_creacion, e.fecha_baja, e.ultimo_login, e.activo, e.rol_id, e.genero_id, e.direccion_id, r.nombre AS rol_nombre, g.nombre AS genero_nombre FROM empleado e LEFT JOIN rol r ON e.rol_id = r.id LEFT JOIN genero g ON e.genero_id = g.id ORDER BY  fecha_creacion  DESC  LIMIT ? OFFSET ? 
+[2026-05-19 03:37:14.173] [AWT-EventQueue-0] DEBUG com.ruben.bluewave.dao.EmpleadoDAO - Params: [2147483647, 0]
+[2026-05-19 03:40:14.690] [AWT-EventQueue-0] ERROR com.ruben.bluewave.util.JDBCUtils - java.sql.SQLException: Can't call commit when autocommit=true
+[2026-05-19 03:40:15.382] [AWT-EventQueue-0] ERROR com.ruben.bluewave.util.JDBCUtils - java.sql.SQLException: Can't call commit when autocommit=true
+[2026-05-19 03:40:17.271] [AWT-EventQueue-0] INFO  com.ruben.bluewave.dao.ClienteDAO - Criteria: com.ruben.bluewave.dao.criteria.ClienteCriteria@4e13f71e[ORDER_BY_APELLIDO1= c.apellido1 ,ORDER_BY_EMAIL= c.email ,ORDER_BY_FECHA_CREACION= c.fecha_creacion ,ORDER_BY_NOMBRE= c.nombre ,apellido1=<null>,apellido2=<null>,ascDesc=true,direccionId=<null>,dni=<null>,email=<null>,empleadoAsignadoId=<null>,estadoClienteId=<null>,fechaCreacionDesde=<null>,fechaCreacionHasta=<null>,fechaNacimientoDesde=<null>,fechaNacimientoHasta=<null>,generoId=<null>,id=<null>,nombre=<null>,orderBy= c.nombre ,telefono=<null>]
+[2026-05-19 03:40:17.272] [AWT-EventQueue-0] INFO  com.ruben.bluewave.dao.ClienteDAO - Criteria SQL:com.ruben.bluewave.dao.criteria.ClienteCriteria@4e13f71e[ORDER_BY_APELLIDO1= c.apellido1 ,ORDER_BY_EMAIL= c.email ,ORDER_BY_FECHA_CREACION= c.fecha_creacion ,ORDER_BY_NOMBRE= c.nombre ,apellido1=<null>,apellido2=<null>,ascDesc=true,direccionId=<null>,dni=<null>,email=<null>,empleadoAsignadoId=<null>,estadoClienteId=<null>,fechaCreacionDesde=<null>,fechaCreacionHasta=<null>,fechaNacimientoDesde=<null>,fechaNacimientoHasta=<null>,generoId=<null>,id=<null>,nombre=<null>,orderBy= c.nombre ,telefono=<null>] SELECT c.id, c.nombre, c.apellido1, c.apellido2, c.dni, c.telefono, c.telefono2, c.telefono3, c.email, c.password, c.fecha_nacimiento, c.fecha_creacion, c.fecha_baja, c.estado_cliente_id, ec.nombre AS estado_cliente_nombre, c.direccion_id, d.calle, d.numero, d.piso, d.apartamento, d.codigo_postal, ci.id AS ciudad_id, ci.nombre AS ciudad_nombre, p.id AS provincia_id, p.nombre AS provincia_nombre, pais.id AS pais_id, pais.nombre AS pais_nombre, pais.codigo_iso AS pais_codigo_iso, c.empleado_asignado_id, e.nombre AS empleado_nombre, e.apellido1 AS empleado_apellido, c.genero_id, g.nombre AS genero_nombre, g.codigo AS genero_codigo FROM cliente c INNER JOIN estado_cliente ec ON c.estado_cliente_id = ec.id INNER JOIN direccion d ON c.direccion_id = d.id INNER JOIN ciudad ci ON d.ciudad_id = ci.id INNER JOIN provincia p ON ci.provincia_id = p.id INNER JOIN pais ON p.pais_id = pais.id INNER JOIN empleado e ON c.empleado_asignado_id = e.id INNER JOIN genero g ON c.genero_id = g.id
+[2026-05-19 03:40:20.983] [AWT-EventQueue-0] DEBUG com.ruben.bluewave.dao.EmpleadoDAO - SQL: SELECT e.id, e.nombre, e.apellido1, e.apellido2, e.dni, e.telefono, e.email, e.password, e.fecha_creacion, e.fecha_baja, e.ultimo_login, e.activo, e.rol_id, e.genero_id, e.direccion_id, r.nombre AS rol_nombre, g.nombre AS genero_nombre FROM empleado e LEFT JOIN rol r ON e.rol_id = r.id LEFT JOIN genero g ON e.genero_id = g.id ORDER BY  fecha_creacion  DESC  LIMIT ? OFFSET ? 
+[2026-05-19 03:40:20.983] [AWT-EventQueue-0] DEBUG com.ruben.bluewave.dao.EmpleadoDAO - Params: [2147483647, 0]
+[2026-05-19 03:49:14.659] [AWT-EventQueue-0] ERROR com.ruben.bluewave.util.JDBCUtils - java.sql.SQLException: Can't call commit when autocommit=true
+[2026-05-19 03:49:14.705] [AWT-EventQueue-0] ERROR com.ruben.bluewave.util.JDBCUtils - java.sql.SQLNonTransientConnectionException: No operations allowed after connection closed.
+[2026-05-19 03:49:35.894] [AWT-EventQueue-0] ERROR com.ruben.bluewave.util.JDBCUtils - java.sql.SQLException: Can't call commit when autocommit=true
+[2026-05-19 03:49:35.947] [AWT-EventQueue-0] ERROR com.ruben.bluewave.util.JDBCUtils - java.sql.SQLNonTransientConnectionException: No operations allowed after connection closed.
+[2026-05-19 03:49:40.953] [AWT-EventQueue-0] ERROR com.ruben.bluewave.util.JDBCUtils - java.sql.SQLException: Can't call commit when autocommit=true
+[2026-05-20 00:18:37.777] [AWT-EventQueue-0] ERROR com.ruben.bluewave.util.JDBCUtils - java.sql.SQLException: Can't call commit when autocommit=true
+[2026-05-20 00:18:38.634] [AWT-EventQueue-0] INFO  com.ruben.bluewave.dao.ClienteDAO - Criteria: com.ruben.bluewave.dao.criteria.ClienteCriteria@12430368[ORDER_BY_APELLIDO1= c.apellido1 ,ORDER_BY_EMAIL= c.email ,ORDER_BY_FECHA_CREACION= c.fecha_creacion ,ORDER_BY_NOMBRE= c.nombre ,apellido1=<null>,apellido2=<null>,ascDesc=true,direccionId=<null>,dni=<null>,email=<null>,empleadoAsignadoId=<null>,estadoClienteId=<null>,fechaCreacionDesde=<null>,fechaCreacionHasta=<null>,fechaNacimientoDesde=<null>,fechaNacimientoHasta=<null>,generoId=<null>,id=<null>,nombre=<null>,orderBy= c.nombre ,telefono=<null>]
+[2026-05-20 00:18:38.635] [AWT-EventQueue-0] INFO  com.ruben.bluewave.dao.ClienteDAO - Criteria SQL:com.ruben.bluewave.dao.criteria.ClienteCriteria@12430368[ORDER_BY_APELLIDO1= c.apellido1 ,ORDER_BY_EMAIL= c.email ,ORDER_BY_FECHA_CREACION= c.fecha_creacion ,ORDER_BY_NOMBRE= c.nombre ,apellido1=<null>,apellido2=<null>,ascDesc=true,direccionId=<null>,dni=<null>,email=<null>,empleadoAsignadoId=<null>,estadoClienteId=<null>,fechaCreacionDesde=<null>,fechaCreacionHasta=<null>,fechaNacimientoDesde=<null>,fechaNacimientoHasta=<null>,generoId=<null>,id=<null>,nombre=<null>,orderBy= c.nombre ,telefono=<null>] SELECT c.id, c.nombre, c.apellido1, c.apellido2, c.dni, c.telefono, c.telefono2, c.telefono3, c.email, c.password, c.fecha_nacimiento, c.fecha_creacion, c.fecha_baja, c.estado_cliente_id, ec.nombre AS estado_cliente_nombre, c.direccion_id, d.calle, d.numero, d.piso, d.apartamento, d.codigo_postal, ci.id AS ciudad_id, ci.nombre AS ciudad_nombre, p.id AS provincia_id, p.nombre AS provincia_nombre, pais.id AS pais_id, pais.nombre AS pais_nombre, pais.codigo_iso AS pais_codigo_iso, c.empleado_asignado_id, e.nombre AS empleado_nombre, e.apellido1 AS empleado_apellido, c.genero_id, g.nombre AS genero_nombre, g.codigo AS genero_codigo FROM cliente c INNER JOIN estado_cliente ec ON c.estado_cliente_id = ec.id INNER JOIN direccion d ON c.direccion_id = d.id INNER JOIN ciudad ci ON d.ciudad_id = ci.id INNER JOIN provincia p ON ci.provincia_id = p.id INNER JOIN pais ON p.pais_id = pais.id INNER JOIN empleado e ON c.empleado_asignado_id = e.id INNER JOIN genero g ON c.genero_id = g.id
+[2026-05-20 00:19:19.543] [AWT-EventQueue-0] INFO  com.ruben.bluewave.dao.ClienteDAO - Criteria: com.ruben.bluewave.dao.criteria.ClienteCriteria@151e5f82[ORDER_BY_APELLIDO1= c.apellido1 ,ORDER_BY_EMAIL= c.email ,ORDER_BY_FECHA_CREACION= c.fecha_creacion ,ORDER_BY_NOMBRE= c.nombre ,apellido1=<null>,apellido2=<null>,ascDesc=true,direccionId=<null>,dni=<null>,email=<null>,empleadoAsignadoId=2,estadoClienteId=<null>,fechaCreacionDesde=<null>,fechaCreacionHasta=<null>,fechaNacimientoDesde=<null>,fechaNacimientoHasta=<null>,generoId=<null>,id=<null>,nombre=<null>,orderBy= c.nombre ,telefono=<null>]
+[2026-05-20 00:19:19.543] [AWT-EventQueue-0] INFO  com.ruben.bluewave.dao.ClienteDAO - Criteria SQL:com.ruben.bluewave.dao.criteria.ClienteCriteria@151e5f82[ORDER_BY_APELLIDO1= c.apellido1 ,ORDER_BY_EMAIL= c.email ,ORDER_BY_FECHA_CREACION= c.fecha_creacion ,ORDER_BY_NOMBRE= c.nombre ,apellido1=<null>,apellido2=<null>,ascDesc=true,direccionId=<null>,dni=<null>,email=<null>,empleadoAsignadoId=2,estadoClienteId=<null>,fechaCreacionDesde=<null>,fechaCreacionHasta=<null>,fechaNacimientoDesde=<null>,fechaNacimientoHasta=<null>,generoId=<null>,id=<null>,nombre=<null>,orderBy= c.nombre ,telefono=<null>] SELECT c.id, c.nombre, c.apellido1, c.apellido2, c.dni, c.telefono, c.telefono2, c.telefono3, c.email, c.password, c.fecha_nacimiento, c.fecha_creacion, c.fecha_baja, c.estado_cliente_id, ec.nombre AS estado_cliente_nombre, c.direccion_id, d.calle, d.numero, d.piso, d.apartamento, d.codigo_postal, ci.id AS ciudad_id, ci.nombre AS ciudad_nombre, p.id AS provincia_id, p.nombre AS provincia_nombre, pais.id AS pais_id, pais.nombre AS pais_nombre, pais.codigo_iso AS pais_codigo_iso, c.empleado_asignado_id, e.nombre AS empleado_nombre, e.apellido1 AS empleado_apellido, c.genero_id, g.nombre AS genero_nombre, g.codigo AS genero_codigo FROM cliente c INNER JOIN estado_cliente ec ON c.estado_cliente_id = ec.id INNER JOIN direccion d ON c.direccion_id = d.id INNER JOIN ciudad ci ON d.ciudad_id = ci.id INNER JOIN provincia p ON ci.provincia_id = p.id INNER JOIN pais ON p.pais_id = pais.id INNER JOIN empleado e ON c.empleado_asignado_id = e.id INNER JOIN genero g ON c.genero_id = g.id WHERE  c.empleado_asignado_id = ? 
+[2026-05-20 00:19:19.560] [AWT-EventQueue-0] INFO  com.ruben.bluewave.dao.ClienteDAO - Criteria: com.ruben.bluewave.dao.criteria.ClienteCriteria@612f6cec[ORDER_BY_APELLIDO1= c.apellido1 ,ORDER_BY_EMAIL= c.email ,ORDER_BY_FECHA_CREACION= c.fecha_creacion ,ORDER_BY_NOMBRE= c.nombre ,apellido1=<null>,apellido2=<null>,ascDesc=true,direccionId=<null>,dni=<null>,email=<null>,empleadoAsignadoId=2,estadoClienteId=<null>,fechaCreacionDesde=<null>,fechaCreacionHasta=<null>,fechaNacimientoDesde=<null>,fechaNacimientoHasta=<null>,generoId=<null>,id=<null>,nombre=<null>,orderBy= c.nombre ,telefono=<null>]
+[2026-05-20 00:19:19.560] [AWT-EventQueue-0] INFO  com.ruben.bluewave.dao.ClienteDAO - Criteria SQL:com.ruben.bluewave.dao.criteria.ClienteCriteria@612f6cec[ORDER_BY_APELLIDO1= c.apellido1 ,ORDER_BY_EMAIL= c.email ,ORDER_BY_FECHA_CREACION= c.fecha_creacion ,ORDER_BY_NOMBRE= c.nombre ,apellido1=<null>,apellido2=<null>,ascDesc=true,direccionId=<null>,dni=<null>,email=<null>,empleadoAsignadoId=2,estadoClienteId=<null>,fechaCreacionDesde=<null>,fechaCreacionHasta=<null>,fechaNacimientoDesde=<null>,fechaNacimientoHasta=<null>,generoId=<null>,id=<null>,nombre=<null>,orderBy= c.nombre ,telefono=<null>] SELECT c.id, c.nombre, c.apellido1, c.apellido2, c.dni, c.telefono, c.telefono2, c.telefono3, c.email, c.password, c.fecha_nacimiento, c.fecha_creacion, c.fecha_baja, c.estado_cliente_id, ec.nombre AS estado_cliente_nombre, c.direccion_id, d.calle, d.numero, d.piso, d.apartamento, d.codigo_postal, ci.id AS ciudad_id, ci.nombre AS ciudad_nombre, p.id AS provincia_id, p.nombre AS provincia_nombre, pais.id AS pais_id, pais.nombre AS pais_nombre, pais.codigo_iso AS pais_codigo_iso, c.empleado_asignado_id, e.nombre AS empleado_nombre, e.apellido1 AS empleado_apellido, c.genero_id, g.nombre AS genero_nombre, g.codigo AS genero_codigo FROM cliente c INNER JOIN estado_cliente ec ON c.estado_cliente_id = ec.id INNER JOIN direccion d ON c.direccion_id = d.id INNER JOIN ciudad ci ON d.ciudad_id = ci.id INNER JOIN provincia p ON ci.provincia_id = p.id INNER JOIN pais ON p.pais_id = pais.id INNER JOIN empleado e ON c.empleado_asignado_id = e.id INNER JOIN genero g ON c.genero_id = g.id WHERE  c.empleado_asignado_id = ? 
+[2026-05-20 00:19:22.588] [AWT-EventQueue-0] INFO  com.ruben.bluewave.dao.ClienteDAO - Criteria: com.ruben.bluewave.dao.criteria.ClienteCriteria@1e4e408c[ORDER_BY_APELLIDO1= c.apellido1 ,ORDER_BY_EMAIL= c.email ,ORDER_BY_FECHA_CREACION= c.fecha_creacion ,ORDER_BY_NOMBRE= c.nombre ,apellido1=<null>,apellido2=<null>,ascDesc=true,direccionId=<null>,dni=<null>,email=<null>,empleadoAsignadoId=8,estadoClienteId=<null>,fechaCreacionDesde=<null>,fechaCreacionHasta=<null>,fechaNacimientoDesde=<null>,fechaNacimientoHasta=<null>,generoId=<null>,id=<null>,nombre=<null>,orderBy= c.nombre ,telefono=<null>]
+[2026-05-20 00:19:22.588] [AWT-EventQueue-0] INFO  com.ruben.bluewave.dao.ClienteDAO - Criteria SQL:com.ruben.bluewave.dao.criteria.ClienteCriteria@1e4e408c[ORDER_BY_APELLIDO1= c.apellido1 ,ORDER_BY_EMAIL= c.email ,ORDER_BY_FECHA_CREACION= c.fecha_creacion ,ORDER_BY_NOMBRE= c.nombre ,apellido1=<null>,apellido2=<null>,ascDesc=true,direccionId=<null>,dni=<null>,email=<null>,empleadoAsignadoId=8,estadoClienteId=<null>,fechaCreacionDesde=<null>,fechaCreacionHasta=<null>,fechaNacimientoDesde=<null>,fechaNacimientoHasta=<null>,generoId=<null>,id=<null>,nombre=<null>,orderBy= c.nombre ,telefono=<null>] SELECT c.id, c.nombre, c.apellido1, c.apellido2, c.dni, c.telefono, c.telefono2, c.telefono3, c.email, c.password, c.fecha_nacimiento, c.fecha_creacion, c.fecha_baja, c.estado_cliente_id, ec.nombre AS estado_cliente_nombre, c.direccion_id, d.calle, d.numero, d.piso, d.apartamento, d.codigo_postal, ci.id AS ciudad_id, ci.nombre AS ciudad_nombre, p.id AS provincia_id, p.nombre AS provincia_nombre, pais.id AS pais_id, pais.nombre AS pais_nombre, pais.codigo_iso AS pais_codigo_iso, c.empleado_asignado_id, e.nombre AS empleado_nombre, e.apellido1 AS empleado_apellido, c.genero_id, g.nombre AS genero_nombre, g.codigo AS genero_codigo FROM cliente c INNER JOIN estado_cliente ec ON c.estado_cliente_id = ec.id INNER JOIN direccion d ON c.direccion_id = d.id INNER JOIN ciudad ci ON d.ciudad_id = ci.id INNER JOIN provincia p ON ci.provincia_id = p.id INNER JOIN pais ON p.pais_id = pais.id INNER JOIN empleado e ON c.empleado_asignado_id = e.id INNER JOIN genero g ON c.genero_id = g.id WHERE  c.empleado_asignado_id = ? 
+[2026-05-20 00:19:22.601] [AWT-EventQueue-0] INFO  com.ruben.bluewave.dao.ClienteDAO - Criteria: com.ruben.bluewave.dao.criteria.ClienteCriteria@5b73178d[ORDER_BY_APELLIDO1= c.apellido1 ,ORDER_BY_EMAIL= c.email ,ORDER_BY_FECHA_CREACION= c.fecha_creacion ,ORDER_BY_NOMBRE= c.nombre ,apellido1=<null>,apellido2=<null>,ascDesc=true,direccionId=<null>,dni=<null>,email=<null>,empleadoAsignadoId=8,estadoClienteId=<null>,fechaCreacionDesde=<null>,fechaCreacionHasta=<null>,fechaNacimientoDesde=<null>,fechaNacimientoHasta=<null>,generoId=<null>,id=<null>,nombre=<null>,orderBy= c.nombre ,telefono=<null>]
+[2026-05-20 00:19:22.601] [AWT-EventQueue-0] INFO  com.ruben.bluewave.dao.ClienteDAO - Criteria SQL:com.ruben.bluewave.dao.criteria.ClienteCriteria@5b73178d[ORDER_BY_APELLIDO1= c.apellido1 ,ORDER_BY_EMAIL= c.email ,ORDER_BY_FECHA_CREACION= c.fecha_creacion ,ORDER_BY_NOMBRE= c.nombre ,apellido1=<null>,apellido2=<null>,ascDesc=true,direccionId=<null>,dni=<null>,email=<null>,empleadoAsignadoId=8,estadoClienteId=<null>,fechaCreacionDesde=<null>,fechaCreacionHasta=<null>,fechaNacimientoDesde=<null>,fechaNacimientoHasta=<null>,generoId=<null>,id=<null>,nombre=<null>,orderBy= c.nombre ,telefono=<null>] SELECT c.id, c.nombre, c.apellido1, c.apellido2, c.dni, c.telefono, c.telefono2, c.telefono3, c.email, c.password, c.fecha_nacimiento, c.fecha_creacion, c.fecha_baja, c.estado_cliente_id, ec.nombre AS estado_cliente_nombre, c.direccion_id, d.calle, d.numero, d.piso, d.apartamento, d.codigo_postal, ci.id AS ciudad_id, ci.nombre AS ciudad_nombre, p.id AS provincia_id, p.nombre AS provincia_nombre, pais.id AS pais_id, pais.nombre AS pais_nombre, pais.codigo_iso AS pais_codigo_iso, c.empleado_asignado_id, e.nombre AS empleado_nombre, e.apellido1 AS empleado_apellido, c.genero_id, g.nombre AS genero_nombre, g.codigo AS genero_codigo FROM cliente c INNER JOIN estado_cliente ec ON c.estado_cliente_id = ec.id INNER JOIN direccion d ON c.direccion_id = d.id INNER JOIN ciudad ci ON d.ciudad_id = ci.id INNER JOIN provincia p ON ci.provincia_id = p.id INNER JOIN pais ON p.pais_id = pais.id INNER JOIN empleado e ON c.empleado_asignado_id = e.id INNER JOIN genero g ON c.genero_id = g.id WHERE  c.empleado_asignado_id = ? 
+[2026-05-20 00:19:23.999] [AWT-EventQueue-0] INFO  com.ruben.bluewave.dao.ClienteDAO - Criteria: com.ruben.bluewave.dao.criteria.ClienteCriteria@6e02190d[ORDER_BY_APELLIDO1= c.apellido1 ,ORDER_BY_EMAIL= c.email ,ORDER_BY_FECHA_CREACION= c.fecha_creacion ,ORDER_BY_NOMBRE= c.nombre ,apellido1=<null>,apellido2=<null>,ascDesc=true,direccionId=<null>,dni=<null>,email=<null>,empleadoAsignadoId=<null>,estadoClienteId=<null>,fechaCreacionDesde=<null>,fechaCreacionHasta=<null>,fechaNacimientoDesde=<null>,fechaNacimientoHasta=<null>,generoId=<null>,id=<null>,nombre=<null>,orderBy= c.nombre ,telefono=<null>]
+[2026-05-20 00:19:23.999] [AWT-EventQueue-0] INFO  com.ruben.bluewave.dao.ClienteDAO - Criteria SQL:com.ruben.bluewave.dao.criteria.ClienteCriteria@6e02190d[ORDER_BY_APELLIDO1= c.apellido1 ,ORDER_BY_EMAIL= c.email ,ORDER_BY_FECHA_CREACION= c.fecha_creacion ,ORDER_BY_NOMBRE= c.nombre ,apellido1=<null>,apellido2=<null>,ascDesc=true,direccionId=<null>,dni=<null>,email=<null>,empleadoAsignadoId=<null>,estadoClienteId=<null>,fechaCreacionDesde=<null>,fechaCreacionHasta=<null>,fechaNacimientoDesde=<null>,fechaNacimientoHasta=<null>,generoId=<null>,id=<null>,nombre=<null>,orderBy= c.nombre ,telefono=<null>] SELECT c.id, c.nombre, c.apellido1, c.apellido2, c.dni, c.telefono, c.telefono2, c.telefono3, c.email, c.password, c.fecha_nacimiento, c.fecha_creacion, c.fecha_baja, c.estado_cliente_id, ec.nombre AS estado_cliente_nombre, c.direccion_id, d.calle, d.numero, d.piso, d.apartamento, d.codigo_postal, ci.id AS ciudad_id, ci.nombre AS ciudad_nombre, p.id AS provincia_id, p.nombre AS provincia_nombre, pais.id AS pais_id, pais.nombre AS pais_nombre, pais.codigo_iso AS pais_codigo_iso, c.empleado_asignado_id, e.nombre AS empleado_nombre, e.apellido1 AS empleado_apellido, c.genero_id, g.nombre AS genero_nombre, g.codigo AS genero_codigo FROM cliente c INNER JOIN estado_cliente ec ON c.estado_cliente_id = ec.id INNER JOIN direccion d ON c.direccion_id = d.id INNER JOIN ciudad ci ON d.ciudad_id = ci.id INNER JOIN provincia p ON ci.provincia_id = p.id INNER JOIN pais ON p.pais_id = pais.id INNER JOIN empleado e ON c.empleado_asignado_id = e.id INNER JOIN genero g ON c.genero_id = g.id
+[2026-05-20 00:19:24.017] [AWT-EventQueue-0] INFO  com.ruben.bluewave.dao.ClienteDAO - Criteria: com.ruben.bluewave.dao.criteria.ClienteCriteria@6bacca[ORDER_BY_APELLIDO1= c.apellido1 ,ORDER_BY_EMAIL= c.email ,ORDER_BY_FECHA_CREACION= c.fecha_creacion ,ORDER_BY_NOMBRE= c.nombre ,apellido1=<null>,apellido2=<null>,ascDesc=true,direccionId=<null>,dni=<null>,email=<null>,empleadoAsignadoId=<null>,estadoClienteId=<null>,fechaCreacionDesde=<null>,fechaCreacionHasta=<null>,fechaNacimientoDesde=<null>,fechaNacimientoHasta=<null>,generoId=<null>,id=<null>,nombre=<null>,orderBy= c.nombre ,telefono=<null>]
+[2026-05-20 00:19:24.017] [AWT-EventQueue-0] INFO  com.ruben.bluewave.dao.ClienteDAO - Criteria SQL:com.ruben.bluewave.dao.criteria.ClienteCriteria@6bacca[ORDER_BY_APELLIDO1= c.apellido1 ,ORDER_BY_EMAIL= c.email ,ORDER_BY_FECHA_CREACION= c.fecha_creacion ,ORDER_BY_NOMBRE= c.nombre ,apellido1=<null>,apellido2=<null>,ascDesc=true,direccionId=<null>,dni=<null>,email=<null>,empleadoAsignadoId=<null>,estadoClienteId=<null>,fechaCreacionDesde=<null>,fechaCreacionHasta=<null>,fechaNacimientoDesde=<null>,fechaNacimientoHasta=<null>,generoId=<null>,id=<null>,nombre=<null>,orderBy= c.nombre ,telefono=<null>] SELECT c.id, c.nombre, c.apellido1, c.apellido2, c.dni, c.telefono, c.telefono2, c.telefono3, c.email, c.password, c.fecha_nacimiento, c.fecha_creacion, c.fecha_baja, c.estado_cliente_id, ec.nombre AS estado_cliente_nombre, c.direccion_id, d.calle, d.numero, d.piso, d.apartamento, d.codigo_postal, ci.id AS ciudad_id, ci.nombre AS ciudad_nombre, p.id AS provincia_id, p.nombre AS provincia_nombre, pais.id AS pais_id, pais.nombre AS pais_nombre, pais.codigo_iso AS pais_codigo_iso, c.empleado_asignado_id, e.nombre AS empleado_nombre, e.apellido1 AS empleado_apellido, c.genero_id, g.nombre AS genero_nombre, g.codigo AS genero_codigo FROM cliente c INNER JOIN estado_cliente ec ON c.estado_cliente_id = ec.id INNER JOIN direccion d ON c.direccion_id = d.id INNER JOIN ciudad ci ON d.ciudad_id = ci.id INNER JOIN provincia p ON ci.provincia_id = p.id INNER JOIN pais ON p.pais_id = pais.id INNER JOIN empleado e ON c.empleado_asignado_id = e.id INNER JOIN genero g ON c.genero_id = g.id
+[2026-05-20 00:29:49.405] [AWT-EventQueue-0] ERROR com.ruben.bluewave.service.impl.EmpleadoServiceImpl - Error en login para admin@bluewave.com: Invalid salt version
+java.lang.IllegalArgumentException: Invalid salt version
+	at org.mindrot.jbcrypt.BCrypt.hashpw(BCrypt.java:496) ~[bluewave.jar:?]
+	at org.mindrot.jbcrypt.BCrypt.checkpw(BCrypt.java:597) ~[bluewave.jar:?]
+	at com.ruben.bluewave.service.impl.EncryptionServiceBCCryptImpl.checkEncription(EncryptionServiceBCCryptImpl.java:23) ~[bluewave.jar:?]
+	at com.ruben.bluewave.service.impl.EmpleadoServiceImpl.login(EmpleadoServiceImpl.java:173) [bluewave.jar:?]
+	at com.ruben.bluewave.ui.controller.LoginController.doAction(LoginController.java:32) [bin/:?]
+	at com.ruben.bluewave.ui.controller.AbstractController.actionPerformed(AbstractController.java:44) [bin/:?]
+	at javax.swing.AbstractButton.fireActionPerformed(Unknown Source) [?:1.8.0_421]
+	at javax.swing.AbstractButton$Handler.actionPerformed(Unknown Source) [?:1.8.0_421]
+	at javax.swing.DefaultButtonModel.fireActionPerformed(Unknown Source) [?:1.8.0_421]
+	at javax.swing.DefaultButtonModel.setPressed(Unknown Source) [?:1.8.0_421]
+	at javax.swing.plaf.basic.BasicButtonListener.mouseReleased(Unknown Source) [?:1.8.0_421]
+	at java.awt.Component.processMouseEvent(Unknown Source) [?:1.8.0_421]
+	at javax.swing.JComponent.processMouseEvent(Unknown Source) [?:1.8.0_421]
+	at java.awt.Component.processEvent(Unknown Source) [?:1.8.0_421]
+	at java.awt.Container.processEvent(Unknown Source) [?:1.8.0_421]
+	at java.awt.Component.dispatchEventImpl(Unknown Source) [?:1.8.0_421]
+	at java.awt.Container.dispatchEventImpl(Unknown Source) [?:1.8.0_421]
+	at java.awt.Component.dispatchEvent(Unknown Source) [?:1.8.0_421]
+	at java.awt.LightweightDispatcher.retargetMouseEvent(Unknown Source) [?:1.8.0_421]
+	at java.awt.LightweightDispatcher.processMouseEvent(Unknown Source) [?:1.8.0_421]
+	at java.awt.LightweightDispatcher.dispatchEvent(Unknown Source) [?:1.8.0_421]
+	at java.awt.Container.dispatchEventImpl(Unknown Source) [?:1.8.0_421]
+	at java.awt.Window.dispatchEventImpl(Unknown Source) [?:1.8.0_421]
+	at java.awt.Component.dispatchEvent(Unknown Source) [?:1.8.0_421]
+	at java.awt.EventQueue.dispatchEventImpl(Unknown Source) [?:1.8.0_421]
+	at java.awt.EventQueue.access$500(Unknown Source) [?:1.8.0_421]
+	at java.awt.EventQueue$3.run(Unknown Source) [?:1.8.0_421]
+	at java.awt.EventQueue$3.run(Unknown Source) [?:1.8.0_421]
+	at java.security.AccessController.doPrivileged(Native Method) ~[?:1.8.0_421]
+	at java.security.ProtectionDomain$JavaSecurityAccessImpl.doIntersectionPrivilege(Unknown Source) [?:1.8.0_421]
+	at java.security.ProtectionDomain$JavaSecurityAccessImpl.doIntersectionPrivilege(Unknown Source) [?:1.8.0_421]
+	at java.awt.EventQueue$4.run(Unknown Source) [?:1.8.0_421]
+	at java.awt.EventQueue$4.run(Unknown Source) [?:1.8.0_421]
+	at java.security.AccessController.doPrivileged(Native Method) ~[?:1.8.0_421]
+	at java.security.ProtectionDomain$JavaSecurityAccessImpl.doIntersectionPrivilege(Unknown Source) [?:1.8.0_421]
+	at java.awt.EventQueue.dispatchEvent(Unknown Source) [?:1.8.0_421]
+	at java.awt.EventDispatchThread.pumpOneEventForFilters(Unknown Source) [?:1.8.0_421]
+	at java.awt.EventDispatchThread.pumpEventsForFilter(Unknown Source) [?:1.8.0_421]
+	at java.awt.EventDispatchThread.pumpEventsForHierarchy(Unknown Source) [?:1.8.0_421]
+	at java.awt.EventDispatchThread.pumpEvents(Unknown Source) [?:1.8.0_421]
+	at java.awt.EventDispatchThread.pumpEvents(Unknown Source) [?:1.8.0_421]
+	at java.awt.EventDispatchThread.run(Unknown Source) [?:1.8.0_421]
+[2026-05-20 00:31:55.900] [AWT-EventQueue-0] ERROR com.ruben.bluewave.service.impl.EmpleadoServiceImpl - Error en login para admin@bluewave.com: Invalid salt version
+java.lang.IllegalArgumentException: Invalid salt version
+	at org.mindrot.jbcrypt.BCrypt.hashpw(BCrypt.java:496) ~[bluewave.jar:?]
+	at org.mindrot.jbcrypt.BCrypt.checkpw(BCrypt.java:597) ~[bluewave.jar:?]
+	at com.ruben.bluewave.service.impl.EncryptionServiceBCCryptImpl.checkEncription(EncryptionServiceBCCryptImpl.java:23) ~[bluewave.jar:?]
+	at com.ruben.bluewave.service.impl.EmpleadoServiceImpl.login(EmpleadoServiceImpl.java:173) [bluewave.jar:?]
+	at com.ruben.bluewave.ui.controller.LoginController.doAction(LoginController.java:32) [bin/:?]
+	at com.ruben.bluewave.ui.controller.AbstractController.actionPerformed(AbstractController.java:44) [bin/:?]
+	at javax.swing.JTextField.fireActionPerformed(Unknown Source) [?:1.8.0_421]
+	at javax.swing.JTextField.postActionEvent(Unknown Source) [?:1.8.0_421]
+	at javax.swing.JTextField$NotifyAction.actionPerformed(Unknown Source) [?:1.8.0_421]
+	at javax.swing.SwingUtilities.notifyAction(Unknown Source) [?:1.8.0_421]
+	at javax.swing.JComponent.processKeyBinding(Unknown Source) [?:1.8.0_421]
+	at javax.swing.JComponent.processKeyBindings(Unknown Source) [?:1.8.0_421]
+	at javax.swing.JComponent.processKeyEvent(Unknown Source) [?:1.8.0_421]
+	at java.awt.Component.processEvent(Unknown Source) [?:1.8.0_421]
+	at java.awt.Container.processEvent(Unknown Source) [?:1.8.0_421]
+	at java.awt.Component.dispatchEventImpl(Unknown Source) [?:1.8.0_421]
+	at java.awt.Container.dispatchEventImpl(Unknown Source) [?:1.8.0_421]
+	at java.awt.Component.dispatchEvent(Unknown Source) [?:1.8.0_421]
+	at java.awt.KeyboardFocusManager.redispatchEvent(Unknown Source) [?:1.8.0_421]
+	at java.awt.DefaultKeyboardFocusManager.dispatchKeyEvent(Unknown Source) [?:1.8.0_421]
+	at java.awt.DefaultKeyboardFocusManager.preDispatchKeyEvent(Unknown Source) [?:1.8.0_421]
+	at java.awt.DefaultKeyboardFocusManager.typeAheadAssertions(Unknown Source) [?:1.8.0_421]
+	at java.awt.DefaultKeyboardFocusManager.dispatchEvent(Unknown Source) [?:1.8.0_421]
+	at java.awt.Component.dispatchEventImpl(Unknown Source) [?:1.8.0_421]
+	at java.awt.Container.dispatchEventImpl(Unknown Source) [?:1.8.0_421]
+	at java.awt.Window.dispatchEventImpl(Unknown Source) [?:1.8.0_421]
+	at java.awt.Component.dispatchEvent(Unknown Source) [?:1.8.0_421]
+	at java.awt.EventQueue.dispatchEventImpl(Unknown Source) [?:1.8.0_421]
+	at java.awt.EventQueue.access$500(Unknown Source) [?:1.8.0_421]
+	at java.awt.EventQueue$3.run(Unknown Source) [?:1.8.0_421]
+	at java.awt.EventQueue$3.run(Unknown Source) [?:1.8.0_421]
+	at java.security.AccessController.doPrivileged(Native Method) ~[?:1.8.0_421]
+	at java.security.ProtectionDomain$JavaSecurityAccessImpl.doIntersectionPrivilege(Unknown Source) [?:1.8.0_421]
+	at java.security.ProtectionDomain$JavaSecurityAccessImpl.doIntersectionPrivilege(Unknown Source) [?:1.8.0_421]
+	at java.awt.EventQueue$4.run(Unknown Source) [?:1.8.0_421]
+	at java.awt.EventQueue$4.run(Unknown Source) [?:1.8.0_421]
+	at java.security.AccessController.doPrivileged(Native Method) ~[?:1.8.0_421]
+	at java.security.ProtectionDomain$JavaSecurityAccessImpl.doIntersectionPrivilege(Unknown Source) [?:1.8.0_421]
+	at java.awt.EventQueue.dispatchEvent(Unknown Source) [?:1.8.0_421]
+	at java.awt.EventDispatchThread.pumpOneEventForFilters(Unknown Source) [?:1.8.0_421]
+	at java.awt.EventDispatchThread.pumpEventsForFilter(Unknown Source) [?:1.8.0_421]
+	at java.awt.EventDispatchThread.pumpEventsForHierarchy(Unknown Source) [?:1.8.0_421]
+	at java.awt.EventDispatchThread.pumpEvents(Unknown Source) [?:1.8.0_421]
+	at java.awt.EventDispatchThread.pumpEvents(Unknown Source) [?:1.8.0_421]
+	at java.awt.EventDispatchThread.run(Unknown Source) [?:1.8.0_421]
+[2026-05-20 00:32:47.693] [AWT-EventQueue-0] ERROR com.ruben.bluewave.service.impl.EmpleadoServiceImpl - Error en login para admin@bluewave.com: Invalid salt version
+java.lang.IllegalArgumentException: Invalid salt version
+	at org.mindrot.jbcrypt.BCrypt.hashpw(BCrypt.java:496) ~[bluewave.jar:?]
+	at org.mindrot.jbcrypt.BCrypt.checkpw(BCrypt.java:597) ~[bluewave.jar:?]
+	at com.ruben.bluewave.service.impl.EncryptionServiceBCCryptImpl.checkEncription(EncryptionServiceBCCryptImpl.java:23) ~[bluewave.jar:?]
+	at com.ruben.bluewave.service.impl.EmpleadoServiceImpl.login(EmpleadoServiceImpl.java:173) [bluewave.jar:?]
+	at com.ruben.bluewave.ui.controller.LoginController.doAction(LoginController.java:32) [bin/:?]
+	at com.ruben.bluewave.ui.controller.AbstractController.actionPerformed(AbstractController.java:44) [bin/:?]
+	at javax.swing.AbstractButton.fireActionPerformed(Unknown Source) [?:1.8.0_421]
+	at javax.swing.AbstractButton$Handler.actionPerformed(Unknown Source) [?:1.8.0_421]
+	at javax.swing.DefaultButtonModel.fireActionPerformed(Unknown Source) [?:1.8.0_421]
+	at javax.swing.DefaultButtonModel.setPressed(Unknown Source) [?:1.8.0_421]
+	at javax.swing.plaf.basic.BasicButtonListener.mouseReleased(Unknown Source) [?:1.8.0_421]
+	at java.awt.Component.processMouseEvent(Unknown Source) [?:1.8.0_421]
+	at javax.swing.JComponent.processMouseEvent(Unknown Source) [?:1.8.0_421]
+	at java.awt.Component.processEvent(Unknown Source) [?:1.8.0_421]
+	at java.awt.Container.processEvent(Unknown Source) [?:1.8.0_421]
+	at java.awt.Component.dispatchEventImpl(Unknown Source) [?:1.8.0_421]
+	at java.awt.Container.dispatchEventImpl(Unknown Source) [?:1.8.0_421]
+	at java.awt.Component.dispatchEvent(Unknown Source) [?:1.8.0_421]
+	at java.awt.LightweightDispatcher.retargetMouseEvent(Unknown Source) [?:1.8.0_421]
+	at java.awt.LightweightDispatcher.processMouseEvent(Unknown Source) [?:1.8.0_421]
+	at java.awt.LightweightDispatcher.dispatchEvent(Unknown Source) [?:1.8.0_421]
+	at java.awt.Container.dispatchEventImpl(Unknown Source) [?:1.8.0_421]
+	at java.awt.Window.dispatchEventImpl(Unknown Source) [?:1.8.0_421]
+	at java.awt.Component.dispatchEvent(Unknown Source) [?:1.8.0_421]
+	at java.awt.EventQueue.dispatchEventImpl(Unknown Source) [?:1.8.0_421]
+	at java.awt.EventQueue.access$500(Unknown Source) [?:1.8.0_421]
+	at java.awt.EventQueue$3.run(Unknown Source) [?:1.8.0_421]
+	at java.awt.EventQueue$3.run(Unknown Source) [?:1.8.0_421]
+	at java.security.AccessController.doPrivileged(Native Method) ~[?:1.8.0_421]
+	at java.security.ProtectionDomain$JavaSecurityAccessImpl.doIntersectionPrivilege(Unknown Source) [?:1.8.0_421]
+	at java.security.ProtectionDomain$JavaSecurityAccessImpl.doIntersectionPrivilege(Unknown Source) [?:1.8.0_421]
+	at java.awt.EventQueue$4.run(Unknown Source) [?:1.8.0_421]
+	at java.awt.EventQueue$4.run(Unknown Source) [?:1.8.0_421]
+	at java.security.AccessController.doPrivileged(Native Method) ~[?:1.8.0_421]
+	at java.security.ProtectionDomain$JavaSecurityAccessImpl.doIntersectionPrivilege(Unknown Source) [?:1.8.0_421]
+	at java.awt.EventQueue.dispatchEvent(Unknown Source) [?:1.8.0_421]
+	at java.awt.EventDispatchThread.pumpOneEventForFilters(Unknown Source) [?:1.8.0_421]
+	at java.awt.EventDispatchThread.pumpEventsForFilter(Unknown Source) [?:1.8.0_421]
+	at java.awt.EventDispatchThread.pumpEventsForHierarchy(Unknown Source) [?:1.8.0_421]
+	at java.awt.EventDispatchThread.pumpEvents(Unknown Source) [?:1.8.0_421]
+	at java.awt.EventDispatchThread.pumpEvents(Unknown Source) [?:1.8.0_421]
+	at java.awt.EventDispatchThread.run(Unknown Source) [?:1.8.0_421]
+[2026-05-20 00:33:30.534] [AWT-EventQueue-0] ERROR com.ruben.bluewave.service.impl.EmpleadoServiceImpl - Error en login para javier50@bluewave.com: Invalid salt version
+java.lang.IllegalArgumentException: Invalid salt version
+	at org.mindrot.jbcrypt.BCrypt.hashpw(BCrypt.java:496) ~[bluewave.jar:?]
+	at org.mindrot.jbcrypt.BCrypt.checkpw(BCrypt.java:597) ~[bluewave.jar:?]
+	at com.ruben.bluewave.service.impl.EncryptionServiceBCCryptImpl.checkEncription(EncryptionServiceBCCryptImpl.java:23) ~[bluewave.jar:?]
+	at com.ruben.bluewave.service.impl.EmpleadoServiceImpl.login(EmpleadoServiceImpl.java:173) [bluewave.jar:?]
+	at com.ruben.bluewave.ui.controller.LoginController.doAction(LoginController.java:32) [bin/:?]
+	at com.ruben.bluewave.ui.controller.AbstractController.actionPerformed(AbstractController.java:44) [bin/:?]
+	at javax.swing.JComboBox.fireActionEvent(Unknown Source) [?:1.8.0_421]
+	at javax.swing.JComboBox.setSelectedItem(Unknown Source) [?:1.8.0_421]
+	at javax.swing.JComboBox.setSelectedIndex(Unknown Source) [?:1.8.0_421]
+	at javax.swing.plaf.basic.BasicComboPopup$Handler.mouseReleased(Unknown Source) [?:1.8.0_421]
+	at java.awt.AWTEventMulticaster.mouseReleased(Unknown Source) [?:1.8.0_421]
+	at java.awt.Component.processMouseEvent(Unknown Source) [?:1.8.0_421]
+	at javax.swing.JComponent.processMouseEvent(Unknown Source) [?:1.8.0_421]
+	at javax.swing.plaf.basic.BasicComboPopup$1.processMouseEvent(Unknown Source) [?:1.8.0_421]
+	at java.awt.Component.processEvent(Unknown Source) [?:1.8.0_421]
+	at java.awt.Container.processEvent(Unknown Source) [?:1.8.0_421]
+	at java.awt.Component.dispatchEventImpl(Unknown Source) [?:1.8.0_421]
+	at java.awt.Container.dispatchEventImpl(Unknown Source) [?:1.8.0_421]
+	at java.awt.Component.dispatchEvent(Unknown Source) [?:1.8.0_421]
+	at java.awt.LightweightDispatcher.retargetMouseEvent(Unknown Source) [?:1.8.0_421]
+	at java.awt.LightweightDispatcher.processMouseEvent(Unknown Source) [?:1.8.0_421]
+	at java.awt.LightweightDispatcher.dispatchEvent(Unknown Source) [?:1.8.0_421]
+	at java.awt.Container.dispatchEventImpl(Unknown Source) [?:1.8.0_421]
+	at java.awt.Window.dispatchEventImpl(Unknown Source) [?:1.8.0_421]
+	at java.awt.Component.dispatchEvent(Unknown Source) [?:1.8.0_421]
+	at java.awt.EventQueue.dispatchEventImpl(Unknown Source) [?:1.8.0_421]
+	at java.awt.EventQueue.access$500(Unknown Source) [?:1.8.0_421]
+	at java.awt.EventQueue$3.run(Unknown Source) [?:1.8.0_421]
+	at java.awt.EventQueue$3.run(Unknown Source) [?:1.8.0_421]
+	at java.security.AccessController.doPrivileged(Native Method) ~[?:1.8.0_421]
+	at java.security.ProtectionDomain$JavaSecurityAccessImpl.doIntersectionPrivilege(Unknown Source) [?:1.8.0_421]
+	at java.security.ProtectionDomain$JavaSecurityAccessImpl.doIntersectionPrivilege(Unknown Source) [?:1.8.0_421]
+	at java.awt.EventQueue$4.run(Unknown Source) [?:1.8.0_421]
+	at java.awt.EventQueue$4.run(Unknown Source) [?:1.8.0_421]
+	at java.security.AccessController.doPrivileged(Native Method) ~[?:1.8.0_421]
+	at java.security.ProtectionDomain$JavaSecurityAccessImpl.doIntersectionPrivilege(Unknown Source) [?:1.8.0_421]
+	at java.awt.EventQueue.dispatchEvent(Unknown Source) [?:1.8.0_421]
+	at java.awt.EventDispatchThread.pumpOneEventForFilters(Unknown Source) [?:1.8.0_421]
+	at java.awt.EventDispatchThread.pumpEventsForFilter(Unknown Source) [?:1.8.0_421]
+	at java.awt.EventDispatchThread.pumpEventsForHierarchy(Unknown Source) [?:1.8.0_421]
+	at java.awt.EventDispatchThread.pumpEvents(Unknown Source) [?:1.8.0_421]
+	at java.awt.EventDispatchThread.pumpEvents(Unknown Source) [?:1.8.0_421]
+	at java.awt.EventDispatchThread.run(Unknown Source) [?:1.8.0_421]
+[2026-05-20 00:34:00.809] [AWT-EventQueue-0] ERROR com.ruben.bluewave.service.impl.EmpleadoServiceImpl - Error en login para javier50@bluewave.com: Invalid salt version
+java.lang.IllegalArgumentException: Invalid salt version
+	at org.mindrot.jbcrypt.BCrypt.hashpw(BCrypt.java:496) ~[bluewave.jar:?]
+	at org.mindrot.jbcrypt.BCrypt.checkpw(BCrypt.java:597) ~[bluewave.jar:?]
+	at com.ruben.bluewave.service.impl.EncryptionServiceBCCryptImpl.checkEncription(EncryptionServiceBCCryptImpl.java:23) ~[bluewave.jar:?]
+	at com.ruben.bluewave.service.impl.EmpleadoServiceImpl.login(EmpleadoServiceImpl.java:173) [bluewave.jar:?]
+	at com.ruben.bluewave.ui.controller.LoginController.doAction(LoginController.java:32) [bin/:?]
+	at com.ruben.bluewave.ui.controller.AbstractController.actionPerformed(AbstractController.java:44) [bin/:?]
+	at javax.swing.AbstractButton.fireActionPerformed(Unknown Source) [?:1.8.0_421]
+	at javax.swing.AbstractButton$Handler.actionPerformed(Unknown Source) [?:1.8.0_421]
+	at javax.swing.DefaultButtonModel.fireActionPerformed(Unknown Source) [?:1.8.0_421]
+	at javax.swing.DefaultButtonModel.setPressed(Unknown Source) [?:1.8.0_421]
+	at javax.swing.plaf.basic.BasicButtonListener.mouseReleased(Unknown Source) [?:1.8.0_421]
+	at java.awt.Component.processMouseEvent(Unknown Source) [?:1.8.0_421]
+	at javax.swing.JComponent.processMouseEvent(Unknown Source) [?:1.8.0_421]
+	at java.awt.Component.processEvent(Unknown Source) [?:1.8.0_421]
+	at java.awt.Container.processEvent(Unknown Source) [?:1.8.0_421]
+	at java.awt.Component.dispatchEventImpl(Unknown Source) [?:1.8.0_421]
+	at java.awt.Container.dispatchEventImpl(Unknown Source) [?:1.8.0_421]
+	at java.awt.Component.dispatchEvent(Unknown Source) [?:1.8.0_421]
+	at java.awt.LightweightDispatcher.retargetMouseEvent(Unknown Source) [?:1.8.0_421]
+	at java.awt.LightweightDispatcher.processMouseEvent(Unknown Source) [?:1.8.0_421]
+	at java.awt.LightweightDispatcher.dispatchEvent(Unknown Source) [?:1.8.0_421]
+	at java.awt.Container.dispatchEventImpl(Unknown Source) [?:1.8.0_421]
+	at java.awt.Window.dispatchEventImpl(Unknown Source) [?:1.8.0_421]
+	at java.awt.Component.dispatchEvent(Unknown Source) [?:1.8.0_421]
+	at java.awt.EventQueue.dispatchEventImpl(Unknown Source) [?:1.8.0_421]
+	at java.awt.EventQueue.access$500(Unknown Source) [?:1.8.0_421]
+	at java.awt.EventQueue$3.run(Unknown Source) [?:1.8.0_421]
+	at java.awt.EventQueue$3.run(Unknown Source) [?:1.8.0_421]
+	at java.security.AccessController.doPrivileged(Native Method) ~[?:1.8.0_421]
+	at java.security.ProtectionDomain$JavaSecurityAccessImpl.doIntersectionPrivilege(Unknown Source) [?:1.8.0_421]
+	at java.security.ProtectionDomain$JavaSecurityAccessImpl.doIntersectionPrivilege(Unknown Source) [?:1.8.0_421]
+	at java.awt.EventQueue$4.run(Unknown Source) [?:1.8.0_421]
+	at java.awt.EventQueue$4.run(Unknown Source) [?:1.8.0_421]
+	at java.security.AccessController.doPrivileged(Native Method) ~[?:1.8.0_421]
+	at java.security.ProtectionDomain$JavaSecurityAccessImpl.doIntersectionPrivilege(Unknown Source) [?:1.8.0_421]
+	at java.awt.EventQueue.dispatchEvent(Unknown Source) [?:1.8.0_421]
+	at java.awt.EventDispatchThread.pumpOneEventForFilters(Unknown Source) [?:1.8.0_421]
+	at java.awt.EventDispatchThread.pumpEventsForFilter(Unknown Source) [?:1.8.0_421]
+	at java.awt.EventDispatchThread.pumpEventsForHierarchy(Unknown Source) [?:1.8.0_421]
+	at java.awt.EventDispatchThread.pumpEvents(Unknown Source) [?:1.8.0_421]
+	at java.awt.EventDispatchThread.pumpEvents(Unknown Source) [?:1.8.0_421]
+	at java.awt.EventDispatchThread.run(Unknown Source) [?:1.8.0_421]
+[2026-05-20 00:42:45.427] [AWT-EventQueue-0] ERROR com.ruben.bluewave.util.JDBCUtils - java.sql.SQLException: Can't call commit when autocommit=true
+[2026-05-20 00:42:45.463] [AWT-EventQueue-0] ERROR com.ruben.bluewave.util.JDBCUtils - java.sql.SQLNonTransientConnectionException: No operations allowed after connection closed.
+[2026-05-20 00:43:55.553] [AWT-EventQueue-0] ERROR com.ruben.bluewave.util.JDBCUtils - java.sql.SQLException: Can't call commit when autocommit=true
+[2026-05-20 00:43:55.606] [AWT-EventQueue-0] ERROR com.ruben.bluewave.util.JDBCUtils - java.sql.SQLNonTransientConnectionException: No operations allowed after connection closed.
+[2026-05-20 00:46:45.283] [AWT-EventQueue-0] ERROR com.ruben.bluewave.util.JDBCUtils - java.sql.SQLException: Can't call commit when autocommit=true
+[2026-05-20 00:46:45.332] [AWT-EventQueue-0] ERROR com.ruben.bluewave.util.JDBCUtils - java.sql.SQLNonTransientConnectionException: No operations allowed after connection closed.
+[2026-05-20 00:48:48.007] [AWT-EventQueue-0] ERROR com.ruben.bluewave.util.JDBCUtils - java.sql.SQLException: Can't call commit when autocommit=true
+[2026-05-20 00:48:48.065] [AWT-EventQueue-0] ERROR com.ruben.bluewave.util.JDBCUtils - java.sql.SQLNonTransientConnectionException: No operations allowed after connection closed.
+[2026-05-20 00:48:49.635] [AWT-EventQueue-0] ERROR com.ruben.bluewave.util.JDBCUtils - java.sql.SQLException: Can't call commit when autocommit=true
+[2026-05-20 00:48:49.666] [AWT-EventQueue-0] ERROR com.ruben.bluewave.util.JDBCUtils - java.sql.SQLNonTransientConnectionException: No operations allowed after connection closed.
+[2026-05-20 00:48:50.293] [AWT-EventQueue-0] ERROR com.ruben.bluewave.util.JDBCUtils - java.sql.SQLException: Can't call commit when autocommit=true
+[2026-05-20 00:48:51.879] [AWT-EventQueue-0] DEBUG com.ruben.bluewave.dao.EmpleadoDAO - SQL: SELECT e.id, e.nombre, e.apellido1, e.apellido2, e.dni, e.telefono, e.email, e.password, e.fecha_creacion, e.fecha_baja, e.ultimo_login, e.activo, e.rol_id, e.genero_id, e.direccion_id, r.nombre AS rol_nombre, g.nombre AS genero_nombre FROM empleado e LEFT JOIN rol r ON e.rol_id = r.id LEFT JOIN genero g ON e.genero_id = g.id ORDER BY  fecha_creacion  DESC  LIMIT ? OFFSET ? 
+[2026-05-20 00:48:51.879] [AWT-EventQueue-0] DEBUG com.ruben.bluewave.dao.EmpleadoDAO - Params: [2147483647, 0]
+[2026-05-20 00:49:12.451] [AWT-EventQueue-0] ERROR com.ruben.bluewave.util.JDBCUtils - java.sql.SQLException: Can't call commit when autocommit=true
+[2026-05-20 00:49:12.474] [AWT-EventQueue-0] ERROR com.ruben.bluewave.util.JDBCUtils - java.sql.SQLNonTransientConnectionException: No operations allowed after connection closed.
+[2026-05-20 00:49:13.109] [AWT-EventQueue-0] ERROR com.ruben.bluewave.util.JDBCUtils - java.sql.SQLException: Can't call commit when autocommit=true
+[2026-05-20 00:52:33.416] [AWT-EventQueue-0] ERROR com.ruben.bluewave.util.JDBCUtils - java.sql.SQLException: Can't call commit when autocommit=true
+[2026-05-20 00:52:33.576] [AWT-EventQueue-0] ERROR com.ruben.bluewave.util.JDBCUtils - java.sql.SQLException: Can't call commit when autocommit=true
+[2026-05-20 00:52:36.595] [AWT-EventQueue-0] INFO  com.ruben.bluewave.dao.ClienteDAO - Criteria: com.ruben.bluewave.dao.criteria.ClienteCriteria@199a31db[ORDER_BY_APELLIDO1= c.apellido1 ,ORDER_BY_EMAIL= c.email ,ORDER_BY_FECHA_CREACION= c.fecha_creacion ,ORDER_BY_NOMBRE= c.nombre ,apellido1=<null>,apellido2=<null>,ascDesc=true,direccionId=<null>,dni=<null>,email=<null>,empleadoAsignadoId=<null>,estadoClienteId=<null>,fechaCreacionDesde=<null>,fechaCreacionHasta=<null>,fechaNacimientoDesde=<null>,fechaNacimientoHasta=<null>,generoId=<null>,id=<null>,nombre=<null>,orderBy= c.nombre ,telefono=<null>]
+[2026-05-20 00:52:36.596] [AWT-EventQueue-0] INFO  com.ruben.bluewave.dao.ClienteDAO - Criteria SQL:com.ruben.bluewave.dao.criteria.ClienteCriteria@199a31db[ORDER_BY_APELLIDO1= c.apellido1 ,ORDER_BY_EMAIL= c.email ,ORDER_BY_FECHA_CREACION= c.fecha_creacion ,ORDER_BY_NOMBRE= c.nombre ,apellido1=<null>,apellido2=<null>,ascDesc=true,direccionId=<null>,dni=<null>,email=<null>,empleadoAsignadoId=<null>,estadoClienteId=<null>,fechaCreacionDesde=<null>,fechaCreacionHasta=<null>,fechaNacimientoDesde=<null>,fechaNacimientoHasta=<null>,generoId=<null>,id=<null>,nombre=<null>,orderBy= c.nombre ,telefono=<null>] SELECT c.id, c.nombre, c.apellido1, c.apellido2, c.dni, c.telefono, c.telefono2, c.telefono3, c.email, c.password, c.fecha_nacimiento, c.fecha_creacion, c.fecha_baja, c.estado_cliente_id, ec.nombre AS estado_cliente_nombre, c.direccion_id, d.calle, d.numero, d.piso, d.apartamento, d.codigo_postal, ci.id AS ciudad_id, ci.nombre AS ciudad_nombre, p.id AS provincia_id, p.nombre AS provincia_nombre, pais.id AS pais_id, pais.nombre AS pais_nombre, pais.codigo_iso AS pais_codigo_iso, c.empleado_asignado_id, e.nombre AS empleado_nombre, e.apellido1 AS empleado_apellido, c.genero_id, g.nombre AS genero_nombre, g.codigo AS genero_codigo FROM cliente c INNER JOIN estado_cliente ec ON c.estado_cliente_id = ec.id INNER JOIN direccion d ON c.direccion_id = d.id INNER JOIN ciudad ci ON d.ciudad_id = ci.id INNER JOIN provincia p ON ci.provincia_id = p.id INNER JOIN pais ON p.pais_id = pais.id INNER JOIN empleado e ON c.empleado_asignado_id = e.id INNER JOIN genero g ON c.genero_id = g.id
+[2026-05-20 00:52:40.082] [AWT-EventQueue-0] ERROR com.ruben.bluewave.util.JDBCUtils - java.sql.SQLException: Can't call commit when autocommit=true
+[2026-05-20 00:52:40.111] [AWT-EventQueue-0] ERROR com.ruben.bluewave.util.JDBCUtils - java.sql.SQLNonTransientConnectionException: No operations allowed after connection closed.
+[2026-05-20 00:53:48.673] [AWT-EventQueue-0] INFO  com.ruben.bluewave.service.impl.DireccionServiceImpl - Dirección creada con id: 9
+[2026-05-20 00:53:48.770] [AWT-EventQueue-0] INFO  com.ruben.bluewave.service.impl.EmpleadoServiceImpl - Empleado creado con id: 52
+[2026-05-20 00:59:52.379] [AWT-EventQueue-0] ERROR com.ruben.bluewave.util.JDBCUtils - java.sql.SQLException: Can't call commit when autocommit=true
+[2026-05-20 00:59:57.011] [AWT-EventQueue-0] ERROR com.ruben.bluewave.util.JDBCUtils - java.sql.SQLException: Can't call commit when autocommit=true
+[2026-05-20 01:00:17.514] [AWT-EventQueue-0] ERROR com.ruben.bluewave.util.JDBCUtils - java.sql.SQLException: Can't call commit when autocommit=true
+[2026-05-20 01:06:13.217] [AWT-EventQueue-0] ERROR com.ruben.bluewave.util.JDBCUtils - java.sql.SQLException: Can't call commit when autocommit=true
+[2026-05-20 01:06:13.320] [AWT-EventQueue-0] ERROR com.ruben.bluewave.util.JDBCUtils - java.sql.SQLException: Can't call commit when autocommit=true
+[2026-05-20 01:07:12.846] [AWT-EventQueue-0] ERROR com.ruben.bluewave.util.JDBCUtils - java.sql.SQLException: Can't call commit when autocommit=true
+[2026-05-20 01:07:45.059] [AWT-EventQueue-0] ERROR com.ruben.bluewave.util.JDBCUtils - java.sql.SQLException: Can't call commit when autocommit=true
+[2026-05-20 01:07:46.988] [AWT-EventQueue-0] INFO  com.ruben.bluewave.dao.ClienteDAO - Criteria: com.ruben.bluewave.dao.criteria.ClienteCriteria@1ee0c014[ORDER_BY_APELLIDO1= c.apellido1 ,ORDER_BY_EMAIL= c.email ,ORDER_BY_FECHA_CREACION= c.fecha_creacion ,ORDER_BY_NOMBRE= c.nombre ,apellido1=<null>,apellido2=<null>,ascDesc=true,direccionId=<null>,dni=<null>,email=<null>,empleadoAsignadoId=<null>,estadoClienteId=<null>,fechaCreacionDesde=<null>,fechaCreacionHasta=<null>,fechaNacimientoDesde=<null>,fechaNacimientoHasta=<null>,generoId=<null>,id=<null>,nombre=<null>,orderBy= c.nombre ,telefono=<null>]
+[2026-05-20 01:07:46.989] [AWT-EventQueue-0] INFO  com.ruben.bluewave.dao.ClienteDAO - Criteria SQL:com.ruben.bluewave.dao.criteria.ClienteCriteria@1ee0c014[ORDER_BY_APELLIDO1= c.apellido1 ,ORDER_BY_EMAIL= c.email ,ORDER_BY_FECHA_CREACION= c.fecha_creacion ,ORDER_BY_NOMBRE= c.nombre ,apellido1=<null>,apellido2=<null>,ascDesc=true,direccionId=<null>,dni=<null>,email=<null>,empleadoAsignadoId=<null>,estadoClienteId=<null>,fechaCreacionDesde=<null>,fechaCreacionHasta=<null>,fechaNacimientoDesde=<null>,fechaNacimientoHasta=<null>,generoId=<null>,id=<null>,nombre=<null>,orderBy= c.nombre ,telefono=<null>] SELECT c.id, c.nombre, c.apellido1, c.apellido2, c.dni, c.telefono, c.telefono2, c.telefono3, c.email, c.password, c.fecha_nacimiento, c.fecha_creacion, c.fecha_baja, c.estado_cliente_id, ec.nombre AS estado_cliente_nombre, c.direccion_id, d.calle, d.numero, d.piso, d.apartamento, d.codigo_postal, ci.id AS ciudad_id, ci.nombre AS ciudad_nombre, p.id AS provincia_id, p.nombre AS provincia_nombre, pais.id AS pais_id, pais.nombre AS pais_nombre, pais.codigo_iso AS pais_codigo_iso, c.empleado_asignado_id, e.nombre AS empleado_nombre, e.apellido1 AS empleado_apellido, c.genero_id, g.nombre AS genero_nombre, g.codigo AS genero_codigo FROM cliente c INNER JOIN estado_cliente ec ON c.estado_cliente_id = ec.id INNER JOIN direccion d ON c.direccion_id = d.id INNER JOIN ciudad ci ON d.ciudad_id = ci.id INNER JOIN provincia p ON ci.provincia_id = p.id INNER JOIN pais ON p.pais_id = pais.id INNER JOIN empleado e ON c.empleado_asignado_id = e.id INNER JOIN genero g ON c.genero_id = g.id
+[2026-05-20 01:07:53.036] [AWT-EventQueue-0] ERROR com.ruben.bluewave.util.JDBCUtils - java.sql.SQLException: Can't call commit when autocommit=true
+[2026-05-20 01:07:56.493] [AWT-EventQueue-0] ERROR com.ruben.bluewave.util.JDBCUtils - java.sql.SQLException: Can't call commit when autocommit=true

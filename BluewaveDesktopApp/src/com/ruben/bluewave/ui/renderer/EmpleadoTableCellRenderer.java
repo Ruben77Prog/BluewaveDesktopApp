@@ -1,84 +1,103 @@
 package com.ruben.bluewave.ui.renderer;
 
 import java.awt.Component;
-
+import java.awt.FlowLayout;
+import javax.swing.ImageIcon;
 import javax.swing.JLabel;
+import javax.swing.JPanel;
 import javax.swing.JTable;
 import javax.swing.table.TableCellRenderer;
-
 import com.ruben.bluewave.model.EmpleadoDTO;
 
 public class EmpleadoTableCellRenderer implements TableCellRenderer {
+	private ImageIcon editIcon;
+	private ImageIcon deleteIcon;
 
-    public EmpleadoTableCellRenderer() {
-    }
+	public EmpleadoTableCellRenderer() {
+		editIcon = new ImageIcon(getClass().getResource("/nuvola/16x16/1875_viewmag+_viewmag+.png"));
+		deleteIcon = new ImageIcon(getClass().getResource("/nuvola/16x16/1250_delete_delete.png"));
+	}
 
-    @Override
-    public Component getTableCellRendererComponent(JTable table, Object value, boolean isSelected, boolean hasFocus,
-                                                   int row, int column) {
+	@Override
+	public Component getTableCellRendererComponent(JTable table, Object value, boolean isSelected, boolean hasFocus,
+			int row, int column) {
 
-        JLabel c = new JLabel();
+		if (column == 10) {
+			JPanel panel = new JPanel(new FlowLayout(FlowLayout.CENTER, 5, 0));
+			panel.setOpaque(true);
 
-        if (isSelected) {
-            c.setOpaque(true);
-            c.setBackground(table.getSelectionBackground());
-            c.setForeground(table.getSelectionForeground());
-        } else {
-            c.setOpaque(true);
-            c.setBackground(table.getBackground());
-            c.setForeground(table.getForeground());
-        }
+			JLabel editLabel = new JLabel(editIcon);
+			JLabel deleteLabel = new JLabel(deleteIcon);
 
-        if (value != null && value instanceof EmpleadoDTO) {
-            try {
-                EmpleadoDTO empleado = (EmpleadoDTO) value;
-                String text = "";
+			panel.add(editLabel);
+			panel.add(deleteLabel);
 
-                switch (column) {
-                    case 0:
-                        text = empleado.getId() != null ? empleado.getId().toString() : "";
-                        break;
-                    case 1:
-                        text = empleado.getNombre() != null ? empleado.getNombre() : "";
-                        break;
-                    case 2:
-                        text = empleado.getApellido1() != null ? empleado.getApellido1() : "";
-                        break;
-                    case 3:
-                        text = empleado.getApellido2() != null ? empleado.getApellido2() : "";
-                        break;
-                    case 4:
-                        text = empleado.getDni() != null ? empleado.getDni() : "";
-                        break;
-                    case 5:
-                        text = empleado.getTelefono() != null ? empleado.getTelefono() : "";
-                        break;
-                    case 6:
-                        text = empleado.getEmail() != null ? empleado.getEmail() : "";
-                        break;
-                    case 7:
-                       
-                        Boolean activo = empleado.getActivo();
-                        text = activo != null ? (activo ? "Sí" : "No") : "";
-                        break;
-                    case 8:
-                        text = empleado.getRolNombre() != null ? empleado.getRolNombre() : "";
-                        break;
-                    case 9:
-                        text = empleado.getGeneroNombre() != null ? empleado.getGeneroNombre() : "";
-                        break;
-                    default:
-                        text = "";
-                }
-                c.setText(text);
-            } catch (Exception ex) {
-                System.out.println("ERROR en renderer Empleado: " + ex.getMessage());
-                ex.printStackTrace();
-                c.setText("Error");
-            }
-        } else {
-            c.setText("");
-        }
-        return c;
-    }
+			if (isSelected) {
+				panel.setBackground(table.getSelectionBackground());
+			} else {
+				panel.setBackground(table.getBackground());
+			}
+
+			editLabel.putClientProperty("row", row);
+			editLabel.putClientProperty("action", "edit");
+			deleteLabel.putClientProperty("row", row);
+			deleteLabel.putClientProperty("action", "delete");
+
+			return panel;
+		}
+
+		JLabel c = new JLabel();
+		c.setOpaque(true);
+
+		if (isSelected) {
+			c.setBackground(table.getSelectionBackground());
+			c.setForeground(table.getSelectionForeground());
+		} else {
+			c.setBackground(table.getBackground());
+			c.setForeground(table.getForeground());
+		}
+
+		if (value instanceof EmpleadoDTO) {
+			EmpleadoDTO e = (EmpleadoDTO) value;
+			String text = "";
+			switch (column) {
+			case 0:
+				text = e.getId() != null ? e.getId().toString() : "";
+				break;
+			case 1:
+				text = e.getNombre() != null ? e.getNombre() : "";
+				break;
+			case 2:
+				text = e.getApellido1() != null ? e.getApellido1() : "";
+				break;
+			case 3:
+				text = e.getApellido2() != null ? e.getApellido2() : "";
+				break;
+			case 4:
+				text = e.getDni() != null ? e.getDni() : "";
+				break;
+			case 5:
+				text = e.getTelefono() != null ? e.getTelefono() : "";
+				break;
+			case 6:
+				text = e.getEmail() != null ? e.getEmail() : "";
+				break;
+			case 7:
+				text = (e.getActivo() != null && e.getActivo()) ? "Sí" : "No";
+				break;
+			case 8:
+				text = e.getRolNombre() != null ? e.getRolNombre() : "";
+				break;
+			case 9:
+				text = e.getGeneroNombre() != null ? e.getGeneroNombre() : "";
+				break;
+			default:
+				text = "";
+			}
+			c.setText(text);
+		} else {
+			c.setText("");
+		}
+		return c;
+	}
 }

@@ -47,529 +47,708 @@ import com.toedter.calendar.JDateChooser;
 
 public class ClienteAltaView extends AbstractView {
 
-	private ClienteService clienteService;
-	private PaisService paisService;
-	private ProvinciaService provinciaService;
-	private CiudadService ciudadService;
-	private DireccionService direccionService;
-	private GeneroService generoService;
-	private EstadoClienteService estadoClienteService;
+    private ClienteService clienteService;
+    private PaisService paisService;
+    private ProvinciaService provinciaService;
+    private CiudadService ciudadService;
+    private DireccionService direccionService;
+    private GeneroService generoService;
+    private EstadoClienteService estadoClienteService;
 
-	private JTextField nombreTF;
-	private JTextField apellido1TF;
-	private JTextField apellido2TF;
-	private JTextField dniTF;
-	private JTextField telefonoTF;
-	private JTextField emailTF;
-	private JDateChooser fechaNacimientoDC;
-	private JComboBox<Genero> generoCB;
-	private JComboBox<EstadoCliente> estadoClienteCB;
+    private JTextField nombreTF;
+    private JTextField apellido1TF;
+    private JTextField apellido2TF;
+    private JTextField dniTF;
+    private JTextField telefonoTF;
+    private JTextField emailTF;
+    private JDateChooser fechaNacimientoDC;
+    private JComboBox<Genero> generoCB;
+    private JComboBox<EstadoCliente> estadoClienteCB;
 
-	private JComboBox<Pais> paisCB;
-	private JComboBox<Provincia> provinciaCB;
-	private JComboBox<Ciudad> ciudadCB;
-	private JTextField calleTF;
-	private JTextField numeroTF;
-	private JTextField pisoTF;
-	private JTextField puertaTF;
-	private JTextField codigoPostalTF;
+    private JComboBox<Pais> paisCB;
+    private JComboBox<Provincia> provinciaCB;
+    private JComboBox<Ciudad> ciudadCB;
+    private JTextField calleTF;
+    private JTextField numeroTF;
+    private JTextField pisoTF;
+    private JTextField puertaTF;
+    private JTextField codigoPostalTF;
 
-	private boolean editable = false;
-	private JButton guardarButton;
+    private boolean editable = false;
+    private JButton guardarButton;
 
-	public ClienteAltaView() {
-		initServices();
-		initialize();
-		postInitialize();
-	}
+    public ClienteAltaView() {
+        initServices();
+        initialize();
+        postInitialize();
+    }
 
-	private void initServices() {
-		clienteService = new ClienteServiceImpl();
-		paisService = new PaisServiceImpl();
-		provinciaService = new ProvinciaServiceImpl();
-		ciudadService = new CiudadServiceImpl();
-		direccionService = new DireccionServiceImpl();
-		generoService = new GeneroServiceImpl();
-		estadoClienteService = new EstadoClienteServiceImpl();
-	}
+    private void initServices() {
+        clienteService = new ClienteServiceImpl();
+        paisService = new PaisServiceImpl();
+        provinciaService = new ProvinciaServiceImpl();
+        ciudadService = new CiudadServiceImpl();
+        direccionService = new DireccionServiceImpl();
+        generoService = new GeneroServiceImpl();
+        estadoClienteService = new EstadoClienteServiceImpl();
+    }
 
-	private void initialize() {
-		setName("Alta de cliente");
-		setLayout(new BorderLayout(0, 0));
+    private void initialize() {
+        setName("Alta de cliente");
+        setLayout(new BorderLayout(0, 0));
 
-		JPanel formPanel = new JPanel();
-		GridBagLayout gbl = new GridBagLayout();
-		gbl.columnWidths = new int[] { 0, 0, 0, 0, 0, 0 };
-		gbl.rowHeights = new int[] { 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0 };
-		gbl.columnWeights = new double[] { 0.0, 1.0, 0.0, 1.0, 0.0, Double.MIN_VALUE };
-		gbl.rowWeights = new double[] { 0.0, 0.0, 0.0, 0.0, 0.0, 0.0, 0.0, 0.0, 0.0, 0.0, 0.0, Double.MIN_VALUE };
-		formPanel.setLayout(gbl);
+        JPanel formPanel = new JPanel();
+        GridBagLayout gbl = new GridBagLayout();
+        gbl.columnWidths = new int[] { 0, 0, 0, 0, 0, 0 };
+        gbl.rowHeights = new int[] { 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0 };
+        gbl.columnWeights = new double[] { 0.0, 1.0, 0.0, 1.0, 0.0, Double.MIN_VALUE };
+        gbl.rowWeights = new double[] { 0.0, 0.0, 0.0, 0.0, 0.0, 0.0, 0.0, 0.0, 0.0, 0.0, 0.0, Double.MIN_VALUE };
+        formPanel.setLayout(gbl);
 
-		addLabel(formPanel, "Nombre:", 0, 0);
-		nombreTF = addTextField(formPanel, 1, 0);
-		addLabel(formPanel, "Primer Apellido:", 2, 0);
-		apellido1TF = addTextField(formPanel, 3, 0);
+        JLabel nombreLabel = new JLabel("Nombre:");
+        GridBagConstraints gbcNombreLabel = new GridBagConstraints();
+        gbcNombreLabel.insets = new Insets(0, 0, 5, 5);
+        gbcNombreLabel.gridx = 0;
+        gbcNombreLabel.gridy = 0;
+        formPanel.add(nombreLabel, gbcNombreLabel);
 
-		addLabel(formPanel, "Segundo Apellido:", 0, 1);
-		apellido2TF = addTextField(formPanel, 1, 1);
-		addLabel(formPanel, "DNI:", 2, 1);
-		dniTF = addTextField(formPanel, 3, 1);
+        nombreTF = new JTextField();
+        nombreTF.setColumns(12);
+        GridBagConstraints gbcNombreTF = new GridBagConstraints();
+        gbcNombreTF.insets = new Insets(0, 0, 5, 5);
+        gbcNombreTF.fill = GridBagConstraints.HORIZONTAL;
+        gbcNombreTF.gridx = 1;
+        gbcNombreTF.gridy = 0;
+        formPanel.add(nombreTF, gbcNombreTF);
 
-		addLabel(formPanel, "Teléfono:", 0, 2);
-		telefonoTF = addTextField(formPanel, 1, 2);
-		addLabel(formPanel, "Email:", 2, 2);
-		emailTF = addTextField(formPanel, 3, 2);
+        JLabel apellido1Label = new JLabel("Primer Apellido:");
+        GridBagConstraints gbcApellido1Label = new GridBagConstraints();
+        gbcApellido1Label.insets = new Insets(0, 0, 5, 5);
+        gbcApellido1Label.gridx = 2;
+        gbcApellido1Label.gridy = 0;
+        formPanel.add(apellido1Label, gbcApellido1Label);
 
-		addLabel(formPanel, "Fecha Nacimiento:", 0, 3);
-		fechaNacimientoDC = addDateChooser(formPanel, 1, 3);
-		addLabel(formPanel, "Género:", 2, 3);
-		generoCB = addCombo(formPanel, 3, 3);
+        apellido1TF = new JTextField();
+        apellido1TF.setColumns(12);
+        GridBagConstraints gbcApellido1TF = new GridBagConstraints();
+        gbcApellido1TF.insets = new Insets(0, 0, 5, 5);
+        gbcApellido1TF.fill = GridBagConstraints.HORIZONTAL;
+        gbcApellido1TF.gridx = 3;
+        gbcApellido1TF.gridy = 0;
+        formPanel.add(apellido1TF, gbcApellido1TF);
 
-		addLabel(formPanel, "Estado Cliente:", 0, 4);
-		estadoClienteCB = addCombo(formPanel, 1, 4);
+        JLabel apellido2Label = new JLabel("Segundo Apellido:");
+        GridBagConstraints gbcApellido2Label = new GridBagConstraints();
+        gbcApellido2Label.insets = new Insets(0, 0, 5, 5);
+        gbcApellido2Label.gridx = 0;
+        gbcApellido2Label.gridy = 1;
+        formPanel.add(apellido2Label, gbcApellido2Label);
 
-		addLabel(formPanel, "País:", 0, 5);
-		paisCB = addCombo(formPanel, 1, 5);
-		paisCB.addActionListener(e -> cargarProvincias());
+        apellido2TF = new JTextField();
+        apellido2TF.setColumns(12);
+        GridBagConstraints gbcApellido2TF = new GridBagConstraints();
+        gbcApellido2TF.insets = new Insets(0, 0, 5, 5);
+        gbcApellido2TF.fill = GridBagConstraints.HORIZONTAL;
+        gbcApellido2TF.gridx = 1;
+        gbcApellido2TF.gridy = 1;
+        formPanel.add(apellido2TF, gbcApellido2TF);
 
-		addLabel(formPanel, "Provincia:", 2, 5);
-		provinciaCB = addCombo(formPanel, 3, 5);
-		provinciaCB.addActionListener(e -> cargarCiudades());
+        JLabel dniLabel = new JLabel("DNI:");
+        GridBagConstraints gbcDniLabel = new GridBagConstraints();
+        gbcDniLabel.insets = new Insets(0, 0, 5, 5);
+        gbcDniLabel.gridx = 2;
+        gbcDniLabel.gridy = 1;
+        formPanel.add(dniLabel, gbcDniLabel);
 
-		addLabel(formPanel, "Ciudad:", 0, 6);
-		ciudadCB = addCombo(formPanel, 1, 6);
+        dniTF = new JTextField();
+        dniTF.setColumns(12);
+        GridBagConstraints gbcDniTF = new GridBagConstraints();
+        gbcDniTF.insets = new Insets(0, 0, 5, 5);
+        gbcDniTF.fill = GridBagConstraints.HORIZONTAL;
+        gbcDniTF.gridx = 3;
+        gbcDniTF.gridy = 1;
+        formPanel.add(dniTF, gbcDniTF);
 
-		addLabel(formPanel, "Calle:", 0, 7);
-		calleTF = addTextField(formPanel, 1, 7);
-		addLabel(formPanel, "Número:", 2, 7);
-		numeroTF = addTextField(formPanel, 3, 7);
+        JLabel telefonoLabel = new JLabel("Teléfono:");
+        GridBagConstraints gbcTelefonoLabel = new GridBagConstraints();
+        gbcTelefonoLabel.insets = new Insets(0, 0, 5, 5);
+        gbcTelefonoLabel.gridx = 0;
+        gbcTelefonoLabel.gridy = 2;
+        formPanel.add(telefonoLabel, gbcTelefonoLabel);
 
-		addLabel(formPanel, "Piso / Bloque:", 0, 8);
-		pisoTF = addTextField(formPanel, 1, 8);
-		addLabel(formPanel, "Puerta / Apartamento:", 2, 8);
-		puertaTF = addTextField(formPanel, 3, 8);
+        telefonoTF = new JTextField();
+        telefonoTF.setColumns(12);
+        GridBagConstraints gbcTelefonoTF = new GridBagConstraints();
+        gbcTelefonoTF.insets = new Insets(0, 0, 5, 5);
+        gbcTelefonoTF.fill = GridBagConstraints.HORIZONTAL;
+        gbcTelefonoTF.gridx = 1;
+        gbcTelefonoTF.gridy = 2;
+        formPanel.add(telefonoTF, gbcTelefonoTF);
 
-		addLabel(formPanel, "Código Postal:", 0, 9);
-		codigoPostalTF = addTextField(formPanel, 1, 9);
+        JLabel emailLabel = new JLabel("Email:");
+        GridBagConstraints gbcEmailLabel = new GridBagConstraints();
+        gbcEmailLabel.insets = new Insets(0, 0, 5, 5);
+        gbcEmailLabel.gridx = 2;
+        gbcEmailLabel.gridy = 2;
+        formPanel.add(emailLabel, gbcEmailLabel);
 
-		JScrollPane scrollPane = new JScrollPane(formPanel);
-		scrollPane.setVerticalScrollBarPolicy(JScrollPane.VERTICAL_SCROLLBAR_AS_NEEDED);
-		add(scrollPane, BorderLayout.CENTER);
+        emailTF = new JTextField();
+        emailTF.setColumns(12);
+        GridBagConstraints gbcEmailTF = new GridBagConstraints();
+        gbcEmailTF.insets = new Insets(0, 0, 5, 5);
+        gbcEmailTF.fill = GridBagConstraints.HORIZONTAL;
+        gbcEmailTF.gridx = 3;
+        gbcEmailTF.gridy = 2;
+        formPanel.add(emailTF, gbcEmailTF);
 
-		JPanel buttonPanel = new JPanel(new FlowLayout(FlowLayout.RIGHT));
+        JLabel fechaNacimientoLabel = new JLabel("Fecha Nacimiento:");
+        GridBagConstraints gbcFechaNacimientoLabel = new GridBagConstraints();
+        gbcFechaNacimientoLabel.insets = new Insets(0, 0, 5, 5);
+        gbcFechaNacimientoLabel.gridx = 0;
+        gbcFechaNacimientoLabel.gridy = 3;
+        formPanel.add(fechaNacimientoLabel, gbcFechaNacimientoLabel);
 
-		guardarButton = new JButton("Guardar");
-		guardarButton.setIcon(new ImageIcon(getClass().getResource("/nuvola/16x16/1511_mount_zip_mount_zip.png")));
-		guardarButton.addActionListener(e -> crearCliente());
-		buttonPanel.add(guardarButton);
+        fechaNacimientoDC = new JDateChooser();
+        GridBagConstraints gbcFechaNacimientoDC = new GridBagConstraints();
+        gbcFechaNacimientoDC.insets = new Insets(0, 0, 5, 5);
+        gbcFechaNacimientoDC.fill = GridBagConstraints.HORIZONTAL;
+        gbcFechaNacimientoDC.gridx = 1;
+        gbcFechaNacimientoDC.gridy = 3;
+        formPanel.add(fechaNacimientoDC, gbcFechaNacimientoDC);
 
-		JButton limpiarButton = new JButton("Limpiar");
-		limpiarButton.setIcon(new ImageIcon(getClass().getResource("/nuvola/16x16/1250_delete_delete.png")));
-		limpiarButton.addActionListener(e -> limpiarCampos());
-		buttonPanel.add(limpiarButton);
+        JLabel generoLabel = new JLabel("Género:");
+        GridBagConstraints gbcGeneroLabel = new GridBagConstraints();
+        gbcGeneroLabel.insets = new Insets(0, 0, 5, 5);
+        gbcGeneroLabel.gridx = 2;
+        gbcGeneroLabel.gridy = 3;
+        formPanel.add(generoLabel, gbcGeneroLabel);
 
-		add(buttonPanel, BorderLayout.SOUTH);
-	}
+        generoCB = new JComboBox<>();
+        GridBagConstraints gbcGeneroCB = new GridBagConstraints();
+        gbcGeneroCB.insets = new Insets(0, 0, 5, 5);
+        gbcGeneroCB.fill = GridBagConstraints.HORIZONTAL;
+        gbcGeneroCB.gridx = 3;
+        gbcGeneroCB.gridy = 3;
+        formPanel.add(generoCB, gbcGeneroCB);
 
-	private void postInitialize() {
-		cargarGeneros();
-		cargarEstadosCliente();
-		cargarPaises();
-	}
+        JLabel estadoClienteLabel = new JLabel("Estado Cliente:");
+        GridBagConstraints gbcEstadoClienteLabel = new GridBagConstraints();
+        gbcEstadoClienteLabel.insets = new Insets(0, 0, 5, 5);
+        gbcEstadoClienteLabel.gridx = 0;
+        gbcEstadoClienteLabel.gridy = 4;
+        formPanel.add(estadoClienteLabel, gbcEstadoClienteLabel);
 
-	private void cargarGeneros() {
-		try {
-			List<Genero> generos = generoService.findAll();
-			DefaultComboBoxModel<Genero> model = new DefaultComboBoxModel<>();
-			Genero placeholder = new Genero();
-			placeholder.setId(null);
-			placeholder.setNombre("Seleccionar");
-			model.addElement(placeholder);
-			for (Genero g : generos)
-				model.addElement(g);
-			generoCB.setModel(model);
-			generoCB.setRenderer(new GeneroCBRenderer());
-		} catch (Exception e) {
-			e.printStackTrace();
-		}
-	}
+        estadoClienteCB = new JComboBox<>();
+        GridBagConstraints gbcEstadoClienteCB = new GridBagConstraints();
+        gbcEstadoClienteCB.insets = new Insets(0, 0, 5, 5);
+        gbcEstadoClienteCB.fill = GridBagConstraints.HORIZONTAL;
+        gbcEstadoClienteCB.gridx = 1;
+        gbcEstadoClienteCB.gridy = 4;
+        formPanel.add(estadoClienteCB, gbcEstadoClienteCB);
 
-	private void cargarEstadosCliente() {
-		try {
-			List<EstadoCliente> estados = estadoClienteService.findAll();
-			DefaultComboBoxModel<EstadoCliente> model = new DefaultComboBoxModel<>();
-			EstadoCliente placeholder = new EstadoCliente();
-			placeholder.setId(null);
-			placeholder.setNombre("Seleccionar");
-			model.addElement(placeholder);
-			for (EstadoCliente ec : estados)
-				model.addElement(ec);
-			estadoClienteCB.setModel(model);
-			estadoClienteCB.setRenderer(new EstadoClienteCBRenderer());
-		} catch (Exception e) {
-			e.printStackTrace();
-		}
-	}
+        JLabel paisLabel = new JLabel("País:");
+        GridBagConstraints gbcPaisLabel = new GridBagConstraints();
+        gbcPaisLabel.insets = new Insets(0, 0, 5, 5);
+        gbcPaisLabel.gridx = 0;
+        gbcPaisLabel.gridy = 5;
+        formPanel.add(paisLabel, gbcPaisLabel);
 
-	private void cargarPaises() {
-		try {
-			List<Pais> paises = paisService.findAll();
-			DefaultComboBoxModel<Pais> model = new DefaultComboBoxModel<>();
-			Pais placeholder = new Pais();
-			placeholder.setId(null);
-			placeholder.setNombre("Seleccionar país");
-			model.addElement(placeholder);
-			for (Pais p : paises)
-				model.addElement(p);
-			paisCB.setModel(model);
-			paisCB.setRenderer(new javax.swing.DefaultListCellRenderer() {
-				public java.awt.Component getListCellRendererComponent(javax.swing.JList<?> list, Object value,
-						int index, boolean isSelected, boolean cellHasFocus) {
-					super.getListCellRendererComponent(list, value, index, isSelected, cellHasFocus);
-					if (value instanceof Pais)
-						setText(((Pais) value).getNombre());
-					return this;
-				}
-			});
-		} catch (Exception e) {
-			e.printStackTrace();
-			JOptionPane.showMessageDialog(this, "Error cargando países", "Error", JOptionPane.ERROR_MESSAGE);
-		}
-	}
+        paisCB = new JComboBox<>();
+        GridBagConstraints gbcPaisCB = new GridBagConstraints();
+        gbcPaisCB.insets = new Insets(0, 0, 5, 5);
+        gbcPaisCB.fill = GridBagConstraints.HORIZONTAL;
+        gbcPaisCB.gridx = 1;
+        gbcPaisCB.gridy = 5;
+        formPanel.add(paisCB, gbcPaisCB);
+        paisCB.addActionListener(e -> cargarProvincias());
 
-	private void cargarProvincias() {
-		Pais pais = (Pais) paisCB.getSelectedItem();
-		if (pais == null || pais.getId() == null) {
-			provinciaCB.setModel(new DefaultComboBoxModel<>());
-			ciudadCB.setModel(new DefaultComboBoxModel<>());
-			return;
-		}
-		try {
-			List<Provincia> provincias = provinciaService.findByPais(pais.getId());
-			DefaultComboBoxModel<Provincia> model = new DefaultComboBoxModel<>();
-			Provincia placeholder = new Provincia();
-			placeholder.setId(null);
-			placeholder.setNombre("Seleccionar provincia");
-			model.addElement(placeholder);
-			for (Provincia p : provincias)
-				model.addElement(p);
-			provinciaCB.setModel(model);
-			provinciaCB.setRenderer(new javax.swing.DefaultListCellRenderer() {
-				public java.awt.Component getListCellRendererComponent(javax.swing.JList<?> list, Object value,
-						int index, boolean isSelected, boolean cellHasFocus) {
-					super.getListCellRendererComponent(list, value, index, isSelected, cellHasFocus);
-					if (value instanceof Provincia)
-						setText(((Provincia) value).getNombre());
-					return this;
-				}
-			});
-			ciudadCB.setModel(new DefaultComboBoxModel<>());
-		} catch (Exception e) {
-			e.printStackTrace();
-			JOptionPane.showMessageDialog(this, "Error cargando provincias", "Error", JOptionPane.ERROR_MESSAGE);
-		}
-	}
+        JLabel provinciaLabel = new JLabel("Provincia:");
+        GridBagConstraints gbcProvinciaLabel = new GridBagConstraints();
+        gbcProvinciaLabel.insets = new Insets(0, 0, 5, 5);
+        gbcProvinciaLabel.gridx = 2;
+        gbcProvinciaLabel.gridy = 5;
+        formPanel.add(provinciaLabel, gbcProvinciaLabel);
 
-	private void cargarCiudades() {
-		Provincia provincia = (Provincia) provinciaCB.getSelectedItem();
-		if (provincia == null || provincia.getId() == null) {
-			ciudadCB.setModel(new DefaultComboBoxModel<>());
-			return;
-		}
-		try {
-			List<Ciudad> ciudades = ciudadService.findByProvinciaId(provincia.getId());
-			DefaultComboBoxModel<Ciudad> model = new DefaultComboBoxModel<>();
-			Ciudad placeholder = new Ciudad();
-			placeholder.setId(null);
-			placeholder.setNombre("Seleccionar ciudad");
-			model.addElement(placeholder);
-			for (Ciudad c : ciudades)
-				model.addElement(c);
-			ciudadCB.setModel(model);
-			ciudadCB.setRenderer(new javax.swing.DefaultListCellRenderer() {
-				public java.awt.Component getListCellRendererComponent(javax.swing.JList<?> list, Object value,
-						int index, boolean isSelected, boolean cellHasFocus) {
-					super.getListCellRendererComponent(list, value, index, isSelected, cellHasFocus);
-					if (value instanceof Ciudad)
-						setText(((Ciudad) value).getNombre());
-					return this;
-				}
-			});
-		} catch (Exception e) {
-			e.printStackTrace();
-			JOptionPane.showMessageDialog(this, "Error cargando ciudades", "Error", JOptionPane.ERROR_MESSAGE);
-		}
-	}
+        provinciaCB = new JComboBox<>();
+        GridBagConstraints gbcProvinciaCB = new GridBagConstraints();
+        gbcProvinciaCB.insets = new Insets(0, 0, 5, 5);
+        gbcProvinciaCB.fill = GridBagConstraints.HORIZONTAL;
+        gbcProvinciaCB.gridx = 3;
+        gbcProvinciaCB.gridy = 5;
+        formPanel.add(provinciaCB, gbcProvinciaCB);
+        provinciaCB.addActionListener(e -> cargarCiudades());
 
-	private void crearCliente() {
-		try {
-			Pais pais = (Pais) paisCB.getSelectedItem();
-			Provincia provincia = (Provincia) provinciaCB.getSelectedItem();
-			Ciudad ciudad = (Ciudad) ciudadCB.getSelectedItem();
+        JLabel ciudadLabel = new JLabel("Ciudad:");
+        GridBagConstraints gbcCiudadLabel = new GridBagConstraints();
+        gbcCiudadLabel.insets = new Insets(0, 0, 5, 5);
+        gbcCiudadLabel.gridx = 0;
+        gbcCiudadLabel.gridy = 6;
+        formPanel.add(ciudadLabel, gbcCiudadLabel);
 
-			if (pais == null || pais.getId() == null || provincia == null || provincia.getId() == null || ciudad == null
-					|| ciudad.getId() == null) {
-				JOptionPane.showMessageDialog(this, "Debe seleccionar país, provincia y ciudad.",
-						"Dirección incompleta", JOptionPane.WARNING_MESSAGE);
-				return;
-			}
+        ciudadCB = new JComboBox<>();
+        GridBagConstraints gbcCiudadCB = new GridBagConstraints();
+        gbcCiudadCB.insets = new Insets(0, 0, 5, 5);
+        gbcCiudadCB.fill = GridBagConstraints.HORIZONTAL;
+        gbcCiudadCB.gridx = 1;
+        gbcCiudadCB.gridy = 6;
+        formPanel.add(ciudadCB, gbcCiudadCB);
 
-			Direccion direccion = new Direccion();
-			direccion.setCalle(calleTF.getText().trim());
-			direccion.setNumero(numeroTF.getText().trim());
-			direccion.setPiso(pisoTF.getText().trim());
-			direccion.setPuerta(puertaTF.getText().trim());
-			direccion.setCodigoPostal(codigoPostalTF.getText().trim());
-			direccion.setCiudadId(ciudad.getId());
+        JLabel calleLabel = new JLabel("Calle:");
+        GridBagConstraints gbcCalleLabel = new GridBagConstraints();
+        gbcCalleLabel.insets = new Insets(0, 0, 5, 5);
+        gbcCalleLabel.gridx = 0;
+        gbcCalleLabel.gridy = 7;
+        formPanel.add(calleLabel, gbcCalleLabel);
 
-			Direccion direccionGuardada = direccionService.create(direccion);
-			if (direccionGuardada == null || direccionGuardada.getId() == null) {
-				JOptionPane.showMessageDialog(this, "Error al guardar la dirección", "Error",
-						JOptionPane.ERROR_MESSAGE);
-				return;
-			}
+        calleTF = new JTextField();
+        calleTF.setColumns(12);
+        GridBagConstraints gbcCalleTF = new GridBagConstraints();
+        gbcCalleTF.insets = new Insets(0, 0, 5, 5);
+        gbcCalleTF.fill = GridBagConstraints.HORIZONTAL;
+        gbcCalleTF.gridx = 1;
+        gbcCalleTF.gridy = 7;
+        formPanel.add(calleTF, gbcCalleTF);
 
-			Cliente cliente = getClienteFromForm();
-			if (cliente == null)
-				return;
+        JLabel numeroLabel = new JLabel("Número:");
+        GridBagConstraints gbcNumeroLabel = new GridBagConstraints();
+        gbcNumeroLabel.insets = new Insets(0, 0, 5, 5);
+        gbcNumeroLabel.gridx = 2;
+        gbcNumeroLabel.gridy = 7;
+        formPanel.add(numeroLabel, gbcNumeroLabel);
 
-			cliente.setDireccionId(direccionGuardada.getId());
+        numeroTF = new JTextField();
+        numeroTF.setColumns(12);
+        GridBagConstraints gbcNumeroTF = new GridBagConstraints();
+        gbcNumeroTF.insets = new Insets(0, 0, 5, 5);
+        gbcNumeroTF.fill = GridBagConstraints.HORIZONTAL;
+        gbcNumeroTF.gridx = 3;
+        gbcNumeroTF.gridy = 7;
+        formPanel.add(numeroTF, gbcNumeroTF);
 
-			Long idCliente = clienteService.create(cliente);
-			if (idCliente != null) {
-				JOptionPane.showMessageDialog(this, "Cliente creado correctamente con ID: " + idCliente);
-				limpiarCampos();
-			} else {
-				JOptionPane.showMessageDialog(this, "Error al crear el cliente", "Error", JOptionPane.ERROR_MESSAGE);
-			}
-		} catch (Exception ex) {
-			ex.printStackTrace();
-			JOptionPane.showMessageDialog(this, "Error: " + ex.getMessage(), "Error", JOptionPane.ERROR_MESSAGE);
-		}
-	}
+        JLabel pisoLabel = new JLabel("Piso / Bloque:");
+        GridBagConstraints gbcPisoLabel = new GridBagConstraints();
+        gbcPisoLabel.insets = new Insets(0, 0, 5, 5);
+        gbcPisoLabel.gridx = 0;
+        gbcPisoLabel.gridy = 8;
+        formPanel.add(pisoLabel, gbcPisoLabel);
 
-	public Cliente getClienteFromForm() {
-		if (nombreTF.getText().trim().isEmpty() || apellido1TF.getText().trim().isEmpty()
-				|| dniTF.getText().trim().isEmpty() || emailTF.getText().trim().isEmpty()) {
-			JOptionPane.showMessageDialog(this, "Nombre, primer apellido, DNI y email son obligatorios.",
-					"Datos incompletos", JOptionPane.WARNING_MESSAGE);
-			return null;
-		}
+        pisoTF = new JTextField();
+        pisoTF.setColumns(12);
+        GridBagConstraints gbcPisoTF = new GridBagConstraints();
+        gbcPisoTF.insets = new Insets(0, 0, 5, 5);
+        gbcPisoTF.fill = GridBagConstraints.HORIZONTAL;
+        gbcPisoTF.gridx = 1;
+        gbcPisoTF.gridy = 8;
+        formPanel.add(pisoTF, gbcPisoTF);
 
-		Cliente cliente = new Cliente();
-		cliente.setNombre(nombreTF.getText().trim());
-		cliente.setApellido1(apellido1TF.getText().trim());
-		cliente.setApellido2(apellido2TF.getText().trim());
-		cliente.setDni(dniTF.getText().trim());
-		cliente.setTelefono(telefonoTF.getText().trim());
-		cliente.setEmail(emailTF.getText().trim());
-		cliente.setFechaNacimiento(fechaNacimientoDC.getDate());
-		cliente.setContrasena("generar-password");
+        JLabel puertaLabel = new JLabel("Puerta / Apartamento:");
+        GridBagConstraints gbcPuertaLabel = new GridBagConstraints();
+        gbcPuertaLabel.insets = new Insets(0, 0, 5, 5);
+        gbcPuertaLabel.gridx = 2;
+        gbcPuertaLabel.gridy = 8;
+        formPanel.add(puertaLabel, gbcPuertaLabel);
 
-		Genero genero = (Genero) generoCB.getSelectedItem();
-		if (genero != null && genero.getId() != null) {
-			cliente.setGeneroId(genero.getId());
-		} else {
-			cliente.setGeneroId(1L);
-		}
+        puertaTF = new JTextField();
+        puertaTF.setColumns(12);
+        GridBagConstraints gbcPuertaTF = new GridBagConstraints();
+        gbcPuertaTF.insets = new Insets(0, 0, 5, 5);
+        gbcPuertaTF.fill = GridBagConstraints.HORIZONTAL;
+        gbcPuertaTF.gridx = 3;
+        gbcPuertaTF.gridy = 8;
+        formPanel.add(puertaTF, gbcPuertaTF);
 
-		EstadoCliente estado = (EstadoCliente) estadoClienteCB.getSelectedItem();
-		if (estado != null && estado.getId() != null) {
-			cliente.setEstadoClienteId(estado.getId());
-		} else {
-			cliente.setEstadoClienteId(1L);
-		}
+        JLabel codigoPostalLabel = new JLabel("Código Postal:");
+        GridBagConstraints gbcCodigoPostalLabel = new GridBagConstraints();
+        gbcCodigoPostalLabel.insets = new Insets(0, 0, 5, 5);
+        gbcCodigoPostalLabel.gridx = 0;
+        gbcCodigoPostalLabel.gridy = 9;
+        formPanel.add(codigoPostalLabel, gbcCodigoPostalLabel);
 
-		if (cliente.getEmpleadoAsignadoId() == null) {
-			cliente.setEmpleadoAsignadoId(1L);
-		}
+        codigoPostalTF = new JTextField();
+        codigoPostalTF.setColumns(12);
+        GridBagConstraints gbcCodigoPostalTF = new GridBagConstraints();
+        gbcCodigoPostalTF.insets = new Insets(0, 0, 5, 5);
+        gbcCodigoPostalTF.fill = GridBagConstraints.HORIZONTAL;
+        gbcCodigoPostalTF.gridx = 1;
+        gbcCodigoPostalTF.gridy = 9;
+        formPanel.add(codigoPostalTF, gbcCodigoPostalTF);
 
-		Pais pais = (Pais) paisCB.getSelectedItem();
-		Provincia provincia = (Provincia) provinciaCB.getSelectedItem();
-		Ciudad ciudad = (Ciudad) ciudadCB.getSelectedItem();
+        JScrollPane scrollPane = new JScrollPane(formPanel);
+        scrollPane.setVerticalScrollBarPolicy(JScrollPane.VERTICAL_SCROLLBAR_AS_NEEDED);
+        add(scrollPane, BorderLayout.CENTER);
 
-		if (pais != null && pais.getId() != null && provincia != null && provincia.getId() != null && ciudad != null
-				&& ciudad.getId() != null) {
-			Direccion direccion = new Direccion();
-			direccion.setCalle(calleTF.getText().trim());
-			direccion.setNumero(numeroTF.getText().trim());
-			direccion.setPiso(pisoTF.getText().trim());
-			direccion.setPuerta(puertaTF.getText().trim());
-			direccion.setCodigoPostal(codigoPostalTF.getText().trim());
-			direccion.setCiudadId(ciudad.getId());
-			cliente.setDireccion(direccion);
-		}
+        JPanel buttonPanel = new JPanel(new FlowLayout(FlowLayout.RIGHT));
 
-		return cliente;
-	}
+        guardarButton = new JButton("Guardar");
+        guardarButton.setIcon(new ImageIcon(getClass().getResource("/nuvola/16x16/1511_mount_zip_mount_zip.png")));
+        guardarButton.addActionListener(e -> crearCliente());
+        buttonPanel.add(guardarButton);
 
-	public Direccion getDireccionFromForm() {
-		Pais pais = (Pais) paisCB.getSelectedItem();
-		Provincia provincia = (Provincia) provinciaCB.getSelectedItem();
-		Ciudad ciudad = (Ciudad) ciudadCB.getSelectedItem();
+        JButton limpiarButton = new JButton("Limpiar");
+        limpiarButton.setIcon(new ImageIcon(getClass().getResource("/nuvola/16x16/1250_delete_delete.png")));
+        limpiarButton.addActionListener(e -> limpiarCampos());
+        buttonPanel.add(limpiarButton);
 
-		if (pais == null || pais.getId() == null || provincia == null || provincia.getId() == null || ciudad == null
-				|| ciudad.getId() == null) {
-			return null;
-		}
+        add(buttonPanel, BorderLayout.SOUTH);
+    }
 
-		Direccion direccion = new Direccion();
-		direccion.setCalle(calleTF.getText().trim());
-		direccion.setNumero(numeroTF.getText().trim());
-		direccion.setPiso(pisoTF.getText().trim());
-		direccion.setPuerta(puertaTF.getText().trim());
-		direccion.setCodigoPostal(codigoPostalTF.getText().trim());
-		direccion.setCiudadId(ciudad.getId());
+    private void postInitialize() {
+        cargarGeneros();
+        cargarEstadosCliente();
+        cargarPaises();
+    }
 
-		return direccion;
-	}
+    private void cargarGeneros() {
+        try {
+            List<Genero> generos = generoService.findAll();
+            DefaultComboBoxModel<Genero> model = new DefaultComboBoxModel<>();
+            Genero placeholder = new Genero();
+            placeholder.setId(null);
+            placeholder.setNombre("Seleccionar");
+            model.addElement(placeholder);
+            for (Genero g : generos)
+                model.addElement(g);
+            generoCB.setModel(model);
+            generoCB.setRenderer(new GeneroCBRenderer());
+        } catch (Exception e) {
+            e.printStackTrace();
+        }
+    }
 
-	public void limpiarCampos() {
-		nombreTF.setText("");
-		apellido1TF.setText("");
-		apellido2TF.setText("");
-		dniTF.setText("");
-		telefonoTF.setText("");
-		emailTF.setText("");
-		fechaNacimientoDC.setDate(null);
-		generoCB.setSelectedIndex(0);
-		estadoClienteCB.setSelectedIndex(0);
-		calleTF.setText("");
-		numeroTF.setText("");
-		pisoTF.setText("");
-		puertaTF.setText("");
-		codigoPostalTF.setText("");
-		paisCB.setSelectedIndex(0);
-		provinciaCB.setModel(new DefaultComboBoxModel<>());
-		ciudadCB.setModel(new DefaultComboBoxModel<>());
-	}
+    private void cargarEstadosCliente() {
+        try {
+            List<EstadoCliente> estados = estadoClienteService.findAll();
+            DefaultComboBoxModel<EstadoCliente> model = new DefaultComboBoxModel<>();
+            EstadoCliente placeholder = new EstadoCliente();
+            placeholder.setId(null);
+            placeholder.setNombre("Seleccionar");
+            model.addElement(placeholder);
+            for (EstadoCliente ec : estados)
+                model.addElement(ec);
+            estadoClienteCB.setModel(model);
+            estadoClienteCB.setRenderer(new EstadoClienteCBRenderer());
+        } catch (Exception e) {
+            e.printStackTrace();
+        }
+    }
 
-	public void setEditable(boolean editable) {
-		this.editable = editable;
-		nombreTF.setEditable(editable);
-		apellido1TF.setEditable(editable);
-		apellido2TF.setEditable(editable);
-		dniTF.setEditable(editable);
-		telefonoTF.setEditable(editable);
-		emailTF.setEditable(editable);
-		calleTF.setEditable(editable);
-		numeroTF.setEditable(editable);
-		pisoTF.setEditable(editable);
-		puertaTF.setEditable(editable);
-		codigoPostalTF.setEditable(editable);
-		fechaNacimientoDC.setEnabled(editable);
-		generoCB.setEnabled(editable);
-		estadoClienteCB.setEnabled(editable);
-		paisCB.setEnabled(editable);
-		provinciaCB.setEnabled(editable);
-		ciudadCB.setEnabled(editable);
+    private void cargarPaises() {
+        try {
+            List<Pais> paises = paisService.findAll();
+            DefaultComboBoxModel<Pais> model = new DefaultComboBoxModel<>();
+            Pais placeholder = new Pais();
+            placeholder.setId(null);
+            placeholder.setNombre("Seleccionar país");
+            model.addElement(placeholder);
+            for (Pais p : paises)
+                model.addElement(p);
+            paisCB.setModel(model);
+            paisCB.setRenderer(new javax.swing.DefaultListCellRenderer() {
+                public java.awt.Component getListCellRendererComponent(javax.swing.JList<?> list, Object value,
+                        int index, boolean isSelected, boolean cellHasFocus) {
+                    super.getListCellRendererComponent(list, value, index, isSelected, cellHasFocus);
+                    if (value instanceof Pais)
+                        setText(((Pais) value).getNombre());
+                    return this;
+                }
+            });
+        } catch (Exception e) {
+            e.printStackTrace();
+            JOptionPane.showMessageDialog(this, "Error cargando países", "Error", JOptionPane.ERROR_MESSAGE);
+        }
+    }
 
-		if (guardarButton != null) {
-			guardarButton.setText(editable ? "Actualizar" : "Guardar");
-		}
-	}
+    private void cargarProvincias() {
+        Pais pais = (Pais) paisCB.getSelectedItem();
+        if (pais == null || pais.getId() == null) {
+            provinciaCB.setModel(new DefaultComboBoxModel<>());
+            ciudadCB.setModel(new DefaultComboBoxModel<>());
+            return;
+        }
+        try {
+            List<Provincia> provincias = provinciaService.findByPais(pais.getId());
+            DefaultComboBoxModel<Provincia> model = new DefaultComboBoxModel<>();
+            Provincia placeholder = new Provincia();
+            placeholder.setId(null);
+            placeholder.setNombre("Seleccionar provincia");
+            model.addElement(placeholder);
+            for (Provincia p : provincias)
+                model.addElement(p);
+            provinciaCB.setModel(model);
+            provinciaCB.setRenderer(new javax.swing.DefaultListCellRenderer() {
+                public java.awt.Component getListCellRendererComponent(javax.swing.JList<?> list, Object value,
+                        int index, boolean isSelected, boolean cellHasFocus) {
+                    super.getListCellRendererComponent(list, value, index, isSelected, cellHasFocus);
+                    if (value instanceof Provincia)
+                        setText(((Provincia) value).getNombre());
+                    return this;
+                }
+            });
+            ciudadCB.setModel(new DefaultComboBoxModel<>());
+        } catch (Exception e) {
+            e.printStackTrace();
+            JOptionPane.showMessageDialog(this, "Error cargando provincias", "Error", JOptionPane.ERROR_MESSAGE);
+        }
+    }
 
-	public void setAgreeController(AbstractController controller) {
-		if (guardarButton != null) {
-			for (ActionListener al : guardarButton.getActionListeners()) {
-				guardarButton.removeActionListener(al);
-			}
-			guardarButton.addActionListener(controller);
-		}
-	}
+    private void cargarCiudades() {
+        Provincia provincia = (Provincia) provinciaCB.getSelectedItem();
+        if (provincia == null || provincia.getId() == null) {
+            ciudadCB.setModel(new DefaultComboBoxModel<>());
+            return;
+        }
+        try {
+            List<Ciudad> ciudades = ciudadService.findByProvinciaId(provincia.getId());
+            DefaultComboBoxModel<Ciudad> model = new DefaultComboBoxModel<>();
+            Ciudad placeholder = new Ciudad();
+            placeholder.setId(null);
+            placeholder.setNombre("Seleccionar ciudad");
+            model.addElement(placeholder);
+            for (Ciudad c : ciudades)
+                model.addElement(c);
+            ciudadCB.setModel(model);
+            ciudadCB.setRenderer(new javax.swing.DefaultListCellRenderer() {
+                public java.awt.Component getListCellRendererComponent(javax.swing.JList<?> list, Object value,
+                        int index, boolean isSelected, boolean cellHasFocus) {
+                    super.getListCellRendererComponent(list, value, index, isSelected, cellHasFocus);
+                    if (value instanceof Ciudad)
+                        setText(((Ciudad) value).getNombre());
+                    return this;
+                }
+            });
+        } catch (Exception e) {
+            e.printStackTrace();
+            JOptionPane.showMessageDialog(this, "Error cargando ciudades", "Error", JOptionPane.ERROR_MESSAGE);
+        }
+    }
 
-	public void cargarCliente(ClienteDTO cliente) {
-		nombreTF.setText(cliente.getNombre() != null ? cliente.getNombre() : "");
-		apellido1TF.setText(cliente.getApellido1() != null ? cliente.getApellido1() : "");
-		apellido2TF.setText(cliente.getApellido2() != null ? cliente.getApellido2() : "");
-		dniTF.setText(cliente.getDni() != null ? cliente.getDni() : "");
-		telefonoTF.setText(cliente.getTelefono() != null ? cliente.getTelefono() : "");
-		emailTF.setText(cliente.getEmail() != null ? cliente.getEmail() : "");
-		fechaNacimientoDC.setDate(cliente.getFechaNacimiento());
+    private void crearCliente() {
+        try {
+            Pais pais = (Pais) paisCB.getSelectedItem();
+            Provincia provincia = (Provincia) provinciaCB.getSelectedItem();
+            Ciudad ciudad = (Ciudad) ciudadCB.getSelectedItem();
 
-		if (cliente.getGeneroId() != null) {
-			for (int i = 0; i < generoCB.getItemCount(); i++) {
-				Genero g = generoCB.getItemAt(i);
-				if (g.getId() != null && g.getId().equals(cliente.getGeneroId())) {
-					generoCB.setSelectedIndex(i);
-					break;
-				}
-			}
-		}
+            if (pais == null || pais.getId() == null || provincia == null || provincia.getId() == null || ciudad == null
+                    || ciudad.getId() == null) {
+                JOptionPane.showMessageDialog(this, "Debe seleccionar país, provincia y ciudad.",
+                        "Dirección incompleta", JOptionPane.WARNING_MESSAGE);
+                return;
+            }
 
-		if (cliente.getEstadoClienteId() != null) {
-			for (int i = 0; i < estadoClienteCB.getItemCount(); i++) {
-				EstadoCliente ec = estadoClienteCB.getItemAt(i);
-				if (ec.getId() != null && ec.getId().equals(cliente.getEstadoClienteId())) {
-					estadoClienteCB.setSelectedIndex(i);
-					break;
-				}
-			}
-		}
+            Direccion direccion = new Direccion();
+            direccion.setCalle(calleTF.getText().trim());
+            direccion.setNumero(numeroTF.getText().trim());
+            direccion.setPiso(pisoTF.getText().trim());
+            direccion.setPuerta(puertaTF.getText().trim());
+            direccion.setCodigoPostal(codigoPostalTF.getText().trim());
+            direccion.setCiudadId(ciudad.getId());
 
-		if (cliente.getDireccionId() != null) {
-			try {
-				Direccion direccion = direccionService.findById(cliente.getDireccionId());
-				if (direccion != null) {
-					calleTF.setText(direccion.getCalle() != null ? direccion.getCalle() : "");
-					numeroTF.setText(direccion.getNumero() != null ? direccion.getNumero() : "");
-					pisoTF.setText(direccion.getPiso() != null ? direccion.getPiso() : "");
-					puertaTF.setText(direccion.getPuerta() != null ? direccion.getPuerta() : "");
-					codigoPostalTF.setText(direccion.getCodigoPostal() != null ? direccion.getCodigoPostal() : "");
-				}
-			} catch (Exception e) {
-				e.printStackTrace();
-			}
-		}
-	}
+            Direccion direccionGuardada = direccionService.create(direccion);
+            if (direccionGuardada == null || direccionGuardada.getId() == null) {
+                JOptionPane.showMessageDialog(this, "Error al guardar la dirección", "Error",
+                        JOptionPane.ERROR_MESSAGE);
+                return;
+            }
 
-	public void mostrarMensaje(String mensaje) {
-		JOptionPane.showMessageDialog(this, mensaje);
-	}
+            Cliente cliente = getClienteFromForm();
+            if (cliente == null)
+                return;
 
-	public void mostrarError(String error) {
-		JOptionPane.showMessageDialog(this, error, "Error", JOptionPane.ERROR_MESSAGE);
-	}
+            cliente.setDireccionId(direccionGuardada.getId());
 
-	private void addLabel(JPanel panel, String text, int x, int y) {
-		GridBagConstraints gbc = new GridBagConstraints();
-		gbc.insets = new Insets(0, 0, 5, 5);
-		gbc.gridx = x;
-		gbc.gridy = y;
-		panel.add(new JLabel(text), gbc);
-	}
+            Long idCliente = clienteService.create(cliente);
+            if (idCliente != null) {
+                JOptionPane.showMessageDialog(this, "Cliente creado correctamente con ID: " + idCliente);
+                limpiarCampos();
+            } else {
+                JOptionPane.showMessageDialog(this, "Error al crear el cliente", "Error", JOptionPane.ERROR_MESSAGE);
+            }
+        } catch (Exception ex) {
+            ex.printStackTrace();
+            JOptionPane.showMessageDialog(this, "Error: " + ex.getMessage(), "Error", JOptionPane.ERROR_MESSAGE);
+        }
+    }
 
-	private JTextField addTextField(JPanel panel, int x, int y) {
-		JTextField field = new JTextField();
-		field.setColumns(12);
-		GridBagConstraints gbc = new GridBagConstraints();
-		gbc.insets = new Insets(0, 0, 5, 5);
-		gbc.fill = GridBagConstraints.HORIZONTAL;
-		gbc.gridx = x;
-		gbc.gridy = y;
-		panel.add(field, gbc);
-		return field;
-	}
+    public Cliente getClienteFromForm() {
+        if (nombreTF.getText().trim().isEmpty() || apellido1TF.getText().trim().isEmpty()
+                || dniTF.getText().trim().isEmpty() || emailTF.getText().trim().isEmpty()) {
+            JOptionPane.showMessageDialog(this, "Nombre, primer apellido, DNI y email son obligatorios.",
+                    "Datos incompletos", JOptionPane.WARNING_MESSAGE);
+            return null;
+        }
 
-	private JDateChooser addDateChooser(JPanel panel, int x, int y) {
-		JDateChooser chooser = new JDateChooser();
-		GridBagConstraints gbc = new GridBagConstraints();
-		gbc.insets = new Insets(0, 0, 5, 5);
-		gbc.fill = GridBagConstraints.HORIZONTAL;
-		gbc.gridx = x;
-		gbc.gridy = y;
-		panel.add(chooser, gbc);
-		return chooser;
-	}
-	
-	private <T> JComboBox<T> addCombo(JPanel panel, int x, int y) {
-		JComboBox<T> combo = new JComboBox<>();
-		GridBagConstraints gbc = new GridBagConstraints();
-		gbc.insets = new Insets(0, 0, 5, 5);
-		gbc.fill = GridBagConstraints.HORIZONTAL;
-		gbc.gridx = x;
-		gbc.gridy = y;
-		panel.add(combo, gbc);
-		return combo;
-	}
+        Cliente cliente = new Cliente();
+        cliente.setNombre(nombreTF.getText().trim());
+        cliente.setApellido1(apellido1TF.getText().trim());
+        cliente.setApellido2(apellido2TF.getText().trim());
+        cliente.setDni(dniTF.getText().trim());
+        cliente.setTelefono(telefonoTF.getText().trim());
+        cliente.setEmail(emailTF.getText().trim());
+        cliente.setFechaNacimiento(fechaNacimientoDC.getDate());
+        cliente.setContrasena("generar-password");
+
+        Genero genero = (Genero) generoCB.getSelectedItem();
+        if (genero != null && genero.getId() != null) {
+            cliente.setGeneroId(genero.getId());
+        } else {
+            cliente.setGeneroId(1L);
+        }
+
+        EstadoCliente estado = (EstadoCliente) estadoClienteCB.getSelectedItem();
+        if (estado != null && estado.getId() != null) {
+            cliente.setEstadoClienteId(estado.getId());
+        } else {
+            cliente.setEstadoClienteId(1L);
+        }
+
+        if (cliente.getEmpleadoAsignadoId() == null) {
+            cliente.setEmpleadoAsignadoId(1L);
+        }
+
+        Pais pais = (Pais) paisCB.getSelectedItem();
+        Provincia provincia = (Provincia) provinciaCB.getSelectedItem();
+        Ciudad ciudad = (Ciudad) ciudadCB.getSelectedItem();
+
+        if (pais != null && pais.getId() != null && provincia != null && provincia.getId() != null && ciudad != null
+                && ciudad.getId() != null) {
+            Direccion direccion = new Direccion();
+            direccion.setCalle(calleTF.getText().trim());
+            direccion.setNumero(numeroTF.getText().trim());
+            direccion.setPiso(pisoTF.getText().trim());
+            direccion.setPuerta(puertaTF.getText().trim());
+            direccion.setCodigoPostal(codigoPostalTF.getText().trim());
+            direccion.setCiudadId(ciudad.getId());
+            cliente.setDireccion(direccion);
+        }
+
+        return cliente;
+    }
+
+    public Direccion getDireccionFromForm() {
+        Pais pais = (Pais) paisCB.getSelectedItem();
+        Provincia provincia = (Provincia) provinciaCB.getSelectedItem();
+        Ciudad ciudad = (Ciudad) ciudadCB.getSelectedItem();
+
+        if (pais == null || pais.getId() == null || provincia == null || provincia.getId() == null || ciudad == null
+                || ciudad.getId() == null) {
+            return null;
+        }
+
+        Direccion direccion = new Direccion();
+        direccion.setCalle(calleTF.getText().trim());
+        direccion.setNumero(numeroTF.getText().trim());
+        direccion.setPiso(pisoTF.getText().trim());
+        direccion.setPuerta(puertaTF.getText().trim());
+        direccion.setCodigoPostal(codigoPostalTF.getText().trim());
+        direccion.setCiudadId(ciudad.getId());
+
+        return direccion;
+    }
+
+    public void limpiarCampos() {
+        nombreTF.setText("");
+        apellido1TF.setText("");
+        apellido2TF.setText("");
+        dniTF.setText("");
+        telefonoTF.setText("");
+        emailTF.setText("");
+        fechaNacimientoDC.setDate(null);
+        generoCB.setSelectedIndex(0);
+        estadoClienteCB.setSelectedIndex(0);
+        calleTF.setText("");
+        numeroTF.setText("");
+        pisoTF.setText("");
+        puertaTF.setText("");
+        codigoPostalTF.setText("");
+        paisCB.setSelectedIndex(0);
+        provinciaCB.setModel(new DefaultComboBoxModel<>());
+        ciudadCB.setModel(new DefaultComboBoxModel<>());
+    }
+
+    public void setEditable(boolean editable) {
+        this.editable = editable;
+        nombreTF.setEditable(editable);
+        apellido1TF.setEditable(editable);
+        apellido2TF.setEditable(editable);
+        dniTF.setEditable(editable);
+        telefonoTF.setEditable(editable);
+        emailTF.setEditable(editable);
+        calleTF.setEditable(editable);
+        numeroTF.setEditable(editable);
+        pisoTF.setEditable(editable);
+        puertaTF.setEditable(editable);
+        codigoPostalTF.setEditable(editable);
+        fechaNacimientoDC.setEnabled(editable);
+        generoCB.setEnabled(editable);
+        estadoClienteCB.setEnabled(editable);
+        paisCB.setEnabled(editable);
+        provinciaCB.setEnabled(editable);
+        ciudadCB.setEnabled(editable);
+
+        if (guardarButton != null) {
+            guardarButton.setText(editable ? "Actualizar" : "Guardar");
+        }
+    }
+
+    public void setAgreeController(AbstractController controller) {
+        if (guardarButton != null) {
+            for (ActionListener al : guardarButton.getActionListeners()) {
+                guardarButton.removeActionListener(al);
+            }
+            guardarButton.addActionListener(controller);
+        }
+    }
+
+    public void cargarCliente(ClienteDTO cliente) {
+        nombreTF.setText(cliente.getNombre() != null ? cliente.getNombre() : "");
+        apellido1TF.setText(cliente.getApellido1() != null ? cliente.getApellido1() : "");
+        apellido2TF.setText(cliente.getApellido2() != null ? cliente.getApellido2() : "");
+        dniTF.setText(cliente.getDni() != null ? cliente.getDni() : "");
+        telefonoTF.setText(cliente.getTelefono() != null ? cliente.getTelefono() : "");
+        emailTF.setText(cliente.getEmail() != null ? cliente.getEmail() : "");
+        fechaNacimientoDC.setDate(cliente.getFechaNacimiento());
+
+        if (cliente.getGeneroId() != null) {
+            for (int i = 0; i < generoCB.getItemCount(); i++) {
+                Genero g = generoCB.getItemAt(i);
+                if (g.getId() != null && g.getId().equals(cliente.getGeneroId())) {
+                    generoCB.setSelectedIndex(i);
+                    i = generoCB.getItemCount();
+                }
+            }
+        }
+
+        if (cliente.getEstadoClienteId() != null) {
+            for (int i = 0; i < estadoClienteCB.getItemCount(); i++) {
+                EstadoCliente ec = estadoClienteCB.getItemAt(i);
+                if (ec.getId() != null && ec.getId().equals(cliente.getEstadoClienteId())) {
+                    estadoClienteCB.setSelectedIndex(i);
+                    i = estadoClienteCB.getItemCount();
+                }
+            }
+        }
+
+        if (cliente.getDireccionId() != null) {
+            try {
+                Direccion direccion = direccionService.findById(cliente.getDireccionId());
+                if (direccion != null) {
+                    calleTF.setText(direccion.getCalle() != null ? direccion.getCalle() : "");
+                    numeroTF.setText(direccion.getNumero() != null ? direccion.getNumero() : "");
+                    pisoTF.setText(direccion.getPiso() != null ? direccion.getPiso() : "");
+                    puertaTF.setText(direccion.getPuerta() != null ? direccion.getPuerta() : "");
+                    codigoPostalTF.setText(direccion.getCodigoPostal() != null ? direccion.getCodigoPostal() : "");
+                }
+            } catch (Exception e) {
+                e.printStackTrace();
+            }
+        }
+    }
+
+    public void mostrarMensaje(String mensaje) {
+        JOptionPane.showMessageDialog(this, mensaje);
+    }
+
+    public void mostrarError(String error) {
+        JOptionPane.showMessageDialog(this, error, "Error", JOptionPane.ERROR_MESSAGE);
+    }
 }

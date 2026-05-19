@@ -26,9 +26,9 @@ public class OpenClienteSearchController extends AbstractAction {
 	}
 
 	private void doAction() {
-//		View view = new ClienteSearchView();
-//		MainWindow.getInstance.addView("Buscar cliente", view);
-	System.out.println("OpenClienteSearchController: doAction");
+		System.out.println("OpenClienteSearchController: doAction");
+		ClienteSearchView view = new ClienteSearchView();
+		MainWindow.getInstance().addView(view.getName(), view);
 
 	}
 

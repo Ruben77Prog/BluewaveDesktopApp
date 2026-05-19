@@ -4,8 +4,6 @@ import java.awt.BorderLayout;
 import java.awt.Component;
 import java.awt.EventQueue;
 import java.awt.FlowLayout;
-import java.awt.event.ActionEvent;
-import java.awt.event.ActionListener;
 
 import javax.swing.ImageIcon;
 import javax.swing.JButton;
@@ -18,27 +16,45 @@ import javax.swing.JTabbedPane;
 import javax.swing.JToolBar;
 import javax.swing.UIManager;
 
+import com.ruben.bluewave.model.EmpleadoDTO;
 import com.ruben.bluewave.ui.controller.OpenClienteSearchController;
 import com.ruben.bluewave.ui.controller.OpenEmpleadoSearchController;
 import com.ruben.bluewave.ui.controller.OpenIncidenciaSearchController;
 import com.ruben.bluewave.ui.controller.OpenNuevaIncidenciaController;
-import com.ruben.bluewave.ui.views.ClienteSearchView;
 import com.ruben.bluewave.ui.views.ClienteAltaView;
+import com.ruben.bluewave.ui.views.ClienteSearchView;
+import com.ruben.bluewave.ui.views.EmpleadoAltaView;
+import com.ruben.bluewave.ui.views.EmpleadoSearchView;
 import com.ruben.bluewave.ui.views.IncidenciaSearchView;
+import com.ruben.bluewave.ui.views.LoginView;
 import com.ruben.bluewave.ui.views.NuevaIncidenciaView;
 import com.ruben.bluewave.ui.views.View;
 
-/**
- * Ventana de la aplicacion implementada como singleton
- */
 public class MainWindow {
 
 	private JFrame frame;
 	private JPanel centerPanel;
 	private JTabbedPane contentTabbedPane;
-	private JButton buscarClienteButton;
-	private JMenuItem buscarClienteMenuItem;
 	private static MainWindow instance;
+
+	private EmpleadoDTO usuarioActual;
+	private boolean isAdmin;
+	private JMenuBar menuBar;
+	private JToolBar mainToolBar;
+
+	private JButton buscarClienteButton;
+	private JButton anadirClienteButton;
+	private JButton buscarEmpleadoButton;
+	private JButton nuevoEmpleadoButton;
+	private JButton buscarIncidenciaButton;
+	private JButton nuevaIncidenciaButton;
+
+	private JMenuItem buscarClienteMenuItem;
+	private JMenuItem nuevoClienteMenuItem;
+	private JMenuItem buscarEmpleadoMenuItem;
+	private JMenuItem nuevoEmpleadoMenuItem;
+	private JMenuItem buscarIncidenciaMenuItem;
+	private JMenuItem nuevaIncidenciaMenuItem;
 
 	public static void main(String[] args) {
 		EventQueue.invokeLater(new Runnable() {
@@ -57,6 +73,7 @@ public class MainWindow {
 	private MainWindow() {
 		initialize();
 		postInitialize();
+		showLogin();
 	}
 
 	public static MainWindow getInstance() {
@@ -84,162 +101,191 @@ public class MainWindow {
 		flowLayout.setAlignment(FlowLayout.LEFT);
 		northPanel.add(menuPanel, BorderLayout.NORTH);
 
-		JMenuBar menuBar = new JMenuBar();
+		menuBar = new JMenuBar();
 		menuPanel.add(menuBar);
 
 		JMenu clienteMenu = new JMenu("Cliente");
 		menuBar.add(clienteMenu);
 
 		buscarClienteMenuItem = new JMenuItem("Buscar...");
-		buscarClienteMenuItem.addActionListener(new ActionListener() {
-			public void actionPerformed(ActionEvent e) {
-				ClienteSearchView csv = new ClienteSearchView();
-				addView(csv.getName(), csv);
-			}
-		});
 		clienteMenu.add(buscarClienteMenuItem);
 
-		JMenuItem nuevoClienteMenuItem = new JMenuItem("Nuevo...");
-		nuevoClienteMenuItem.addActionListener(new ActionListener() {
-			public void actionPerformed(ActionEvent e) {
-				ClienteAltaView ncv = new ClienteAltaView();
-				addView(ncv.getName(), ncv);
-			}
-		});
+		nuevoClienteMenuItem = new JMenuItem("Nuevo...");
 		clienteMenu.add(nuevoClienteMenuItem);
 
-		
 		JMenu usuarioMenu = new JMenu("Usuario");
 		menuBar.add(usuarioMenu);
 
-		JMenuItem nuevoUsuarioMenuItem = new JMenuItem("Nuevo...");
-		nuevoUsuarioMenuItem.addActionListener(new ActionListener() {
-			public void actionPerformed(ActionEvent e) {
-				
-			}
-		});
-		usuarioMenu.add(nuevoUsuarioMenuItem);
-
-		JMenuItem buscarUsuarioMenuItem = new JMenuItem("Buscar...");
-		usuarioMenu.add(buscarUsuarioMenuItem);
-
-		JMenuItem buscarEmpleadoMenuItem = new JMenuItem("Buscar empleado...");
-		buscarEmpleadoMenuItem.addActionListener(new OpenEmpleadoSearchController());
+		buscarEmpleadoMenuItem = new JMenuItem("Buscar...");
 		usuarioMenu.add(buscarEmpleadoMenuItem);
 
-		
+		nuevoEmpleadoMenuItem = new JMenuItem("Nuevo...");
+		usuarioMenu.add(nuevoEmpleadoMenuItem);
+
 		JMenu contratoMenu = new JMenu("Contrato");
 		menuBar.add(contratoMenu);
-		JMenuItem nuevoContratoMenuItem = new JMenuItem("Nuevo...");
-		contratoMenu.add(nuevoContratoMenuItem);
 
-		
 		JMenu incidenciaMenu = new JMenu("Incidencia");
 		menuBar.add(incidenciaMenu);
 
-		JMenuItem buscarIncidenciaMenuItem = new JMenuItem("Buscar incidencia...");
-		buscarIncidenciaMenuItem.addActionListener(new OpenIncidenciaSearchController());
+		buscarIncidenciaMenuItem = new JMenuItem("Buscar...");
 		incidenciaMenu.add(buscarIncidenciaMenuItem);
 
-		JMenuItem nuevaIncidenciaMenuItem = new JMenuItem("Nueva...");
-		nuevaIncidenciaMenuItem.addActionListener(new OpenNuevaIncidenciaController());
+		nuevaIncidenciaMenuItem = new JMenuItem("Nueva...");
 		incidenciaMenu.add(nuevaIncidenciaMenuItem);
 
-		JMenu subMenuBuscar = new JMenu("Buscar...");
-		incidenciaMenu.add(subMenuBuscar);
-		JMenuItem tipoIncidenciaMenuItem = new JMenuItem("Tipo");
-		subMenuBuscar.add(tipoIncidenciaMenuItem);
-		JMenuItem prioridadMenuItem = new JMenuItem("Prioridad");
-		subMenuBuscar.add(prioridadMenuItem);
+		JMenu sesionMenu = new JMenu("Sesión");
+		menuBar.add(sesionMenu);
 
-		JMenu estadisticaNewMenu = new JMenu("Estadistica");
-		menuBar.add(estadisticaNewMenu);
+		JMenuItem cerrarSesionMenuItem = new JMenuItem("Cerrar sesión");
+		cerrarSesionMenuItem.addActionListener(e -> cerrarSesion());
+		sesionMenu.add(cerrarSesionMenuItem);
+
+		JMenuItem salirMenuItem = new JMenuItem("Salir");
+		salirMenuItem.addActionListener(e -> System.exit(0));
+		sesionMenu.add(salirMenuItem);
 
 		JPanel toolbarPanel = new JPanel();
 		northPanel.add(toolbarPanel, BorderLayout.SOUTH);
 		toolbarPanel.setLayout(new FlowLayout(FlowLayout.LEFT, 5, 5));
 
-		JToolBar clienteToolBar = new JToolBar();
-		toolbarPanel.add(clienteToolBar);
+		mainToolBar = new JToolBar();
+		toolbarPanel.add(mainToolBar);
 
 		buscarClienteButton = new JButton("");
-		buscarClienteButton.addActionListener(new ActionListener() {
-			public void actionPerformed(ActionEvent e) {
-				ClienteSearchView csv = new ClienteSearchView();
-				contentTabbedPane.addTab(csv.getName(), csv);
-				addView(csv.getName(), csv);
-				contentTabbedPane.revalidate();
-			}
-		});
 		buscarClienteButton.setIcon(new ImageIcon(MainWindow.class.getResource("/nuvola/16x16/1339_kmag_kmag.png")));
-		clienteToolBar.add(buscarClienteButton);
+		buscarClienteButton.setToolTipText("Buscar...");
+		mainToolBar.add(buscarClienteButton);
 
-		JButton anadirClienteButton = new JButton("");
-		anadirClienteButton.addActionListener(new ActionListener() {
-			 public void actionPerformed(ActionEvent e) {
-			        ClienteAltaView ncv = new ClienteAltaView();  
-			        addView(ncv.getName(), ncv);
-			}
-		});
+		anadirClienteButton = new JButton("");
 		anadirClienteButton
 				.setIcon(new ImageIcon(MainWindow.class.getResource("/nuvola/16x16/1875_viewmag+_viewmag+.png")));
-		clienteToolBar.add(anadirClienteButton);
+		anadirClienteButton.setToolTipText("Nuevo...");
+		mainToolBar.add(anadirClienteButton);
 
-		JToolBar usuarioToolBar = new JToolBar();
-		toolbarPanel.add(usuarioToolBar);
+		mainToolBar.addSeparator();
 
-		JButton nuevoUsuarioButton = new JButton("");
-		nuevoUsuarioButton.setIcon(new ImageIcon(MainWindow.class.getResource(
-				"/nuvola/16x16/1447_man_male_male_man_user_employee_manager_employee_operator_manager_personal_operator_administrator_administrator_personal_user.png")));
-		nuevoUsuarioButton.addActionListener(new ActionListener() {
-			public void actionPerformed(ActionEvent e) {
-				// Abrir NuevaEmpleadoView (pendiente)
-			}
-		});
-		usuarioToolBar.add(nuevoUsuarioButton);
-
-		JButton buscarEmpleadoButton = new JButton("");
+		buscarEmpleadoButton = new JButton("");
 		buscarEmpleadoButton.setIcon(new ImageIcon(MainWindow.class.getResource("/nuvola/16x16/1339_kmag_kmag.png")));
-		buscarEmpleadoButton.addActionListener(new OpenEmpleadoSearchController());
-		usuarioToolBar.add(buscarEmpleadoButton);
+		buscarEmpleadoButton.setToolTipText("Buscar...");
+		mainToolBar.add(buscarEmpleadoButton);
 
-		JToolBar contratoToolBar = new JToolBar();
-		toolbarPanel.add(contratoToolBar);
-		JButton nuevoContratoButton = new JButton("");
-		nuevoContratoButton
-				.setIcon(new ImageIcon(MainWindow.class.getResource("/nuvola/16x16/1394_kthememgr_kthememgr.png")));
-		contratoToolBar.add(nuevoContratoButton);
-		JButton buscarContratoButton = new JButton("");
-		buscarContratoButton
-				.setIcon(new ImageIcon(MainWindow.class.getResource("/nuvola/16x16/1718_compfile_compfile.png")));
-		contratoToolBar.add(buscarContratoButton);
+		nuevoEmpleadoButton = new JButton("");
+		nuevoEmpleadoButton.setIcon(new ImageIcon(MainWindow.class.getResource(
+				"/nuvola/16x16/1447_man_male_male_man_user_employee_manager_employee_operator_manager_personal_operator_administrator_administrator_personal_user.png")));
+		nuevoEmpleadoButton.setToolTipText("Nuevo...");
+		mainToolBar.add(nuevoEmpleadoButton);
 
-		JToolBar incidenciaToolBar = new JToolBar();
-		toolbarPanel.add(incidenciaToolBar);
+		mainToolBar.addSeparator();
 
-		JButton nuevaIncidenciaButton = new JButton("");
+		buscarIncidenciaButton = new JButton("");
+		buscarIncidenciaButton.setIcon(new ImageIcon(MainWindow.class.getResource("/nuvola/16x16/1339_kmag_kmag.png")));
+		buscarIncidenciaButton.setToolTipText("Buscar...");
+		mainToolBar.add(buscarIncidenciaButton);
+
+		nuevaIncidenciaButton = new JButton("");
 		nuevaIncidenciaButton
 				.setIcon(new ImageIcon(MainWindow.class.getResource("/nuvola/16x16/1875_viewmag+_viewmag+.png")));
-		nuevaIncidenciaButton.addActionListener(new OpenNuevaIncidenciaController()); 
-		incidenciaToolBar.add(nuevaIncidenciaButton);
-
-		JButton buscarIncidenciaButton = new JButton("");
-		buscarIncidenciaButton.setIcon(new ImageIcon(MainWindow.class.getResource("/nuvola/16x16/1339_kmag_kmag.png")));
-		buscarIncidenciaButton.addActionListener(new OpenIncidenciaSearchController());
-		incidenciaToolBar.add(buscarIncidenciaButton);
+		nuevaIncidenciaButton.setToolTipText("Nueva...");
+		mainToolBar.add(nuevaIncidenciaButton);
 
 		centerPanel = new JPanel();
 		mainPanel.add(centerPanel, BorderLayout.CENTER);
 		centerPanel.setLayout(new BorderLayout(0, 0));
+
 		contentTabbedPane = new JTabbedPane(JTabbedPane.TOP);
 		centerPanel.add(contentTabbedPane, BorderLayout.CENTER);
+	}
 
-		JPanel southPanel = new JPanel();
-		mainPanel.add(southPanel, BorderLayout.SOUTH);
-		JPanel eastPanel = new JPanel();
-		mainPanel.add(eastPanel, BorderLayout.EAST);
-		JPanel westPanel = new JPanel();
-		mainPanel.add(westPanel, BorderLayout.WEST);
+	private void postInitialize() {
+		OpenClienteSearchController clienteSearchController = new OpenClienteSearchController();
+
+		buscarClienteButton.setAction(clienteSearchController);
+		buscarClienteMenuItem.setAction(clienteSearchController);
+
+		nuevoClienteMenuItem.addActionListener(e -> {
+			ClienteAltaView view = new ClienteAltaView();
+			addView(view.getName(), view);
+		});
+
+		anadirClienteButton.addActionListener(e -> {
+			ClienteAltaView view = new ClienteAltaView();
+			addView(view.getName(), view);
+		});
+
+		OpenEmpleadoSearchController empleadoSearchController = new OpenEmpleadoSearchController();
+		buscarEmpleadoButton.setAction(empleadoSearchController);
+		buscarEmpleadoMenuItem.setAction(empleadoSearchController);
+
+		nuevoEmpleadoMenuItem.addActionListener(e -> {
+			EmpleadoAltaView view = new EmpleadoAltaView();
+			addView(view.getName(), view);
+		});
+
+		nuevoEmpleadoButton.addActionListener(e -> {
+			EmpleadoAltaView view = new EmpleadoAltaView();
+			addView(view.getName(), view);
+		});
+
+		OpenIncidenciaSearchController incidenciaSearchController = new OpenIncidenciaSearchController();
+		buscarIncidenciaButton.setAction(incidenciaSearchController);
+		buscarIncidenciaMenuItem.setAction(incidenciaSearchController);
+
+		OpenNuevaIncidenciaController nuevaIncidenciaController = new OpenNuevaIncidenciaController();
+		nuevaIncidenciaButton.setAction(nuevaIncidenciaController);
+		nuevaIncidenciaMenuItem.setAction(nuevaIncidenciaController);
+	}
+
+	private void aplicarPermisos() {
+		if (isAdmin) {
+
+			buscarEmpleadoButton.setVisible(true);
+			nuevoEmpleadoButton.setVisible(true);
+			buscarEmpleadoMenuItem.setVisible(true);
+			nuevoEmpleadoMenuItem.setVisible(true);
+			anadirClienteButton.setVisible(true);
+			nuevoClienteMenuItem.setVisible(true);
+		} else {
+
+			buscarEmpleadoButton.setVisible(false);
+			nuevoEmpleadoButton.setVisible(false);
+			buscarEmpleadoMenuItem.setVisible(false);
+			nuevoEmpleadoMenuItem.setVisible(false);
+			anadirClienteButton.setVisible(false);
+			nuevoClienteMenuItem.setVisible(false);
+		}
+	}
+
+	public void showLogin() {
+		LoginView loginView = new LoginView();
+		contentTabbedPane.removeAll();
+		contentTabbedPane.addTab("Login", loginView);
+		menuBar.setVisible(false);
+		mainToolBar.setVisible(false);
+	}
+
+	public void loginSuccess(EmpleadoDTO usuario, boolean isAdmin) {
+		this.usuarioActual = usuario;
+		this.isAdmin = isAdmin;
+
+		String rol = isAdmin ? "Administrador" : "Empleado";
+		frame.setTitle("Bluewave - Usuario: " + usuario.getNombre() + " " + usuario.getApellido1() + " (" + rol + ")");
+
+		contentTabbedPane.removeAll();
+		menuBar.setVisible(true);
+		mainToolBar.setVisible(true);
+
+		aplicarPermisos();
+
+		JPanel welcomePanel = new JPanel();
+		addView("Bienvenido", welcomePanel);
+	}
+
+	public void cerrarSesion() {
+		usuarioActual = null;
+		isAdmin = false;
+		frame.setTitle("Bluewave");
+		showLogin();
 	}
 
 	public void addView(String titulo, JPanel contenido) {
@@ -252,9 +298,7 @@ public class MainWindow {
 		contentTabbedPane.remove((Component) view);
 	}
 
-	private void postInitialize() {
-		OpenClienteSearchController c = new OpenClienteSearchController();
-		buscarClienteButton.addActionListener(c);
-		buscarClienteMenuItem.setAction(c);
+	public boolean isAdmin() {
+		return isAdmin;
 	}
 }
