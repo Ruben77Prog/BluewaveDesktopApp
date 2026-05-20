@@ -1,12 +1,10 @@
 package com.ruben.bluewave.ui.views;
 
 import java.awt.BorderLayout;
-import java.awt.Component;
 import java.awt.FlowLayout;
 import java.awt.GridBagConstraints;
 import java.awt.GridBagLayout;
 import java.awt.Insets;
-import java.awt.Point;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
 import java.awt.event.MouseAdapter;
@@ -25,7 +23,6 @@ import javax.swing.JPanel;
 import javax.swing.JScrollPane;
 import javax.swing.JTable;
 import javax.swing.JTextField;
-import javax.swing.SwingUtilities;
 
 import org.apache.commons.lang3.StringUtils;
 
@@ -305,42 +302,55 @@ public class IncidenciaSearchView extends AbstractView {
 		prevButton.setEnabled(false);
 		nextButton.setEnabled(false);
 		lastButton.setEnabled(false);
+		
+		
+		
+		
+		
+		
 
 		resultadosTable.addMouseListener(new MouseAdapter() {
-			@Override
-			public void mouseClicked(MouseEvent e) {
-				int column = resultadosTable.columnAtPoint(e.getPoint());
-				int row = resultadosTable.rowAtPoint(e.getPoint());
+		    @Override
+		    public void mouseClicked(MouseEvent e) {
+		        int column = resultadosTable.columnAtPoint(e.getPoint());
+		        int row = resultadosTable.rowAtPoint(e.getPoint());
 
-				if (row >= 0 && column == 7) {
-					IncidenciaDTO incidencia = ((IncidenciaTableModel) resultadosTable.getModel()).getIncidenciaAt(row);
+		        // Doble clic en cualquier columna 
+		        if (e.getClickCount() == 2 && row >= 0 && column != 7) {
+		            IncidenciaDTO incidencia = ((IncidenciaTableModel) resultadosTable.getModel()).getIncidenciaAt(row);
+		            if (incidencia != null) {
+		                NuevaIncidenciaView detailView = new NuevaIncidenciaView();
+		                detailView.cargarIncidencia(incidencia);
+		                MainWindow.getInstance().addView("Detalle incidencia", detailView);
+		            }
+		        }
+		        
+		        // para editar columnas con un click
+		        if (row >= 0 && column == 7 && e.getClickCount() == 1) {
+		            IncidenciaDTO incidencia = ((IncidenciaTableModel) resultadosTable.getModel()).getIncidenciaAt(row);
+		            if (incidencia == null) return;
+		            
+		            Object[] options = { "Editar", "Eliminar", "Cancelar" };
+		            int option = JOptionPane.showOptionDialog(IncidenciaSearchView.this,
+		                    "Incidencia: " + incidencia.getNumeroIncidencia() + " - " + incidencia.getTitulo(),
+		                    "Acciones", JOptionPane.YES_NO_CANCEL_OPTION, JOptionPane.QUESTION_MESSAGE, null, options,
+		                    options[2]);
 
-					if (incidencia == null) {
-						return;
-					}
-
-					Object[] options = { "Editar", "Eliminar", "Cancelar" };
-					int option = JOptionPane.showOptionDialog(IncidenciaSearchView.this,
-							"Incidencia: " + incidencia.getNumeroIncidencia() + " - " + incidencia.getTitulo(),
-							"Acciones", JOptionPane.YES_NO_CANCEL_OPTION, JOptionPane.QUESTION_MESSAGE, null, options,
-							options[2]);
-
-					if (option == 0) {
-						NuevaIncidenciaView editView = new NuevaIncidenciaView();
-						IncidenciaSetEditableController setEditableController = new IncidenciaSetEditableController(
-								editView, incidencia);
-						setEditableController.doAction();
-						MainWindow.getInstance().addView("Editar incidencia", editView);
-					} else if (option == 1) {
-						IncidenciaDeleteController deleteController = new IncidenciaDeleteController(
-								IncidenciaSearchView.this, incidencia);
-						deleteController.doAction();
-					}
-				}
-			}
+		            if (option == 0) {
+		            	 NuevaIncidenciaView editView = new NuevaIncidenciaView();
+		            	    editView.cargarIncidencia(incidencia);
+		            	    editView.incidenciaId = incidencia.getId();  // asigno el Id directamente
+		            	    editView.activarEdicion(); 
+		            	    MainWindow.getInstance().addView("Editar incidencia", editView);
+		            } else if (option == 1) {
+		                IncidenciaDeleteController deleteController = new IncidenciaDeleteController(
+		                        IncidenciaSearchView.this, incidencia);
+		                deleteController.doAction();
+		            }
+		        }
+		    }
 		});
 	}
-
 	private void cargarCombos() {
 		try {
 			TipoIncidenciaCriteria criteria = new TipoIncidenciaCriteria();

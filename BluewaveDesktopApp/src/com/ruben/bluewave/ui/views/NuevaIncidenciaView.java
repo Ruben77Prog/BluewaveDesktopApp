@@ -39,6 +39,7 @@ import com.ruben.bluewave.service.impl.EstadoIncidenciaServiceImpl;
 import com.ruben.bluewave.service.impl.IncidenciaServiceImpl;
 import com.ruben.bluewave.service.impl.TipoIncidenciaServiceImpl;
 import com.ruben.bluewave.ui.controller.AbstractController;
+import com.ruben.bluewave.ui.controller.IncidenciaUpdateController;
 import com.ruben.bluewave.ui.renderer.ContratoCBRenderer;
 import com.ruben.bluewave.ui.renderer.EmpleadoCBRenderer;
 import com.ruben.bluewave.ui.renderer.EstadoIncidenciaRenderer;
@@ -67,7 +68,10 @@ public class NuevaIncidenciaView extends AbstractView {
 	private JTextArea descripcionTA;
 
 	private boolean editable = false;
+	private boolean modoDetalle = false;
 	private JButton guardarButton;
+	private JButton editarButton;
+	Long incidenciaId;
 
 	public NuevaIncidenciaView() {
 		initServices();
@@ -111,7 +115,7 @@ public class NuevaIncidenciaView extends AbstractView {
 		contratoCB = new JComboBox<>();
 		formularioPanel.add(contratoCB);
 
-		formularioPanel.add(new JLabel("Empleado asignado:"));
+		formularioPanel.add(new JLabel("Empleado:"));
 		empleadoCB = new JComboBox<>();
 		formularioPanel.add(empleadoCB);
 
@@ -147,14 +151,19 @@ public class NuevaIncidenciaView extends AbstractView {
 		flowLayout.setAlignment(FlowLayout.RIGHT);
 		add(botonesPanel, BorderLayout.SOUTH);
 
-		guardarButton = new JButton("");
-		guardarButton.setIcon(
-				new ImageIcon(ClienteAltaView.class.getResource("/nuvola/16x16/1511_mount_zip_mount_zip.png")));
+		guardarButton = new JButton("Guardar");
+		guardarButton.setIcon(new ImageIcon(getClass().getResource("/nuvola/16x16/1511_mount_zip_mount_zip.png")));
 		guardarButton.addActionListener(e -> guardar());
 		botonesPanel.add(guardarButton);
 
-		JButton limpiarButton = new JButton("");
-		limpiarButton.setIcon(new ImageIcon(ClienteAltaView.class.getResource("/nuvola/16x16/1250_delete_delete.png")));
+		editarButton = new JButton("Editar");
+		editarButton.setIcon(new ImageIcon(getClass().getResource("/nuvola/16x16/1875_viewmag+_viewmag+.png")));
+		editarButton.addActionListener(e -> activarEdicion());
+		editarButton.setVisible(false);
+		botonesPanel.add(editarButton);
+
+		JButton limpiarButton = new JButton("Limpiar");
+		limpiarButton.setIcon(new ImageIcon(getClass().getResource("/nuvola/16x16/1250_delete_delete.png")));
 		limpiarButton.addActionListener(e -> limpiarCampos());
 		botonesPanel.add(limpiarButton);
 	}
@@ -166,7 +175,88 @@ public class NuevaIncidenciaView extends AbstractView {
 		cargarEmpleados();
 	}
 
+	private void cargarTipos() {
+		try {
+			List<TipoIncidencia> tipos = tipoService.findAll();
+			DefaultComboBoxModel<TipoIncidencia> model = new DefaultComboBoxModel<>();
+			TipoIncidencia placeholder = new TipoIncidencia();
+			placeholder.setId(null);
+			placeholder.setNombre("Seleccionar");
+			model.addElement(placeholder);
+			for (TipoIncidencia t : tipos) {
+				model.addElement(t);
+			}
+			tipoCB.setModel(model);
+			tipoCB.setRenderer(new TipoIncidenciaRenderer());
+		} catch (Exception e) {
+			e.printStackTrace();
+		}
+	}
+
+	private void cargarEstados() {
+		try {
+			List<EstadoIncidencia> estados = estadoService.findAll();
+			DefaultComboBoxModel<EstadoIncidencia> model = new DefaultComboBoxModel<>();
+			EstadoIncidencia placeholder = new EstadoIncidencia();
+			placeholder.setId(null);
+			placeholder.setNombre("Seleccionar");
+			model.addElement(placeholder);
+			for (EstadoIncidencia e : estados) {
+				model.addElement(e);
+			}
+			estadoCB.setModel(model);
+			estadoCB.setRenderer(new EstadoIncidenciaRenderer());
+		} catch (Exception e) {
+			e.printStackTrace();
+		}
+	}
+
+	private void cargarContratos() {
+		try {
+			ContratoCriteria criteria = new ContratoCriteria();
+			Results<ContratoDTO> results = contratoService.findByCriteria(criteria, 0, Integer.MAX_VALUE);
+			List<ContratoDTO> contratos = results.getPage();
+
+			DefaultComboBoxModel<ContratoDTO> model = new DefaultComboBoxModel<>();
+			ContratoDTO placeholder = new ContratoDTO();
+			placeholder.setId(null);
+			placeholder.setNumeroContrato("Seleccionar");
+			model.addElement(placeholder);
+			for (ContratoDTO c : contratos) {
+				model.addElement(c);
+			}
+			contratoCB.setModel(model);
+			contratoCB.setRenderer(new ContratoCBRenderer());
+		} catch (Exception e) {
+			e.printStackTrace();
+			JOptionPane.showMessageDialog(this, "Error cargando contratos: " + e.getMessage(), "Error",
+					JOptionPane.ERROR_MESSAGE);
+		}
+	}
+
+	private void cargarEmpleados() {
+		try {
+			List<EmpleadoDTO> empleados = empleadoService.findAll();
+			DefaultComboBoxModel<EmpleadoDTO> model = new DefaultComboBoxModel<>();
+			EmpleadoDTO placeholder = new EmpleadoDTO();
+			placeholder.setId(null);
+			placeholder.setNombre("Seleccionar");
+			model.addElement(placeholder);
+			for (EmpleadoDTO e : empleados) {
+				model.addElement(e);
+			}
+			empleadoCB.setModel(model);
+			empleadoCB.setRenderer(new EmpleadoCBRenderer());
+			AutoCompleteDecorator.decorate(empleadoCB);
+		} catch (Exception e) {
+			e.printStackTrace();
+		}
+	}
+
 	private void guardar() {
+		if (!editable) {
+			return;
+		}
 		try {
 			Incidencia incidencia = getModel();
 			if (incidencia == null)
@@ -239,84 +329,6 @@ public class NuevaIncidenciaView extends AbstractView {
 		empleadoCB.setSelectedIndex(0);
 	}
 
-	private void cargarTipos() {
-		try {
-			List<TipoIncidencia> tipos = tipoService.findAll();
-			DefaultComboBoxModel<TipoIncidencia> model = new DefaultComboBoxModel<>();
-			TipoIncidencia placeholder = new TipoIncidencia();
-			placeholder.setId(null);
-			placeholder.setNombre("Seleccionar");
-			model.addElement(placeholder);
-			for (TipoIncidencia t : tipos)
-				model.addElement(t);
-			tipoCB.setModel(model);
-			tipoCB.setRenderer(new TipoIncidenciaRenderer());
-		} catch (Exception e) {
-			e.printStackTrace();
-		}
-	}
-
-	private void cargarEstados() {
-		try {
-			List<EstadoIncidencia> estados = estadoService.findAll();
-			DefaultComboBoxModel<EstadoIncidencia> model = new DefaultComboBoxModel<>();
-			EstadoIncidencia placeholder = new EstadoIncidencia();
-			placeholder.setId(null);
-			placeholder.setNombre("Seleccionar");
-			model.addElement(placeholder);
-			for (EstadoIncidencia e : estados)
-				model.addElement(e);
-			estadoCB.setModel(model);
-			estadoCB.setRenderer(new EstadoIncidenciaRenderer());
-		} catch (Exception e) {
-			e.printStackTrace();
-		}
-	}
-
-	private void cargarContratos() {
-		try {
-			ContratoCriteria criteria = new ContratoCriteria();
-			Results<ContratoDTO> results = contratoService.findByCriteria(criteria, 0, Integer.MAX_VALUE);
-			List<ContratoDTO> contratos = results.getPage();
-
-			DefaultComboBoxModel<ContratoDTO> model = new DefaultComboBoxModel<>();
-			ContratoDTO placeholder = new ContratoDTO();
-			placeholder.setId(null);
-			placeholder.setNumeroContrato("Seleccionar");
-			model.addElement(placeholder);
-			for (ContratoDTO c : contratos) {
-				model.addElement(c);
-			}
-
-			contratoCB.setModel(model);
-			contratoCB.setRenderer(new ContratoCBRenderer());
-		} catch (Exception e) {
-			e.printStackTrace();
-			JOptionPane.showMessageDialog(this, "Error cargando contratos: " + e.getMessage(), "Error",
-					JOptionPane.ERROR_MESSAGE);
-		}
-	}
-
-	private void cargarEmpleados() {
-		try {
-			List<EmpleadoDTO> empleados = empleadoService.findAll();
-			DefaultComboBoxModel<EmpleadoDTO> model = new DefaultComboBoxModel<>();
-			EmpleadoDTO placeholder = new EmpleadoDTO();
-			placeholder.setId(null);
-			placeholder.setNombre("Seleccionar");
-			model.addElement(placeholder);
-			for (EmpleadoDTO e : empleados)
-				model.addElement(e);
-			empleadoCB.setModel(model);
-			empleadoCB.setRenderer(new EmpleadoCBRenderer());
-			AutoCompleteDecorator.decorate(empleadoCB);
-		} catch (Exception e) {
-			e.printStackTrace();
-		}
-	}
-
-
-
 	public void setEditable(boolean editable) {
 		this.editable = editable;
 		numeroTF.setEditable(editable);
@@ -333,7 +345,10 @@ public class NuevaIncidenciaView extends AbstractView {
 		costeTF.setEditable(editable);
 
 		if (guardarButton != null) {
-			guardarButton.setText(editable ? "Actualizar" : "Guardar");
+			guardarButton.setVisible(editable);
+		}
+		if (editarButton != null) {
+			editarButton.setVisible(!editable && modoDetalle);
 		}
 	}
 
@@ -347,58 +362,74 @@ public class NuevaIncidenciaView extends AbstractView {
 	}
 
 	public void cargarIncidencia(IncidenciaDTO incidencia) {
-	    numeroTF.setText(incidencia.getNumeroIncidencia() != null ? incidencia.getNumeroIncidencia() : "");
-	    tituloTF.setText(incidencia.getTitulo() != null ? incidencia.getTitulo() : "");
-	    descripcionTA.setText(incidencia.getDescripcion() != null ? incidencia.getDescripcion() : "");
-	    fechaIncidenciaDC.setDate(incidencia.getFechaIncidencia());
-	    fechaResolucionDC.setDate(incidencia.getFechaResolucion());
-	    horasEstimadasTF.setText(incidencia.getHorasEstimadas() != null ? String.valueOf(incidencia.getHorasEstimadas()) : "");
-	    horasRealesTF.setText(incidencia.getHorasReales() != null ? String.valueOf(incidencia.getHorasReales()) : "");
-	    costeTF.setText(incidencia.getCosteReparacion() != null ? String.valueOf(incidencia.getCosteReparacion()) : "");
-	    
-	    if (incidencia.getTipoIncidenciaId() != null) {
-	        for (int i = 0; i < tipoCB.getItemCount(); i++) {
-	            TipoIncidencia t = tipoCB.getItemAt(i);
-	            if (t.getId() != null && t.getId().equals(incidencia.getTipoIncidenciaId())) {
-	                tipoCB.setSelectedIndex(i);
-	                i = tipoCB.getItemCount();
-	            }
-	        }
-	    }
-	    
-	    if (incidencia.getEstadoIncidenciaId() != null) {
-	        for (int i = 0; i < estadoCB.getItemCount(); i++) {
-	            EstadoIncidencia e = estadoCB.getItemAt(i);
-	            if (e.getId() != null && e.getId().equals(incidencia.getEstadoIncidenciaId())) {
-	                estadoCB.setSelectedIndex(i);
-	                i = estadoCB.getItemCount();
-	            }
-	        }
-	    }
-	    
-	    if (incidencia.getContratoId() != null) {
-	        for (int i = 0; i < contratoCB.getItemCount(); i++) {
-	            ContratoDTO c = contratoCB.getItemAt(i);
-	            if (c.getId() != null && c.getId().equals(incidencia.getContratoId())) {
-	                contratoCB.setSelectedIndex(i);
-	                i = contratoCB.getItemCount();
-	            }
-	        }
-	    }
-	    
-	    if (incidencia.getEmpleadoCreadorId() != null) {
-	        for (int i = 0; i < empleadoCB.getItemCount(); i++) {
-	            EmpleadoDTO e = empleadoCB.getItemAt(i);
-	            if (e.getId() != null && e.getId().equals(incidencia.getEmpleadoCreadorId())) {
-	                empleadoCB.setSelectedIndex(i);
-	                i = empleadoCB.getItemCount();
-	            }
-	        }
-	    }
+		modoDetalle = true;
+		this.incidenciaId = incidencia.getId();
+		numeroTF.setText(incidencia.getNumeroIncidencia() != null ? incidencia.getNumeroIncidencia() : "");
+		tituloTF.setText(incidencia.getTitulo() != null ? incidencia.getTitulo() : "");
+		descripcionTA.setText(incidencia.getDescripcion() != null ? incidencia.getDescripcion() : "");
+		fechaIncidenciaDC.setDate(incidencia.getFechaIncidencia());
+		fechaResolucionDC.setDate(incidencia.getFechaResolucion());
+		horasEstimadasTF
+				.setText(incidencia.getHorasEstimadas() != null ? String.valueOf(incidencia.getHorasEstimadas()) : "");
+		horasRealesTF.setText(incidencia.getHorasReales() != null ? String.valueOf(incidencia.getHorasReales()) : "");
+		costeTF.setText(incidencia.getCosteReparacion() != null ? String.valueOf(incidencia.getCosteReparacion()) : "");
+
+		if (incidencia.getTipoIncidenciaId() != null) {
+			for (int i = 0; i < tipoCB.getItemCount(); i++) {
+				TipoIncidencia t = tipoCB.getItemAt(i);
+				if (t.getId() != null && t.getId().equals(incidencia.getTipoIncidenciaId())) {
+					tipoCB.setSelectedIndex(i);
+					i = tipoCB.getItemCount();
+				}
+			}
+		}
+
+		if (incidencia.getEstadoIncidenciaId() != null) {
+			for (int i = 0; i < estadoCB.getItemCount(); i++) {
+				EstadoIncidencia e = estadoCB.getItemAt(i);
+				if (e.getId() != null && e.getId().equals(incidencia.getEstadoIncidenciaId())) {
+					estadoCB.setSelectedIndex(i);
+					i = estadoCB.getItemCount();
+				}
+			}
+		}
+
+		if (incidencia.getContratoId() != null) {
+			for (int i = 0; i < contratoCB.getItemCount(); i++) {
+				ContratoDTO c = contratoCB.getItemAt(i);
+				if (c.getId() != null && c.getId().equals(incidencia.getContratoId())) {
+					contratoCB.setSelectedIndex(i);
+					i = contratoCB.getItemCount();
+				}
+			}
+		}
+
+		if (incidencia.getEmpleadoCreadorId() != null) {
+			for (int i = 0; i < empleadoCB.getItemCount(); i++) {
+				EmpleadoDTO e = empleadoCB.getItemAt(i);
+				if (e.getId() != null && e.getId().equals(incidencia.getEmpleadoCreadorId())) {
+					empleadoCB.setSelectedIndex(i);
+					i = empleadoCB.getItemCount();
+				}
+			}
+		}
+
+		setEditable(false);
+	}
+
+	public void setModoDetalle(boolean modoDetalle) {
+		this.modoDetalle = modoDetalle;
+	}
+
+	public void activarEdicion() {
+		setEditable(true);
+		modoDetalle = false;
+		setAgreeController(new IncidenciaUpdateController(this, incidenciaId));
 	}
 
 	public void mostrarMensaje(String mensaje) {
 		JOptionPane.showMessageDialog(this, mensaje);
+
 	}
 
 	public void mostrarError(String error) {

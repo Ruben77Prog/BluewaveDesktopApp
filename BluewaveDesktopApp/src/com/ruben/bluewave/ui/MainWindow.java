@@ -27,6 +27,7 @@ import com.ruben.bluewave.ui.controller.OpenPlanCreateController;
 import com.ruben.bluewave.ui.controller.OpenPlanSearchController;
 import com.ruben.bluewave.ui.views.ClienteAltaView;
 import com.ruben.bluewave.ui.views.EmpleadoAltaView;
+import com.ruben.bluewave.ui.views.EstadisticaView;
 import com.ruben.bluewave.ui.views.LoginView;
 import com.ruben.bluewave.ui.views.View;
 
@@ -81,14 +82,14 @@ public class MainWindow {
 	private MainWindow() {
 		initialize();
 		postInitialize();
-		showLogin();
-//        EmpleadoDTO usuarioPrueba = new EmpleadoDTO();
-//        usuarioPrueba.setId(1L);
-//        usuarioPrueba.setNombre("Admin");
-//        usuarioPrueba.setApellido1("Prueba");
-//        usuarioPrueba.setRolId(1L); 
-//        
-//        loginSuccess(usuarioPrueba, true);
+		//showLogin();
+        EmpleadoDTO usuarioPrueba = new EmpleadoDTO();
+        usuarioPrueba.setId(1L);
+        usuarioPrueba.setNombre("Admin");
+        usuarioPrueba.setApellido1("Prueba");
+        usuarioPrueba.setRolId(1L); 
+        
+        loginSuccess(usuarioPrueba, true);
 	}
 
 	public static MainWindow getInstance() {
@@ -129,7 +130,7 @@ public class MainWindow {
 		nuevoClienteMenuItem = new JMenuItem("Nuevo...");
 		clienteMenu.add(nuevoClienteMenuItem);
 
-		// Menu Usuario (Empleados)
+		
 		JMenu usuarioMenu = new JMenu("Usuario");
 		menuBar.add(usuarioMenu);
 
@@ -363,22 +364,22 @@ public class MainWindow {
 	}
 
 	public void loginSuccess(EmpleadoDTO usuario, boolean isAdmin) {
-		this.usuarioActual = usuario;
-		this.isAdmin = isAdmin;
+	    this.usuarioActual = usuario;
+	    this.isAdmin = isAdmin;
 
-		String rol = isAdmin ? "Administrador" : "Empleado";
-		frame.setTitle("Bluewave - Usuario: " + usuario.getNombre() + " " + usuario.getApellido1() + " (" + rol + ")");
+	    String rol = isAdmin ? "Administrador" : "Empleado";
+	    frame.setTitle("Bluewave - Usuario: " + usuario.getNombre() + " " + usuario.getApellido1() + " (" + rol + ")");
 
-		contentTabbedPane.removeAll();
-		menuBar.setVisible(true);
-		mainToolBar.setVisible(true);
+	    contentTabbedPane.removeAll();
+	    menuBar.setVisible(true);
+	    mainToolBar.setVisible(true);
 
-		aplicarPermisos();
+	    aplicarPermisos();
 
-		JPanel welcomePanel = new JPanel();
-		addView("Bienvenido", welcomePanel);
+	  
+	    EstadisticaView estadisticaView = new EstadisticaView();
+	    addView(estadisticaView.getName(), estadisticaView);
 	}
-
 	public void cerrarSesion() {
 		usuarioActual = null;
 		isAdmin = false;
