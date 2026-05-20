@@ -11,7 +11,7 @@ public class OpenEmpleadoSearchController extends AbstractAction {
     private static final long serialVersionUID = 1L;
 
     public OpenEmpleadoSearchController() {
-        super("Buscar empleado...",
+        super(null,
               new ImageIcon(MainWindow.class.getResource("/nuvola/16x16/1339_kmag_kmag.png")));
     }
 

@@ -6,17 +6,17 @@ import javax.swing.AbstractAction;
 import javax.swing.ImageIcon;
 
 import com.ruben.bluewave.ui.MainWindow;
-import com.ruben.bluewave.ui.views.IncidenciaSearchView;
+import com.ruben.bluewave.ui.views.PlanSearchView;
 
-public class OpenIncidenciaSearchController extends AbstractAction {
+public class OpenPlanSearchController extends AbstractAction {
 
-    public OpenIncidenciaSearchController() {
+    public OpenPlanSearchController() {
         super(null, new ImageIcon(MainWindow.class.getResource("/nuvola/16x16/1339_kmag_kmag.png")));
     }
 
     @Override
     public void actionPerformed(ActionEvent e) {
-        IncidenciaSearchView view = new IncidenciaSearchView();
+        PlanSearchView view = new PlanSearchView();
         MainWindow.getInstance().addView(view.getName(), view);
     }
 }

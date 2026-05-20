@@ -15,7 +15,7 @@ public class OpenClienteSearchController extends AbstractAction {
 
 	public OpenClienteSearchController() {
 
-		super("Buscar...", new ImageIcon(MainWindow.class.getResource("/nuvola/16x16/1339_kmag_kmag.png")));
+		super(null, new ImageIcon(MainWindow.class.getResource("/nuvola/16x16/1339_kmag_kmag.png")));
 
 	}
 

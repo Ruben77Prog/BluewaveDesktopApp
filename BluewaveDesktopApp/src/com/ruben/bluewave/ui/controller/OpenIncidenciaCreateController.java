@@ -11,7 +11,7 @@ import com.ruben.bluewave.ui.views.NuevaIncidenciaView;
 public class OpenIncidenciaCreateController extends AbstractAction {
 
     public OpenIncidenciaCreateController() {
-        super("Nueva incidencia", new ImageIcon(MainWindow.class.getResource("/nuvola/16x16/1875_viewmag+_viewmag+.png")));
+        super(null, new ImageIcon(MainWindow.class.getResource("/nuvola/16x16/1875_viewmag+_viewmag+.png")));
     }
 
     public void doAction() {

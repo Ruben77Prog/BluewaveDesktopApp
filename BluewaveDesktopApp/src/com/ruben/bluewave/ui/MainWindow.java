@@ -18,16 +18,16 @@ import javax.swing.UIManager;
 
 import com.ruben.bluewave.model.EmpleadoDTO;
 import com.ruben.bluewave.ui.controller.OpenClienteSearchController;
+import com.ruben.bluewave.ui.controller.OpenContratoCreateController;
+import com.ruben.bluewave.ui.controller.OpenContratoSearchController;
 import com.ruben.bluewave.ui.controller.OpenEmpleadoSearchController;
 import com.ruben.bluewave.ui.controller.OpenIncidenciaSearchController;
 import com.ruben.bluewave.ui.controller.OpenNuevaIncidenciaController;
+import com.ruben.bluewave.ui.controller.OpenPlanCreateController;
+import com.ruben.bluewave.ui.controller.OpenPlanSearchController;
 import com.ruben.bluewave.ui.views.ClienteAltaView;
-import com.ruben.bluewave.ui.views.ClienteSearchView;
 import com.ruben.bluewave.ui.views.EmpleadoAltaView;
-import com.ruben.bluewave.ui.views.EmpleadoSearchView;
-import com.ruben.bluewave.ui.views.IncidenciaSearchView;
 import com.ruben.bluewave.ui.views.LoginView;
-import com.ruben.bluewave.ui.views.NuevaIncidenciaView;
 import com.ruben.bluewave.ui.views.View;
 
 public class MainWindow {
@@ -48,6 +48,10 @@ public class MainWindow {
 	private JButton nuevoEmpleadoButton;
 	private JButton buscarIncidenciaButton;
 	private JButton nuevaIncidenciaButton;
+	private JButton buscarPlanButton;
+	private JButton nuevoPlanButton;
+	private JButton buscarContratoButton;
+	private JButton nuevoContratoButton;
 
 	private JMenuItem buscarClienteMenuItem;
 	private JMenuItem nuevoClienteMenuItem;
@@ -55,6 +59,10 @@ public class MainWindow {
 	private JMenuItem nuevoEmpleadoMenuItem;
 	private JMenuItem buscarIncidenciaMenuItem;
 	private JMenuItem nuevaIncidenciaMenuItem;
+	private JMenuItem buscarPlanMenuItem;
+	private JMenuItem nuevoPlanMenuItem;
+	private JMenuItem buscarContratoMenuItem;
+	private JMenuItem nuevoContratoMenuItem;
 
 	public static void main(String[] args) {
 		EventQueue.invokeLater(new Runnable() {
@@ -74,6 +82,13 @@ public class MainWindow {
 		initialize();
 		postInitialize();
 		showLogin();
+//        EmpleadoDTO usuarioPrueba = new EmpleadoDTO();
+//        usuarioPrueba.setId(1L);
+//        usuarioPrueba.setNombre("Admin");
+//        usuarioPrueba.setApellido1("Prueba");
+//        usuarioPrueba.setRolId(1L); 
+//        
+//        loginSuccess(usuarioPrueba, true);
 	}
 
 	public static MainWindow getInstance() {
@@ -104,6 +119,7 @@ public class MainWindow {
 		menuBar = new JMenuBar();
 		menuPanel.add(menuBar);
 
+		// Menu Cliente
 		JMenu clienteMenu = new JMenu("Cliente");
 		menuBar.add(clienteMenu);
 
@@ -113,6 +129,7 @@ public class MainWindow {
 		nuevoClienteMenuItem = new JMenuItem("Nuevo...");
 		clienteMenu.add(nuevoClienteMenuItem);
 
+		// Menu Usuario (Empleados)
 		JMenu usuarioMenu = new JMenu("Usuario");
 		menuBar.add(usuarioMenu);
 
@@ -122,9 +139,27 @@ public class MainWindow {
 		nuevoEmpleadoMenuItem = new JMenuItem("Nuevo...");
 		usuarioMenu.add(nuevoEmpleadoMenuItem);
 
+		// Menu Plan
+		JMenu planMenu = new JMenu("Plan");
+		menuBar.add(planMenu);
+
+		buscarPlanMenuItem = new JMenuItem("Buscar...");
+		planMenu.add(buscarPlanMenuItem);
+
+		nuevoPlanMenuItem = new JMenuItem("Nuevo...");
+		planMenu.add(nuevoPlanMenuItem);
+
+		// Menu Contrato
 		JMenu contratoMenu = new JMenu("Contrato");
 		menuBar.add(contratoMenu);
 
+		buscarContratoMenuItem = new JMenuItem("Buscar...");
+		contratoMenu.add(buscarContratoMenuItem);
+
+		nuevoContratoMenuItem = new JMenuItem("Nuevo...");
+		contratoMenu.add(nuevoContratoMenuItem);
+
+		// Menu Incidencia
 		JMenu incidenciaMenu = new JMenu("Incidencia");
 		menuBar.add(incidenciaMenu);
 
@@ -134,6 +169,7 @@ public class MainWindow {
 		nuevaIncidenciaMenuItem = new JMenuItem("Nueva...");
 		incidenciaMenu.add(nuevaIncidenciaMenuItem);
 
+		// Menu Sesion
 		JMenu sesionMenu = new JMenu("Sesión");
 		menuBar.add(sesionMenu);
 
@@ -145,6 +181,7 @@ public class MainWindow {
 		salirMenuItem.addActionListener(e -> System.exit(0));
 		sesionMenu.add(salirMenuItem);
 
+		// Toolbar
 		JPanel toolbarPanel = new JPanel();
 		northPanel.add(toolbarPanel, BorderLayout.SOUTH);
 		toolbarPanel.setLayout(new FlowLayout(FlowLayout.LEFT, 5, 5));
@@ -152,41 +189,72 @@ public class MainWindow {
 		mainToolBar = new JToolBar();
 		toolbarPanel.add(mainToolBar);
 
+		// Cliente
 		buscarClienteButton = new JButton("");
 		buscarClienteButton.setIcon(new ImageIcon(MainWindow.class.getResource("/nuvola/16x16/1339_kmag_kmag.png")));
-		buscarClienteButton.setToolTipText("Buscar...");
+		buscarClienteButton.setToolTipText("Buscar cliente");
 		mainToolBar.add(buscarClienteButton);
 
 		anadirClienteButton = new JButton("");
 		anadirClienteButton
 				.setIcon(new ImageIcon(MainWindow.class.getResource("/nuvola/16x16/1875_viewmag+_viewmag+.png")));
-		anadirClienteButton.setToolTipText("Nuevo...");
+		anadirClienteButton.setToolTipText("Nuevo cliente");
 		mainToolBar.add(anadirClienteButton);
 
 		mainToolBar.addSeparator();
 
+		// Empleado
 		buscarEmpleadoButton = new JButton("");
 		buscarEmpleadoButton.setIcon(new ImageIcon(MainWindow.class.getResource("/nuvola/16x16/1339_kmag_kmag.png")));
-		buscarEmpleadoButton.setToolTipText("Buscar...");
+		buscarEmpleadoButton.setToolTipText("Buscar empleado");
 		mainToolBar.add(buscarEmpleadoButton);
 
 		nuevoEmpleadoButton = new JButton("");
 		nuevoEmpleadoButton.setIcon(new ImageIcon(MainWindow.class.getResource(
 				"/nuvola/16x16/1447_man_male_male_man_user_employee_manager_employee_operator_manager_personal_operator_administrator_administrator_personal_user.png")));
-		nuevoEmpleadoButton.setToolTipText("Nuevo...");
+		nuevoEmpleadoButton.setToolTipText("Nuevo empleado");
 		mainToolBar.add(nuevoEmpleadoButton);
 
 		mainToolBar.addSeparator();
 
+		// Plan
+		buscarPlanButton = new JButton("");
+		buscarPlanButton.setIcon(new ImageIcon(MainWindow.class.getResource("/nuvola/16x16/1339_kmag_kmag.png")));
+		buscarPlanButton.setToolTipText("Buscar plan");
+		mainToolBar.add(buscarPlanButton);
+
+		nuevoPlanButton = new JButton("");
+		nuevoPlanButton
+				.setIcon(new ImageIcon(MainWindow.class.getResource("/nuvola/16x16/1875_viewmag+_viewmag+.png")));
+		nuevoPlanButton.setToolTipText("Nuevo plan");
+		mainToolBar.add(nuevoPlanButton);
+
+		mainToolBar.addSeparator();
+
+		// Contrato
+		buscarContratoButton = new JButton("");
+		buscarContratoButton.setIcon(new ImageIcon(MainWindow.class.getResource("/nuvola/16x16/1339_kmag_kmag.png")));
+		buscarContratoButton.setToolTipText("Buscar contrato");
+		mainToolBar.add(buscarContratoButton);
+
+		nuevoContratoButton = new JButton("");
+		nuevoContratoButton
+				.setIcon(new ImageIcon(MainWindow.class.getResource("/nuvola/16x16/1875_viewmag+_viewmag+.png")));
+		nuevoContratoButton.setToolTipText("Nuevo contrato");
+		mainToolBar.add(nuevoContratoButton);
+
+		mainToolBar.addSeparator();
+
+		// Incidencia
 		buscarIncidenciaButton = new JButton("");
 		buscarIncidenciaButton.setIcon(new ImageIcon(MainWindow.class.getResource("/nuvola/16x16/1339_kmag_kmag.png")));
-		buscarIncidenciaButton.setToolTipText("Buscar...");
+		buscarIncidenciaButton.setToolTipText("Buscar incidencia");
 		mainToolBar.add(buscarIncidenciaButton);
 
 		nuevaIncidenciaButton = new JButton("");
 		nuevaIncidenciaButton
 				.setIcon(new ImageIcon(MainWindow.class.getResource("/nuvola/16x16/1875_viewmag+_viewmag+.png")));
-		nuevaIncidenciaButton.setToolTipText("Nueva...");
+		nuevaIncidenciaButton.setToolTipText("Nueva incidencia");
 		mainToolBar.add(nuevaIncidenciaButton);
 
 		centerPanel = new JPanel();
@@ -199,7 +267,6 @@ public class MainWindow {
 
 	private void postInitialize() {
 		OpenClienteSearchController clienteSearchController = new OpenClienteSearchController();
-
 		buscarClienteButton.setAction(clienteSearchController);
 		buscarClienteMenuItem.setAction(clienteSearchController);
 
@@ -227,6 +294,22 @@ public class MainWindow {
 			addView(view.getName(), view);
 		});
 
+		OpenPlanSearchController planSearchController = new OpenPlanSearchController();
+		buscarPlanButton.setAction(planSearchController);
+		buscarPlanMenuItem.setAction(planSearchController);
+
+		OpenPlanCreateController planCreateController = new OpenPlanCreateController();
+		nuevoPlanButton.setAction(planCreateController);
+		nuevoPlanMenuItem.setAction(planCreateController);
+
+		OpenContratoSearchController contratoSearchController = new OpenContratoSearchController();
+		buscarContratoButton.setAction(contratoSearchController);
+		buscarContratoMenuItem.setAction(contratoSearchController);
+
+		OpenContratoCreateController contratoCreateController = new OpenContratoCreateController();
+		nuevoContratoButton.setAction(contratoCreateController);
+		nuevoContratoMenuItem.setAction(contratoCreateController);
+
 		OpenIncidenciaSearchController incidenciaSearchController = new OpenIncidenciaSearchController();
 		buscarIncidenciaButton.setAction(incidenciaSearchController);
 		buscarIncidenciaMenuItem.setAction(incidenciaSearchController);
@@ -238,21 +321,36 @@ public class MainWindow {
 
 	private void aplicarPermisos() {
 		if (isAdmin) {
-
 			buscarEmpleadoButton.setVisible(true);
 			nuevoEmpleadoButton.setVisible(true);
 			buscarEmpleadoMenuItem.setVisible(true);
 			nuevoEmpleadoMenuItem.setVisible(true);
 			anadirClienteButton.setVisible(true);
 			nuevoClienteMenuItem.setVisible(true);
+			buscarPlanButton.setVisible(true);
+			nuevoPlanButton.setVisible(true);
+			buscarPlanMenuItem.setVisible(true);
+			nuevoPlanMenuItem.setVisible(true);
+			buscarContratoButton.setVisible(true);
+			nuevoContratoButton.setVisible(true);
+			buscarContratoMenuItem.setVisible(true);
+			nuevoContratoMenuItem.setVisible(true);
 		} else {
 
 			buscarEmpleadoButton.setVisible(false);
 			nuevoEmpleadoButton.setVisible(false);
 			buscarEmpleadoMenuItem.setVisible(false);
 			nuevoEmpleadoMenuItem.setVisible(false);
-			anadirClienteButton.setVisible(false);
-			nuevoClienteMenuItem.setVisible(false);
+			anadirClienteButton.setVisible(true);
+			nuevoClienteMenuItem.setVisible(true);
+			buscarPlanButton.setVisible(true);
+			nuevoPlanButton.setVisible(true);
+			buscarPlanMenuItem.setVisible(true);
+			nuevoPlanMenuItem.setVisible(true);
+			buscarContratoButton.setVisible(true);
+			nuevoContratoButton.setVisible(true);
+			buscarContratoMenuItem.setVisible(true);
+			nuevoContratoMenuItem.setVisible(true);
 		}
 	}
 
